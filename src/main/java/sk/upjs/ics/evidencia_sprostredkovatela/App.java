@@ -13,12 +13,12 @@ import javafx.stage.Stage;
 public class App extends Application {
 	
 	public void start(Stage stage) throws Exception {
-		EvidenciaZakaznikaController controller = new EvidenciaZakaznikaController();
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EvidenciaOdberatela.fxml"));
+		UvodneOknoController controller = new UvodneOknoController();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UvodneOkno.fxml"));
 		fxmlLoader.setController(controller);
 		Parent rootPane = fxmlLoader.load();
 		Scene scene = new Scene(rootPane);
-		stage.setTitle("Evidencia");
+		stage.setTitle("Úvodne okno");
 		stage.setScene(scene);
 		stage.show();
 	}

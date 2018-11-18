@@ -16,20 +16,5 @@ public class MysqlZakaznikDao implements ZakaznikDao {
 	public List<Zakaznik> getAll() {
 		String sql = "SELECT id, meno, priezvisko, email, tel_cislo, doplnujuce_udaje FROM zakaznici";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Zakaznik.class));
-//		return jdbcTemplate.query(sql, new RowMapper<Zakaznik>() {
-//
-//			public Zakaznik mapRow(ResultSet rs, int rowNum) throws SQLException {
-//				Zakaznik zakaznik = new Zakaznik();
-//				zakaznik.setId(rs.getLong("id"));
-//				zakaznik.setMeno(rs.getString("meno"));
-//				zakaznik.setPriezvisko(rs.getString("priezvisko"));
-//				zakaznik.setEmail(rs.getString("email"));
-//				zakaznik.setTelCislo(rs.getString("tel_cislo"));
-//				zakaznik.setDoplnujuceUdaje(rs.getString("doplnujuce_udaje"));
-//
-//				return zakaznik;
-//			}
-//
-//		});
 	}
 }

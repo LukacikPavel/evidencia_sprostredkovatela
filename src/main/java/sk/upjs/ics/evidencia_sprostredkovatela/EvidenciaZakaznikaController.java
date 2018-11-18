@@ -9,6 +9,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -74,8 +75,14 @@ public class EvidenciaZakaznikaController {
 		zakazniciTableView.setItems(zakazniciModel);
     	zakazniciTableView.setEditable(true);
 	}
+	
+	@FXML
+    void pridajZakaznikaButton(ActionEvent event) {
+		PridanieZakaznikaController pridanieZakaznikaController = new PridanieZakaznikaController();
+		showModalWindow(pridanieZakaznikaController, "PridanieZakaznika.fxml", "Pridanie Zákazníka");
+    }
 
-	private void showModalWindow(Object controller, String fxml) {
+	private void showModalWindow(Object controller, String fxml, String title) {
 		try {
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
@@ -85,6 +92,7 @@ public class EvidenciaZakaznikaController {
 
 			Stage dialog = new Stage();
 			dialog.setScene(scene);
+			dialog.setTitle(title);
 			dialog.initModality(Modality.APPLICATION_MODAL);
 			dialog.showAndWait();
 		} catch (IOException e) {
