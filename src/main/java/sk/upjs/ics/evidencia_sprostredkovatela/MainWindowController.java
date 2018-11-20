@@ -12,7 +12,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class UvodneOknoController {
+public class MainWindowController {
 
 	@FXML
 	private ResourceBundle resources;
@@ -21,7 +21,7 @@ public class UvodneOknoController {
 	private URL location;
 
 	@FXML
-	private Button zakazniciButton;
+	private Button customersListButton;
 
 	@FXML
 	void initialize() {
@@ -29,12 +29,12 @@ public class UvodneOknoController {
 	}
 	
 	@FXML
-	void otvorZakazniciButton(ActionEvent event) {
-		EvidenciaZakaznikaController evidenciaZakaznikaController = new EvidenciaZakaznikaController();
-		showModalWindow(evidenciaZakaznikaController, "EvidenciaZakaznika.fxml", "Zákazníci");
+	void openCustomersListButtonClicked(ActionEvent event) {
+		CustomersListController controller = new CustomersListController();
+		changeScene(controller, "CustomersList.fxml", "Zákazníci");
 	}
 	
-	private void showModalWindow(Object controller, String fxml, String title) {
+	private void changeScene(Object controller, String fxml, String title) {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
 			fxmlLoader.setController(controller);
@@ -42,11 +42,9 @@ public class UvodneOknoController {
 			rootPane = fxmlLoader.load();
 			Scene scene = new Scene(rootPane);
 
-			Stage dialog = new Stage();
-			dialog.setScene(scene);
-			dialog.setTitle(title);
-			dialog.initModality(Modality.APPLICATION_MODAL);
-			dialog.showAndWait();
+			Stage stage = (Stage) customersListButton.getScene().getWindow();
+			stage.setScene(scene);
+			stage.setTitle(title);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

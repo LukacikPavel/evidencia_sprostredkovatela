@@ -5,19 +5,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="menoTextField" layoutX="226.0" layoutY="87.0" />
-      <TextField fx:id="PriezviskoTextField" layoutX="226.0" layoutY="136.0" />
-      <TextField fx:id="EmailTextField" layoutX="226.0" layoutY="187.0" />
-      <TextField fx:id="TelCisloTextField" layoutX="226.0" layoutY="237.0" />
-      <TextField fx:id="DoplUdajeTextField" layoutX="226.0" layoutY="286.0" />
+      <TextField fx:id="nameTextField" layoutX="226.0" layoutY="87.0" />
+      <TextField fx:id="surnameTextField" layoutX="226.0" layoutY="136.0" />
+      <TextField fx:id="emailTextField" layoutX="226.0" layoutY="187.0" />
+      <TextField fx:id="numberTextField" layoutX="226.0" layoutY="237.0" />
+      <TextField fx:id="moreDetailsTextField" layoutX="226.0" layoutY="286.0" />
       <Label layoutX="70.0" layoutY="91.0" text="Meno" />
       <Label layoutX="70.0" layoutY="140.0" text="Priezvisko" />
       <Label layoutX="70.0" layoutY="191.0" text="E-mail" />
       <Label layoutX="70.0" layoutY="241.0" text="Tel. číslo" />
       <Label layoutX="69.0" layoutY="290.0" text="Doplňujúce údaje" />
-      <Button layoutX="474.0" layoutY="340.0" mnemonicParsing="false" text="Potvrď" />
+      <Button fx:id="saveButton" layoutX="474.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Ulož" />
    </children>
 </AnchorPane>

@@ -6,14 +6,14 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 public enum DaoFactory {
 	INSTANCE;
 	
-	private ZakaznikDao zakaznikDao;
+	private CustomerDao customerDao;
 	private JdbcTemplate jdbcTemplate;
 	
-	public ZakaznikDao getZakaznikDao() {
-		if (zakaznikDao == null) {
-			zakaznikDao = new MysqlZakaznikDao(getJdbcTemplate());
+	public CustomerDao getCustomerDao() {
+		if (customerDao == null) {
+			customerDao = new MysqlCustomerDao(getJdbcTemplate());
 		}
-		return zakaznikDao;
+		return customerDao;
 
 	}
 	

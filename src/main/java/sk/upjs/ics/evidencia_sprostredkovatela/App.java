@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 public class App extends Application {
 	
 	public void start(Stage stage) throws Exception {
-		UvodneOknoController controller = new UvodneOknoController();
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UvodneOkno.fxml"));
+		MainWindowController controller = new MainWindowController();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
 		fxmlLoader.setController(controller);
 		Parent rootPane = fxmlLoader.load();
 		Scene scene = new Scene(rootPane);

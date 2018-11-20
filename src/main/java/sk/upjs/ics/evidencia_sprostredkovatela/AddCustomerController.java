@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class PridanieZakaznikaController {
+public class AddCustomerController {
 
     @FXML
     private ResourceBundle resources;
@@ -16,25 +16,25 @@ public class PridanieZakaznikaController {
     private URL location;
 
     @FXML
-    private TextField menoTextField;
+    private TextField nameTextField;
 
     @FXML
-    private TextField PriezviskoTextField;
+    private TextField surnameTextField;
 
     @FXML
-    private TextField EmailTextField;
+    private TextField emailTextField;
 
     @FXML
-    private TextField TelCisloTextField;
+    private TextField numberTextField;
 
     @FXML
-    private TextField DoplUdajeTextField;
+    private TextField moreDetailsTextField;
 
     @FXML
-    private Button ulozButton;
+    private Button saveButton;
 
     @FXML
-    void ulozZakaznikaButton(ActionEvent event) {
+    void saveButtonClicked(ActionEvent event) {
     	
     }
 

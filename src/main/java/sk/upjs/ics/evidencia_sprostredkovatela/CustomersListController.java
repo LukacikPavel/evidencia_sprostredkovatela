@@ -21,65 +21,70 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sk.upjs.ics.evidencia_sprostredkovatela.entity.Zakaznik;
+import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
-import sk.upjs.ics.evidencia_sprostredkovatela.persistent.ZakaznikDao;
+import sk.upjs.ics.evidencia_sprostredkovatela.persistent.CustomerDao;
 
-public class EvidenciaZakaznikaController {
+public class CustomersListController {
 
-	private ZakaznikDao zakaznikDao = DaoFactory.INSTANCE.getZakaznikDao();
-	private ObservableList<Zakaznik> zakazniciModel;
+	private CustomerDao customerDao = DaoFactory.INSTANCE.getCustomerDao();
+	private ObservableList<Customer> customersModel;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
-	private ObjectProperty<Zakaznik> zvolenyZakaznik = new SimpleObjectProperty<>();
+	private ObjectProperty<Customer> selectedCustomer = new SimpleObjectProperty<>();
 
 	@FXML
-	private TextField menoTextField;
+	private TextField nammeTextField;
 
 	@FXML
-	private TextField priezviskoTextField;
+	private TextField surnameTextField;
 
 	@FXML
-	private TextField blizsieUrcenieTextField;
+	private TextField moreDetailsTextField;
 
 	@FXML
-	private Button upravButton;
+	private Button editCustomerButton;
 
 	@FXML
-	private Button pridajButton;
+	private Button addCustomerButton;
 
 	@FXML
-	private Button vyberButton;
+	private Button chooseСustomerButton;
 
 	@FXML
-	private TableView<Zakaznik> zakazniciTableView;
+	private TableView<Customer> customersTableView;
 
 	@FXML
 	void initialize() {
-		zakazniciModel = FXCollections.observableArrayList(zakaznikDao.getAll());
+		customersModel = FXCollections.observableArrayList(customerDao.getAll());
 		
-		TableColumn<Zakaznik, Long> idCol = new TableColumn<>("ID");
+		TableColumn<Customer, Long> idCol = new TableColumn<>("ID");
 		idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-		zakazniciTableView.getColumns().add(idCol);
+		customersTableView.getColumns().add(idCol);
 		//columnsVisibility.put("id", idCol.visibleProperty());
 		
-		TableColumn<Zakaznik, String> menoCol = new TableColumn<>("Meno");
-		menoCol.setCellValueFactory(new PropertyValueFactory<>("meno"));
-		zakazniciTableView.getColumns().add(menoCol);
+		TableColumn<Customer, String> menoCol = new TableColumn<>("Meno");
+		menoCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+		customersTableView.getColumns().add(menoCol);
 		//columnsVisibility.put("Meno", menoCol.visibleProperty());
 		
-		TableColumn<Zakaznik, String> priezviskoCol = new TableColumn<>("Priezvisko");
-		priezviskoCol.setCellValueFactory(new PropertyValueFactory<>("priezvisko"));
-		zakazniciTableView.getColumns().add(priezviskoCol);
+		TableColumn<Customer, String> priezviskoCol = new TableColumn<>("Priezvisko");
+		priezviskoCol.setCellValueFactory(new PropertyValueFactory<>("surname"));
+		customersTableView.getColumns().add(priezviskoCol);
 		//columnsVisibility.put("Priezvisko", priezviskoCol.visibleProperty());
 		
-		zakazniciTableView.setItems(zakazniciModel);
-    	zakazniciTableView.setEditable(true);
+		customersTableView.setItems(customersModel);
+    	customersTableView.setEditable(true);
 	}
 	
 	@FXML
-    void pridajZakaznikaButton(ActionEvent event) {
-		PridanieZakaznikaController pridanieZakaznikaController = new PridanieZakaznikaController();
-		showModalWindow(pridanieZakaznikaController, "PridanieZakaznika.fxml", "Pridanie Zákazníka");
+    void addCustomerButtonClicked(ActionEvent event) {
+		AddCustomerController controller = new AddCustomerController();
+		showModalWindow(controller, "AddCustomer.fxml", "Pridanie Zákazníka");
+    }
+	
+	@FXML
+    void editCustomerButtonClicked(ActionEvent event) {
+
     }
 
 	private void showModalWindow(Object controller, String fxml, String title) {
