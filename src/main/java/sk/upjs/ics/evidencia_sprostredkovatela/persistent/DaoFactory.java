@@ -21,7 +21,7 @@ public enum DaoFactory {
 		if (jdbcTemplate == null) {
 			MysqlDataSource dataSource = new MysqlDataSource();
 			dataSource.setUser("sprostredkovatel");
-			dataSource.setPassword("paz1cProjekt");
+			dataSource.setPassword("paz1c");
 			dataSource.setUrl("jdbc:mysql://localhost/evidencia_tovarov_sprostredkovatela?serverTimezone=Europe/Bratislava");
 			jdbcTemplate = new JdbcTemplate(dataSource);
 		}

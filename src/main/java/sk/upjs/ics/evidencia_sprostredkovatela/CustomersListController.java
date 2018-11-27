@@ -3,6 +3,7 @@ package sk.upjs.ics.evidencia_sprostredkovatela;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -15,6 +16,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -60,20 +63,43 @@ public class CustomersListController {
 		TableColumn<Customer, Long> idCol = new TableColumn<>("ID");
 		idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 		customersTableView.getColumns().add(idCol);
-		//columnsVisibility.put("id", idCol.visibleProperty());
+		columnsVisibility.put("ID", idCol.visibleProperty());
 		
 		TableColumn<Customer, String> menoCol = new TableColumn<>("Meno");
 		menoCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 		customersTableView.getColumns().add(menoCol);
-		//columnsVisibility.put("Meno", menoCol.visibleProperty());
+		columnsVisibility.put("Meno", menoCol.visibleProperty());
 		
 		TableColumn<Customer, String> priezviskoCol = new TableColumn<>("Priezvisko");
 		priezviskoCol.setCellValueFactory(new PropertyValueFactory<>("surname"));
 		customersTableView.getColumns().add(priezviskoCol);
-		//columnsVisibility.put("Priezvisko", priezviskoCol.visibleProperty());
+		columnsVisibility.put("Priezvisko", priezviskoCol.visibleProperty());
+		
+		TableColumn<Customer, String> emailCol = new TableColumn<>("E-mail");
+		emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+		customersTableView.getColumns().add(emailCol);
+		columnsVisibility.put("E-mail", emailCol.visibleProperty());
+		
+		TableColumn<Customer, String> numberCol = new TableColumn<>("Tel. číslo");
+		numberCol.setCellValueFactory(new PropertyValueFactory<>("number"));
+		customersTableView.getColumns().add(numberCol);
+		columnsVisibility.put("Tel. číslo", numberCol.visibleProperty());
+		
+		TableColumn<Customer, String> moreDetailsCol = new TableColumn<>("Dopl. údaje");
+		moreDetailsCol.setCellValueFactory(new PropertyValueFactory<>("moreDetails"));
+		customersTableView.getColumns().add(moreDetailsCol);
+		columnsVisibility.put("Dopl. údaje", moreDetailsCol.visibleProperty());
 		
 		customersTableView.setItems(customersModel);
     	customersTableView.setEditable(true);
+    	
+    	ContextMenu contextMenu = new ContextMenu();
+    	for (Entry<String, BooleanProperty> entry: columnsVisibility.entrySet()) {
+	    	CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
+	    	menuItem.selectedProperty().bindBidirectional(entry.getValue());
+	    	contextMenu.getItems().add(menuItem);
+    	}
+    	customersTableView.setContextMenu(contextMenu);
 	}
 	
 	@FXML

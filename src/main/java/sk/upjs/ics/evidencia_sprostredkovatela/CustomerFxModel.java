@@ -12,7 +12,7 @@ public class CustomerFxModel {
 	private StringProperty number = new SimpleStringProperty();
 	private StringProperty moreDetails = new SimpleStringProperty();
 
-	public void setZakaznik(Customer customer) {
+	public void setCustomer(Customer customer) {
 		id = customer.getId();
 		setName(customer.getName());
 		setSurname(customer.getSurname());
@@ -21,14 +21,14 @@ public class CustomerFxModel {
 		setMoreDetails(customer.getMoreDetails());
 	}
 
-	public Customer getZakaznik() {
-		Customer zakaznik = new Customer();
-		zakaznik.setName(getName());
-		zakaznik.setSurname(getName());
-		zakaznik.setEmail(getEmail());
-		zakaznik.setNumber(getNumber());
-		zakaznik.setMoreDetails(getMoreDetails());
-		return zakaznik;
+	public Customer getCustomer() {
+		Customer customer = new Customer();
+		customer.setName(getName());
+		customer.setSurname(getSurname());
+		customer.setEmail(getEmail());
+		customer.setNumber(getNumber());
+		customer.setMoreDetails(getMoreDetails());
+		return customer;
 	}
 
 	public Long getId() {
