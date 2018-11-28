@@ -6,11 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * Hello world!
- *
- */
 public class App extends Application {
+	
+	private static Stage mainStage;
 	
 	public void start(Stage stage) throws Exception {
 		MainWindowController controller = new MainWindowController();
@@ -22,6 +20,8 @@ public class App extends Application {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	
 
 	public static void main( String[] args ){
     	launch(args);

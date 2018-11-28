@@ -42,8 +42,7 @@ public class AddCustomerController {
 	void saveButtonClicked(ActionEvent event) {
 		Customer customer = customerModel.getCustomer();
 		customerDao.add(customer);
-		Stage stage = (Stage)(saveButton.getScene().getWindow());
-		stage.close();
+		saveButton.getScene().getWindow().hide();
 	}
 
 	@FXML
