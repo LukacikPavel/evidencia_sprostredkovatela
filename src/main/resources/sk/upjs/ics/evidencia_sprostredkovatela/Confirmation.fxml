@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="139.0" prefWidth="289.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="yesButton" layoutX="80.0" layoutY="95.0" mnemonicParsing="false" onAction="#yesButtonClicked" text="Áno" />
+      <Button fx:id="noButton" layoutX="175.0" layoutY="95.0" mnemonicParsing="false" onAction="#noButtonClicked" text="Nie" />
+      <Label layoutX="117.0" layoutY="33.0" text="Ste si istí?" />
+   </children>
+</AnchorPane>
