@@ -8,12 +8,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="nameTextField" layoutX="51.0" layoutY="73.0" prefHeight="26.0" prefWidth="111.0" />
-      <TextField fx:id="surnameTextField" layoutX="192.0" layoutY="73.0" prefHeight="26.0" prefWidth="149.0" />
+      <TextField fx:id="nameTextField" layoutX="51.0" layoutY="73.0" onInputMethodTextChanged="#nameTextBoxChange" prefHeight="26.0" prefWidth="111.0" />
+      <TextField fx:id="surnameTextField" layoutX="192.0" layoutY="73.0" onInputMethodTextChanged="#surnameTextBoxChange" prefHeight="26.0" prefWidth="149.0" />
       <Label layoutX="91.0" layoutY="36.0" text="Meno" />
       <Label layoutX="240.0" layoutY="36.0" text="Priezvisko" />
       <Label layoutX="436.0" layoutY="36.0" text="Blizsie urcenie" />
-      <TextField fx:id="moreDetailsTextField" layoutX="400.0" layoutY="73.0" prefHeight="26.0" prefWidth="149.0" />
+      <TextField fx:id="moreDetailsTextField" layoutX="400.0" layoutY="73.0" onInputMethodTextChanged="#moreDetailsTextBoxChange" prefHeight="26.0" prefWidth="149.0" />
       <Button fx:id="editCustomerButton" disable="true" layoutX="665.0" layoutY="233.0" mnemonicParsing="false" onAction="#editCustomerButtonClicked" text="Uprav" />
       <Button fx:id="addCustomerButton" layoutX="665.0" layoutY="155.0" mnemonicParsing="false" onAction="#addCustomerButtonClicked" text="Pridaj" />
       <Button fx:id="chooseCustomerButton" layoutX="665.0" layoutY="73.0" mnemonicParsing="false" text="Vyber " />
