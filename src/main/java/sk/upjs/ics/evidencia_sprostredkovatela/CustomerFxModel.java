@@ -12,8 +12,16 @@ public class CustomerFxModel {
 	private StringProperty number = new SimpleStringProperty();
 	private StringProperty moreDetails = new SimpleStringProperty();
 
+	public CustomerFxModel() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public CustomerFxModel(Customer customer) {
+		setCustomer(customer);
+	}
+	
 	public void setCustomer(Customer customer) {
-		id = customer.getId();
+		setId(customer.getId());
 		setName(customer.getName());
 		setSurname(customer.getSurname());
 		setEmail(customer.getEmail());
@@ -23,6 +31,7 @@ public class CustomerFxModel {
 
 	public Customer getCustomer() {
 		Customer customer = new Customer();
+		customer.setId(getId());
 		customer.setName(getName());
 		customer.setSurname(getSurname());
 		customer.setEmail(getEmail());

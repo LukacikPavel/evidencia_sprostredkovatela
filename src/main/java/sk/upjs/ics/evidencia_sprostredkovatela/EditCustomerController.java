@@ -8,7 +8,7 @@ import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.CustomerDao;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
 
-public class AddCustomerController {
+public class EditCustomerController {
 
 	@FXML
 	private TextField nameTextField;
@@ -30,33 +30,37 @@ public class AddCustomerController {
 
 	@FXML
 	private Button cancelButton;
-	
+
 	@FXML
 	private Button disableButton;
-	
+
 	private CustomerDao customerDao;
 	private CustomerFxModel customerModel;
 
-	public AddCustomerController() {
+	public EditCustomerController(Customer customer) {
 		customerDao = DaoFactory.INSTANCE.getCustomerDao();
-		customerModel = new CustomerFxModel();
+		this.customerModel = new CustomerFxModel(customer);
 	}
 
 	@FXML
 	void cancelButtonClicked(ActionEvent event) {
 		cancelButton.getScene().getWindow().hide();
 	}
-	
+
 	@FXML
 	void saveButtonClicked(ActionEvent event) {
 		Customer customer = customerModel.getCustomer();
-		customerDao.add(customer);
+		customerDao.save(customer);
 		saveButton.getScene().getWindow().hide();
 	}
 	
 	@FXML
     void disableButtonClicked(ActionEvent event) {
-		
+		DisableConfirmationController controller = new DisableConfirmationController(customerModel.getId());
+		App.showModalWindow(controller, "Confirmation.fxml", "Určite?");
+		if (controller.wasDisabled()) {
+			disableButton.getScene().getWindow().hide();
+		}
     }
 
 	@FXML
@@ -66,5 +70,7 @@ public class AddCustomerController {
 		emailTextField.textProperty().bindBidirectional(customerModel.emailProperty());
 		numberTextField.textProperty().bindBidirectional(customerModel.numberProperty());
 		moreDetailsTextField.textProperty().bindBidirectional(customerModel.moreDetailsProperty());
+		
+		disableButton.setVisible(true);
 	}
 }

@@ -29,6 +29,7 @@ CREATE TABLE `customer` (
   `email` varchar(60) DEFAULT NULL,
   `number` varchar(45) DEFAULT NULL,
   `more_details` varchar(45) DEFAULT NULL,
+  `enable` varchar(45) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -39,7 +40,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'Maroš','Čekan','maros.cekan@gmail.com',NULL,NULL),(2,'Ladislav','Pčola','ladislav.pcola@gmail.com',NULL,NULL),(3,'Anna','Kmecová',NULL,NULL,NULL);
+INSERT INTO `customer` VALUES (1,'Maroš','Čekan','maros.cekan@gmail.com',NULL,NULL,1),(2,'Ladislav','Pčola','ladislav.pcola@gmail.com',NULL,NULL,1),(3,'Anna','Kmecová',NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 

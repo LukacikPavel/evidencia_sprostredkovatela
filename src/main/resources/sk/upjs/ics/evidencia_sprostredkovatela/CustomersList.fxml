@@ -14,7 +14,7 @@
       <Label layoutX="240.0" layoutY="36.0" text="Priezvisko" />
       <Label layoutX="436.0" layoutY="36.0" text="Blizsie urcenie" />
       <TextField fx:id="moreDetailsTextField" layoutX="400.0" layoutY="73.0" prefHeight="26.0" prefWidth="149.0" />
-      <Button fx:id="editCustomerButton" layoutX="665.0" layoutY="233.0" mnemonicParsing="false" onAction="#editCustomerButtonClicked" text="Uprav" />
+      <Button fx:id="editCustomerButton" disable="true" layoutX="665.0" layoutY="233.0" mnemonicParsing="false" onAction="#editCustomerButtonClicked" text="Uprav" />
       <Button fx:id="addCustomerButton" layoutX="665.0" layoutY="155.0" mnemonicParsing="false" onAction="#addCustomerButtonClicked" text="Pridaj" />
       <Button fx:id="chooseCustomerButton" layoutX="665.0" layoutY="73.0" mnemonicParsing="false" text="Vyber " />
       <TableView fx:id="customersTableView" layoutX="30.0" layoutY="121.0" prefHeight="200.0" prefWidth="551.0" />

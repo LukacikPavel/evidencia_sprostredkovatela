@@ -17,6 +17,8 @@
       <Label layoutX="70.0" layoutY="191.0" text="E-mail" />
       <Label layoutX="70.0" layoutY="241.0" text="Tel. číslo" />
       <Label layoutX="69.0" layoutY="290.0" text="Doplňujúce údaje" />
-      <Button fx:id="saveButton" layoutX="474.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Ulož" />
+      <Button fx:id="saveButton" layoutX="524.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Uložiť" />
+      <Button fx:id="cancelButton" layoutX="457.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Zrušiť" />
+      <Button fx:id="disableButton" layoutX="375.0" layoutY="340.0" mnemonicParsing="false" onAction="#disableButtonClicked" text="Odobrať" visible="false" />
    </children>
 </AnchorPane>
