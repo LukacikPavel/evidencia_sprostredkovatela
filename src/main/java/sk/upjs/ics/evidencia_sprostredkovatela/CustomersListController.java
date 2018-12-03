@@ -1,9 +1,11 @@
 package sk.upjs.ics.evidencia_sprostredkovatela;
 
 import java.io.IOException;
+import java.nio.file.attribute.FileTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Predicate;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -12,6 +14,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
@@ -38,7 +42,7 @@ public class CustomersListController {
 	private ObjectProperty<Customer> selectedCustomer = new SimpleObjectProperty<>();
 
 	@FXML
-	private TextField nammeTextField;
+	private TextField nameTextField;
 
 	@FXML
 	private TextField surnameTextField;
@@ -91,10 +95,7 @@ public class CustomersListController {
 		moreDetailsCol.setCellValueFactory(new PropertyValueFactory<>("moreDetails"));
 		customersTableView.getColumns().add(moreDetailsCol);
 		columnsVisibility.put("Dopl. údaje", moreDetailsCol.visibleProperty());
-
-		customersTableView.setItems(customersModel);
-		customersTableView.setEditable(true);
-
+		
 		ContextMenu contextMenu = new ContextMenu();
 		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
 			CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
@@ -116,6 +117,19 @@ public class CustomersListController {
 			}
 
 		});
+		
+		FilteredList<Customer> filteredCustomers = new FilteredList<>(customersModel);
+		filteredCustomers.predicateProperty().bind(javafx.beans.binding.Bindings.createObjectBinding(() -> 
+		customer -> customer.getName().toLowerCase().contains(nameTextField.getText().toLowerCase()) 
+				&& customer.getSurname().toLowerCase().contains(surnameTextField.getText().toLowerCase()) 
+				&& customer.getMoreDetails().toLowerCase().contains(moreDetailsTextField.getText().toLowerCase()),
+				
+		nameTextField.textProperty(),
+		surnameTextField.textProperty(),
+		moreDetailsTextField.textProperty()
+		));
+		
+		customersTableView.setItems(filteredCustomers);
 	}
 
 	@FXML
@@ -131,4 +145,19 @@ public class CustomersListController {
 		App.showModalWindow(editController, "AddCustomer.fxml", "Úprava Zákazníka");
 		customersModel.setAll(customerDao.getAllEnabled());
 	}
+	
+    @FXML
+    void nameTextBoxChange(InputMethodEvent event) {
+    	
+    }
+
+    @FXML
+    void surnameTextBoxChange(InputMethodEvent event) {
+
+    }
+    
+    @FXML
+    void moreDetailsTextBoxChange(InputMethodEvent event) {
+    	
+    }
 }
