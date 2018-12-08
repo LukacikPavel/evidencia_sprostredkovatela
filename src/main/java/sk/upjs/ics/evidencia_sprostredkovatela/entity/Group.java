@@ -25,6 +25,10 @@ public class Group {
 		return validity;
 	}
 
+	public boolean getValidity() {
+		return validity;
+	}
+
 	public void setValidity(boolean validity) {
 		this.validity = validity;
 	}

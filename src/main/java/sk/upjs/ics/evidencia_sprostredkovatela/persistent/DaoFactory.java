@@ -7,6 +7,7 @@ public enum DaoFactory {
 	INSTANCE;
 
 	private CustomerDao customerDao;
+	private GroupDao groupDao;
 	private JdbcTemplate jdbcTemplate;
 
 	public CustomerDao getCustomerDao() {
@@ -15,6 +16,13 @@ public enum DaoFactory {
 		}
 		return customerDao;
 
+	}
+
+	public GroupDao getGroupDao() {
+		if (groupDao == null) {
+			groupDao = new MysqlGroupDao(getJdbcTemplate());
+		}
+		return groupDao;
 	}
 
 	private JdbcTemplate getJdbcTemplate() {
