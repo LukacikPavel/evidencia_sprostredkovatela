@@ -10,27 +10,27 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class App extends Application {
-	
+
 	private static Stage mainStage;
-	
+
 	public void start(Stage stage) throws Exception {
 		MainWindowController controller = new MainWindowController();
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
 		fxmlLoader.setController(controller);
 		Parent rootPane = fxmlLoader.load();
 		Scene scene = new Scene(rootPane);
-		stage.setTitle("Úvodne okno");
-		stage.setScene(scene);
-		stage.show();
+		mainStage = stage;
+		mainStage.setTitle("Úvodne okno");
+		mainStage.setScene(scene);
+		mainStage.show();
 	}
-	
-	public static void main( String[] args ){
-    	launch(args);
-    }
-	
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+
 	public static void showModalWindow(Object controller, String fxml, String title) {
 		try {
-
 			FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
 			fxmlLoader.setController(controller);
 			Parent rootPane = fxmlLoader.load();
@@ -42,10 +42,24 @@ public class App extends Application {
 			dialog.initModality(Modality.APPLICATION_MODAL);
 			dialog.showAndWait();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	
+
+	public static void changeScene(Object controller, String fxml, String title) {
+
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
+			fxmlLoader.setController(controller);
+			Parent parentPane = fxmlLoader.load();
+			mainStage.getScene().setRoot(parentPane);
+			mainStage.setTitle(title);
+		} catch (IOException e) {
+			System.err.print("Failed changing to scene: " + fxml + "\n" + e.getMessage());
+			e.printStackTrace();
+		}
+
+	}
+
 }

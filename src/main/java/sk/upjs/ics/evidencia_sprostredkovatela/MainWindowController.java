@@ -31,23 +31,6 @@ public class MainWindowController {
 	@FXML
 	void openCustomersListButtonClicked(ActionEvent event) {
 		CustomersListController controller = new CustomersListController();
-		changeScene(controller, "CustomersList.fxml", "Zákazníci");
-	}
-	
-	private void changeScene(Object controller, String fxml, String title) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
-			fxmlLoader.setController(controller);
-			Parent rootPane;
-			rootPane = fxmlLoader.load();
-			Scene scene = new Scene(rootPane);
-
-			Stage stage = (Stage) customersListButton.getScene().getWindow();
-			stage.setScene(scene);
-			stage.setTitle(title);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		App.changeScene(controller, "CustomersList.fxml", "Zákazníci");
 	}
 }
