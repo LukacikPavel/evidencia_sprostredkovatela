@@ -46,12 +46,12 @@ public class Sale {
 		this.customerSurname = customerSurname;
 	}
 
-	public LocalDateTime getDateOfSale() {
+	public LocalDateTime getSaleDate() {
 		return saleDate;
 	}
 
-	public void setDateOfSale(LocalDateTime dateOfSale) {
-		this.saleDate = dateOfSale;
+	public void setSaleDate(LocalDateTime SaleDate) {
+		this.saleDate = SaleDate;
 	}
 
 	public double getTotalPrice() {

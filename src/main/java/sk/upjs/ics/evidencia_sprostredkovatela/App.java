@@ -56,7 +56,6 @@ public class App extends Application {
 			mainStage.getScene().setRoot(parentPane);
 			mainStage.setTitle(title);
 		} catch (IOException e) {
-			System.err.print("Failed changing to scene: " + fxml + "\n" + e.getMessage());
 			e.printStackTrace();
 		}
 

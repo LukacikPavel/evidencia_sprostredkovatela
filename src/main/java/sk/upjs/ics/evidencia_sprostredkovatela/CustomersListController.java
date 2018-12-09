@@ -1,12 +1,8 @@
 package sk.upjs.ics.evidencia_sprostredkovatela;
 
-import java.io.IOException;
-import java.nio.file.attribute.FileTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Predicate;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,9 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
@@ -27,9 +20,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.CustomerDao;
@@ -37,7 +27,7 @@ import sk.upjs.ics.evidencia_sprostredkovatela.persistent.CustomerDao;
 public class CustomersListController {
 
 	private CustomerDao customerDao = DaoFactory.INSTANCE.getCustomerDao();
-	private ObservableList<Customer> customersModel;
+	private ObservableList<Customer> customersList;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<Customer> selectedCustomer = new SimpleObjectProperty<>();
 
@@ -57,14 +47,14 @@ public class CustomersListController {
 	private Button addCustomerButton;
 
 	@FXML
-	private Button chooseСustomerButton;
+	private Button selectCustomerButton;
 
 	@FXML
 	private TableView<Customer> customersTableView;
 
 	@FXML
 	void initialize() {
-		customersModel = FXCollections.observableArrayList(customerDao.getAllEnabled());
+		customersList = FXCollections.observableArrayList(customerDao.getAllEnabled());
 
 		TableColumn<Customer, Long> idCol = new TableColumn<>("ID");
 		idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -118,7 +108,7 @@ public class CustomersListController {
 
 		});
 		
-		FilteredList<Customer> filteredCustomers = new FilteredList<>(customersModel);
+		FilteredList<Customer> filteredCustomers = new FilteredList<>(customersList);
 		filteredCustomers.predicateProperty().bind(javafx.beans.binding.Bindings.createObjectBinding(() -> 
 		customer -> customer.getName().toLowerCase().contains(nameTextField.getText().toLowerCase()) 
 				&& customer.getSurname().toLowerCase().contains(surnameTextField.getText().toLowerCase()) 
@@ -136,28 +126,19 @@ public class CustomersListController {
 	void addCustomerButtonClicked(ActionEvent event) {
 		AddCustomerController controller = new AddCustomerController();
 		App.showModalWindow(controller, "AddCustomer.fxml", "Pridanie Zákazníka");
-		customersModel.setAll(customerDao.getAllEnabled());
+		customersList.setAll(customerDao.getAllEnabled());
 	}
 
 	@FXML
 	void editCustomerButtonClicked(ActionEvent event) {
-		EditCustomerController editController = new EditCustomerController(selectedCustomer.get());
-		App.showModalWindow(editController, "AddCustomer.fxml", "Úprava Zákazníka");
-		customersModel.setAll(customerDao.getAllEnabled());
+		EditCustomerController controller = new EditCustomerController(selectedCustomer.get());
+		App.showModalWindow(controller, "AddCustomer.fxml", "Úprava Zákazníka");
+		customersList.setAll(customerDao.getAllEnabled());
 	}
 	
-    @FXML
-    void nameTextBoxChange(InputMethodEvent event) {
-    	
-    }
-
-    @FXML
-    void surnameTextBoxChange(InputMethodEvent event) {
-
-    }
-    
-    @FXML
-    void moreDetailsTextBoxChange(InputMethodEvent event) {
-    	
+	@FXML
+    void selectCustomerButton(ActionEvent event) {
+		HistoryOfSalesController controller = new HistoryOfSalesController();
+		App.changeScene(controller, "HistoryOfSales.fxml", "Históri predajov");
     }
 }

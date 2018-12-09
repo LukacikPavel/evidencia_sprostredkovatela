@@ -47,7 +47,7 @@ public class MysqlCustomerDao implements CustomerDao {
 	@Override
 	public void save(Customer customer) {
 		if (customer == null) {
-			throw new NullPointerException("Customer can not be null");
+			throw new NullPointerException("Customer cannot be null");
 		}
 		String sql = "UPDATE customer SET name = ?, surname = ?, email = ?, number = ?, "
 				+ "more_details = ? WHERE id = ?";

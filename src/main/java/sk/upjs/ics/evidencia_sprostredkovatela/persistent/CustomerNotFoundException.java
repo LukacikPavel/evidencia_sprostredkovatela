@@ -12,5 +12,4 @@ public class CustomerNotFoundException extends RuntimeException {
 	public long getCustomerId() {
 		return customerId;
 	}
-	
 }
