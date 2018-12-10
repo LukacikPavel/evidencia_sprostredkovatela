@@ -3,6 +3,8 @@ package sk.upjs.ics.evidencia_sprostredkovatela;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -109,7 +111,7 @@ public class CustomersListController {
 		});
 		
 		FilteredList<Customer> filteredCustomers = new FilteredList<>(customersList);
-		filteredCustomers.predicateProperty().bind(javafx.beans.binding.Bindings.createObjectBinding(() -> 
+		filteredCustomers.predicateProperty().bind(Bindings.createObjectBinding(() -> 
 		customer -> customer.getName().toLowerCase().contains(nameTextField.getText().toLowerCase()) 
 				&& customer.getSurname().toLowerCase().contains(surnameTextField.getText().toLowerCase()) 
 				&& customer.getMoreDetails().toLowerCase().contains(moreDetailsTextField.getText().toLowerCase()),
@@ -138,7 +140,7 @@ public class CustomersListController {
 	
 	@FXML
     void selectCustomerButton(ActionEvent event) {
-		HistoryOfSalesController controller = new HistoryOfSalesController();
-		App.changeScene(controller, "HistoryOfSales.fxml", "Históri predajov");
+		HistoryOfSalesController controller = new HistoryOfSalesController(selectedCustomer.get());
+		App.changeScene(controller, "HistoryOfSales.fxml", "História predajov");
     }
 }

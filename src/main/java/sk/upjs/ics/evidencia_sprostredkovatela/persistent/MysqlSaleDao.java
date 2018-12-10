@@ -44,7 +44,7 @@ public class MysqlSaleDao implements SaleDao {
 		if (sale == null) {
 			throw new NullPointerException("Sale cannot be null");
 		}
-		String sql = "UPDATe sale SET customer_id = ?, sale_date = ?, total_price = ?, "
+		String sql = "UPDATE sale SET customer_id = ?, sale_date = ?, total_price = ?, "
 				+ "discount = ?, final_price = ? WHERE id = ?";
 		jdbcTemplate.update(sql, sale.getCustomerId(), sale.getSaleDate(), sale.getTotalPrice(), 
 				sale.getDiscount(), sale.getFinalPrice(), sale.getId());

@@ -12,18 +12,14 @@
       <TextField layoutX="165.0" layoutY="42.0" />
       <Label layoutX="55.0" layoutY="47.0" text="Label" />
       <TableView layoutX="31.0" layoutY="100.0" prefHeight="200.0" prefWidth="367.0" />
-      <Button layoutX="477.0" layoutY="108.0" mnemonicParsing="false" text="PridajTovar" />
-      <Button layoutX="477.0" layoutY="169.0" mnemonicParsing="false" text="OdoberTovar" />
+      <Button layoutX="473.0" layoutY="114.0" mnemonicParsing="false" text="PridajTovar" />
+      <Button layoutX="468.0" layoutY="174.0" mnemonicParsing="false" text="OdoberTovar" />
       <ButtonBar layoutX="398.0" layoutY="251.0" prefHeight="40.0" prefWidth="200.0" />
     <Button layoutX="460.0" layoutY="236.0" mnemonicParsing="false" text="Uprav Mnozstvo" />
-      <Label layoutX="219.0" layoutY="377.0" text="Zlava" />
-      <Label layoutX="219.0" layoutY="335.0" text="Suma Spolu" />
-      <Label layoutX="219.0" layoutY="424.0" text="Vysledna Suma" />
+      <Label layoutX="51.0" layoutY="335.0" text="Suma Spolu" />
       <Button layoutX="358.0" layoutY="42.0" mnemonicParsing="false" text="Vyber zákazníka" />
-      <Button layoutX="460.0" layoutY="291.0" mnemonicParsing="false" text="Zapíš predaj" />
-      <Button layoutX="475.0" layoutY="353.0" mnemonicParsing="false" text="Zruš predaj" />
-      <TextField disable="true" layoutX="300.0" layoutY="331.0" />
-      <TextField layoutX="294.0" layoutY="373.0" />
-      <TextField layoutX="314.0" layoutY="420.0" />
+      <Button layoutX="460.0" layoutY="291.0" mnemonicParsing="false" text="Zapíš objednávku" />
+      <Button layoutX="460.0" layoutY="353.0" mnemonicParsing="false" text="Zruš objednávku" />
+      <TextField disable="true" layoutX="140.0" layoutY="331.0" />
    </children>
 </AnchorPane>
