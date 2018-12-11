@@ -41,6 +41,17 @@ public class ProductListController {
     @FXML
     private Button ulozButton;
 
+    
+    @FXML
+    private Button addProductButton;
+
+    @FXML
+    private Button editProductButton;
+
+    @FXML
+    private TextField nameTextField;
+
+    
     @FXML
     private ChoiceBox<Group> skupinaChoiceBox;
 
@@ -51,6 +62,29 @@ public class ProductListController {
     void vyber(MouseDragEvent event) {
 
     }
+    
+
+    @FXML
+    void addProductClicked(ActionEvent event) {
+			AddProductController controller = new AddProductController();
+			//    	AppEmptyController controller = new AppEmptyController();
+			App.showModalWindow(controller, "AddProduct.fxml", "Pridanie Tovaru");
+				productsList.setAll(productDao.getAll());
+
+
+    }
+
+    @FXML
+    void editProductClicked(ActionEvent event) {
+		AddProductController controller = new AddProductController(selectedProduct.get());
+		//    	AppEmptyController controller = new AppEmptyController();
+		App.showModalWindow(controller, "AddProduct.fxml", "Pridanie Tovaru");
+			productsList.setAll(productDao.getAll());
+
+    }
+
+   
+    
 
 	@FXML
 	void initialize() {
