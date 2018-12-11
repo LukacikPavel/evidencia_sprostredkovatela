@@ -8,6 +8,7 @@ public enum DaoFactory {
 
 	private CustomerDao customerDao;
 	private GroupDao groupDao;
+	private ProductDao productDao;
 	private SaleDao saleDao;
 	private SaleItemDao saleItemDao;
 	private JdbcTemplate jdbcTemplate;
@@ -25,7 +26,15 @@ public enum DaoFactory {
 		}
 		return groupDao;
 	}
+
+	public ProductDao getProductDao() {
+		if (productDao == null) {
+			productDao = new MysqlProductDao(getJdbcTemplate());
+		}
+		return productDao;
+	}
 	
+
 	public SaleDao getSaleDao() {
 		if (saleDao == null) {
 			saleDao = new MysqlSaleDao(getJdbcTemplate());

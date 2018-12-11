@@ -1,4 +1,6 @@
 package sk.upjs.ics.evidencia_sprostredkovatela;
+import com.google.protobuf.GeneratedMessageV3;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Group;
@@ -31,6 +33,14 @@ public class GroupOfGoodsFxModel {
 		group.setName(getName());
 		group.setValidity(getValidity());
 		return group;
+	}
+
+	public boolean isValidity() {
+		return validity;
+	}
+
+	public void setValidity(boolean validity) {
+		this.validity = validity;
 	}
 
 	public Long getId() {

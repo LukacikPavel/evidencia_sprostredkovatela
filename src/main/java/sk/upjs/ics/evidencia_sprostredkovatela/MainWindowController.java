@@ -32,5 +32,15 @@ public class MainWindowController {
 	void openCustomersListButtonClicked(ActionEvent event) {
 		CustomersListController controller = new CustomersListController();
 		App.changeScene(controller, "CustomersList.fxml", "Zákazníci");
+		
 	}
+
+    @FXML
+    void openProductsListButtonClicked(ActionEvent event) {
+    	ProductListController controller = new ProductListController();
+    	App.changeScene(controller, "ProductsList.fxml", "Tovary");
+
+    }
+
+
 }

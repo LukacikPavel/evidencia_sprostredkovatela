@@ -6,7 +6,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="customersListButton" layoutX="219.0" layoutY="142.0" mnemonicParsing="false" onAction="#openCustomersListButtonClicked" text="Zákazníci" AnchorPane.leftAnchor="219.0" AnchorPane.topAnchor="142.0" />
-      <Button layoutX="478.0" layoutY="142.0" mnemonicParsing="false" text="Tovar" AnchorPane.rightAnchor="218.0" AnchorPane.topAnchor="142.0" />
+      <Button layoutX="478.0" layoutY="142.0" mnemonicParsing="false" onAction="#openProductsListButtonClicked" text="Tovar" AnchorPane.rightAnchor="218.0" AnchorPane.topAnchor="142.0" />
       <Button layoutX="225.0" layoutY="310.0" mnemonicParsing="false" text="Predaje" AnchorPane.bottomAnchor="155.4" AnchorPane.leftAnchor="225.0" />
       <Button layoutX="419.0" layoutY="269.0" mnemonicParsing="false" text="Objednávky" AnchorPane.bottomAnchor="155.39999999999998" AnchorPane.rightAnchor="201.8" />
    </children>
