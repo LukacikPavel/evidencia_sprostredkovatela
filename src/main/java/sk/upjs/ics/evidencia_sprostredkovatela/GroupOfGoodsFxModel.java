@@ -35,6 +35,7 @@ public class GroupOfGoodsFxModel {
 		return group;
 	}
 
+	
 	public boolean isValidity() {
 		return validity;
 	}

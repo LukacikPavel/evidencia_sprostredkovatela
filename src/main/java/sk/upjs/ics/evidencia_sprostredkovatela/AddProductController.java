@@ -51,6 +51,7 @@ public class AddProductController {
 		cancelButton.getScene().getWindow().hide();
 	}
 
+	
 	@FXML
 	void saveButtonClicked(ActionEvent event) {
 		Product product = productModel.getProduct();
