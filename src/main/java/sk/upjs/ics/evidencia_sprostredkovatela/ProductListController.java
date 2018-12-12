@@ -1,4 +1,5 @@
 package sk.upjs.ics.evidencia_sprostredkovatela;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,62 +35,55 @@ public class ProductListController {
 	private ObservableList<Product> productsList;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<Product> selectedProduct = new SimpleObjectProperty<>();
-	
-    @FXML
-    private TableView<Product> productTableView;
 
-    @FXML
-    private Button ulozButton;
+	@FXML
+	private TableView<Product> productTableView;
 
-    
-    @FXML
-    private Button addProductButton;
+	@FXML
+	private Button ulozButton;
 
-    @FXML
-    private Button editProductButton;
+	@FXML
+	private Button addProductButton;
 
-    @FXML
-    private TextField nameTextField;
+	@FXML
+	private Button editProductButton;
 
-    
-    @FXML
-    private ChoiceBox<Group> skupinaChoiceBox;
+	@FXML
+	private TextField nameTextField;
 
-    @FXML
-    private TextField tovarTextField;
+	@FXML
+	private ChoiceBox<Group> skupinaChoiceBox;
 
-    @FXML
-    void vyber(MouseDragEvent event) {
+	@FXML
+	private TextField tovarTextField;
 
-    }
-    
+	@FXML
+	void vyber(MouseDragEvent event) {
 
-    @FXML
-    void addProductClicked(ActionEvent event) {
-			AddProductController controller = new AddProductController();
-			//    	AppEmptyController controller = new AppEmptyController();
-			App.showModalWindow(controller, "AddProduct.fxml", "Pridanie Tovaru");
-				productsList.setAll(productDao.getAll());
+	}
 
 
-    }
+	@FXML
+	void addProductClicked(ActionEvent event) {
+		AddProductController controller = new AddProductController();
+		App.showModalWindow(controller, "AddProduct.fxml", "Pridanie Tovaru");
+		productsList.setAll(productDao.getAll());
 
-    @FXML
-    void editProductClicked(ActionEvent event) {
-//		AddProductController controller = new AddProductController(selectedProduct.get());
-		//    	AppEmptyController controller = new AppEmptyController();
-//		App.showModalWindow(controller, "AddProduct.fxml", "Pridanie Tovaru");
-//			productsList.setAll(productDao.getAll());
+	}
 
-    }
+	@FXML
+	void editProductClicked(ActionEvent event) {
+		EditProductController controller = new EditProductController(selectedProduct.get());
+//		AppEmptyController controller = new AppEmptyController();
+		App.showModalWindow(controller, "AddProduct.fxml", "Pridanie Tovaru");
+		productsList.setAll(productDao.getAll());
 
-   
-    
+	}
 
 	@FXML
 	void initialize() {
 		productsList = FXCollections.observableArrayList(productDao.getAll());
-				
+
 		TableColumn<Product, Long> idCol = new TableColumn<>("ID");
 		idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 		productTableView.getColumns().add(idCol);
@@ -99,32 +93,35 @@ public class ProductListController {
 		menoCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 		productTableView.getColumns().add(menoCol);
 		columnsVisibility.put("name", menoCol.visibleProperty());
-		
+
 		ContextMenu contextMenu = new ContextMenu();
 		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
 			CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
 			menuItem.selectedProperty().bindBidirectional(entry.getValue());
 			contextMenu.getItems().add(menuItem);
 
-}
-		
+		}
+
 		productTableView.setContextMenu(contextMenu);
 		productTableView.setItems(productsList);
 
+		 productTableView.getSelectionModel().selectedItemProperty().addListener(new
+		 ChangeListener<Product>() {
 
-		//		productTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
+			@Override
+			public void changed(ObservableValue<? extends Product> observable, Product oldValue, Product newValue) {
+				if (newValue == null) {
+					editProductButton.setDisable(true);
+				} else {
+					editProductButton.setDisable(false);
+				}
+				selectedProduct.set(newValue);
+			}
+			
+			
+			
 
-//			@Override
-//			public void changed(ObservableValue<? extends Product> observable, Product oldValue, Product newValue) {
-//				if (newValue == null) {
-//					editCustomerButton.setDisable(true);
-//				} else {
-//					editCustomerButton.setDisable(false);
-//				}
-//				selectedCustomer.set(newValue);
-//			}
-
-		}
-}
-	
+		 });
+		 }
+	}	 
 

@@ -31,7 +31,7 @@ public class GroupOfGoodsFxModel {
 		Group group = new Group();
 		group.setId(getId());
 		group.setName(getName());
-		group.setValidity(getValidity());
+		group.setValidity(isValidity());
 		return group;
 	}
 

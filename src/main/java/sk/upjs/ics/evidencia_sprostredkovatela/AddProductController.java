@@ -34,22 +34,7 @@ public class AddProductController {
 
 	@FXML
 	private Button disableButton;
-
-	@FXML
-	void cancelButtonClicked(ActionEvent event) {
-
-	}
-
-	@FXML
-	void disableButtonClicked(ActionEvent event) {
-
-	}
-
-	@FXML
-	void saveButtonClicked(ActionEvent event) {
-
-	}
-
+	
 	private ProductDao productDao;
 	private ProductFxModel productModel;
 
@@ -61,22 +46,22 @@ public class AddProductController {
 	
 	
 
-//	@FXML
-//	void cancelButtonClicked(ActionEvent event) {
-//		cancelButton.getScene().getWindow().hide();
-//	}
-//
-//	@FXML
-//	void saveButtonClicked(ActionEvent event) {
-//		Product product = productModel.getProduct();
-//		ProductDao.add(product);
-//		saveButton.getScene().getWindow().hide();
-//	}
-//
-//	@FXML
-//	void disableButtonClicked(ActionEvent event) {
-//
-//	}
+	@FXML
+	void cancelButtonClicked(ActionEvent event) {
+		cancelButton.getScene().getWindow().hide();
+	}
+
+	@FXML
+	void saveButtonClicked(ActionEvent event) {
+		Product product = productModel.getProduct();
+		productDao.add(product);
+		saveButton.getScene().getWindow().hide();
+	}
+
+	@FXML
+	void disableButtonClicked(ActionEvent event) {
+
+	}
 
 	@FXML
 	void initialize() {

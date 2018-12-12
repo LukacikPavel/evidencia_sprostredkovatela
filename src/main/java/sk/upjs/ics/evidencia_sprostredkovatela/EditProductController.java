@@ -45,6 +45,7 @@ public class EditProductController {
 		this.productModel = new ProductFxModel(product);
 
 	}
+	
 
 	@FXML
 	void cancelButtonClicked(ActionEvent event) {
@@ -54,7 +55,7 @@ public class EditProductController {
 	@FXML
 	void saveButtonClicked(ActionEvent event) {
 		Product product = productModel.getProduct();
-		ProductDao.save(product);
+		productDao.save(product);
 		saveButton.getScene().getWindow().hide();
 	}
 
