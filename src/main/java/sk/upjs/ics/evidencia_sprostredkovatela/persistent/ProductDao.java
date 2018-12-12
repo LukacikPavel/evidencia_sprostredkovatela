@@ -17,4 +17,5 @@ public interface ProductDao {
 
 	 void disable(long id);
 
+	 
 }

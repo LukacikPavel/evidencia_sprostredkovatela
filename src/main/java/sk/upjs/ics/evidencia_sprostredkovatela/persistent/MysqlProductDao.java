@@ -46,6 +46,7 @@ public class MysqlProductDao implements ProductDao {
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class));
 	}
 
+	
 	@Override
 	public void save(Product product) {
 		if (product == null) {

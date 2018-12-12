@@ -105,6 +105,8 @@ public class ProductListController {
 		productTableView.setContextMenu(contextMenu);
 		productTableView.setItems(productsList);
 
+		
+		
 		 productTableView.getSelectionModel().selectedItemProperty().addListener(new
 		 ChangeListener<Product>() {
 

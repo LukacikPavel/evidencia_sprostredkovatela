@@ -40,11 +40,12 @@ public class EditProductController {
 	private ProductDao productDao;
 	private ProductFxModel productModel;
 
-	public EditProductController(Product product) {
+	public EditProductController(Product  product) {
 		productDao = DaoFactory.INSTANCE.getProductDao();
 		this.productModel = new ProductFxModel(product);
 
 	}
+
 	
 
 	@FXML
