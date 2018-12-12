@@ -20,5 +20,8 @@
       <Button fx:id="saveButton" layoutX="524.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Uložiť" />
       <Button fx:id="cancelButton" layoutX="457.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Zrušiť" />
       <Button fx:id="disableButton" layoutX="375.0" layoutY="340.0" mnemonicParsing="false" onAction="#disableButtonClicked" text="Odobrať" visible="false" />
+      <Label fx:id="nameLabel" layoutX="423.0" layoutY="91.0" textFill="RED" />
+      <Label fx:id="surnameLabel" layoutX="423.0" layoutY="140.0" textFill="RED" />
+      <Label fx:id="moreDetailsLabel" layoutX="423.0" layoutY="290.0" textFill="RED" />
    </children>
 </AnchorPane>

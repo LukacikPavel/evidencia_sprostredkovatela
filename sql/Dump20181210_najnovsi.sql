@@ -30,8 +30,8 @@ CREATE TABLE `customer` (
   `surname` varchar(45) NOT NULL,
   `email` varchar(60) DEFAULT NULL,
   `number` varchar(45) DEFAULT NULL,
-  `more_details` varchar(45) DEFAULT NULL,
-  `enable` tinyint(4) NOT NULL,
+  `more_details` varchar(45) DEFAULT 'zakaznik',
+  `enable` tinyint(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
