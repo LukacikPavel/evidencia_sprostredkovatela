@@ -36,8 +36,11 @@ public class SalesHistoryController {
 
 	private SaleItemDao saleItemDao = DaoFactory.INSTANCE.getSaleItemDao();
 	private ObservableList<SaleItem> saleItemsList;
+	private ObservableList<SaleItem> lentak2;
+	private ObservableList<SaleItem> lentak1;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private Customer customer;
+	private String previousScene;
 
 	@FXML
 	private TableView<SaleItem> saleItemsTableView;
@@ -60,26 +63,43 @@ public class SalesHistoryController {
 	@FXML
 	private Button selectProductButton;
 
+	@FXML
+	private Button selectCustomerButton;
+
+	public SalesHistoryController() {
+		previousScene = "MainWindow";
+	}
+
 	public SalesHistoryController(Customer customer) {
+		previousScene = "CustomersList";
 		this.customer = customer;
 	}
 
 	@FXML
 	void backButtonClicked(ActionEvent event) {
-		App.changeScene(new CustomersListController(), "CustomersList.fxml", "Zákazníci");
+		if (previousScene.equals("CustomersList")) {
+			App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
+		}
+		if (previousScene.equals("MainWindow")) {
+			App.changeScene(new MainWindowController(), "MainWindow.fxml", "Hlavné okno");
+		}
 	}
 
 	@FXML
-	void selectButtonClicked(ActionEvent event) {
-		System.out.println(startDatePicker.getValue() + " " + endDatePicker.getValue() + " "
-				+ saleItemsList.get(0).getSaleDate().toLocalDate());
+	void selectProductButtonClicked(ActionEvent event) {
+		
 	}
+	
+	@FXML
+    void selectCustomerButtonClicked(ActionEvent event) {
+		CustomersListController controller = new CustomersListController(true);
+		App.showModalWindow(controller, "CustomersList.fxml", "Zákazníci");
+		customer = controller.getSelectedCustomer();
+		fillTableView();
+    }
 
 	@FXML
 	void initialize() {
-		nameTextField.setText(customer.getName() + " " + customer.getSurname());
-
-		saleItemsList = FXCollections.observableArrayList(saleItemDao.getByCustomer(customer.getId()));
 
 		TableColumn<SaleItem, Long> idCol = new TableColumn<>("ID");
 		idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -127,14 +147,41 @@ public class SalesHistoryController {
 		saleItemsTableView.getColumns().add(saleDateCol);
 		columnsVisibility.put("Dátum predaja", saleDateCol.visibleProperty());
 
+		fillTableView();
+
+		ContextMenu contextMenu = new ContextMenu();
+		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
+			CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
+			menuItem.selectedProperty().bindBidirectional(entry.getValue());
+			contextMenu.getItems().add(menuItem);
+		}
+		saleItemsTableView.setContextMenu(contextMenu);
+	}
+	
+	private void fillTableView() {
+		if (customer != null) {
+			nameTextField.setText(customer.getName() + " " + customer.getSurname());
+			saleItemsList = FXCollections.observableArrayList(saleItemDao.getByCustomer(customer.getId()));
+		} else {
+			saleItemsList = FXCollections.observableArrayList(saleItemDao.getAll());
+			selectCustomerButton.setVisible(true);
+		}
+
+		saleItemsTableView.setItems(filterSaleItems());
+	}
+
+	private FilteredList<SaleItem> filterSaleItems() {
 		FilteredList<SaleItem> filteredSaleItems = new FilteredList<>(saleItemsList);
-		
+
 		ObjectProperty<Predicate<SaleItem>> productFilter = new SimpleObjectProperty<>();
-        ObjectProperty<Predicate<SaleItem>> dateFilter = new SimpleObjectProperty<>();
-        
-        productFilter.bind(Bindings.createObjectBinding(() -> 
-        saleItem -> saleItem.getProductName().toLowerCase().contains(productTextField.getText().toLowerCase()), 
-        productTextField.textProperty()));
+		ObjectProperty<Predicate<SaleItem>> dateFilter = new SimpleObjectProperty<>();
+
+		productFilter
+				.bind(Bindings
+						.createObjectBinding(
+								() -> saleItem -> saleItem.getProductName().toLowerCase()
+										.contains(productTextField.getText().toLowerCase()),
+								productTextField.textProperty()));
 
 		dateFilter.bind(Bindings.createObjectBinding(() -> {
 			LocalDate minDate = startDatePicker.getValue();
@@ -146,19 +193,10 @@ public class SalesHistoryController {
 			return ti -> !finalMin.isAfter(ti.getSaleDate().toLocalDate())
 					&& !finalMax.isBefore(ti.getSaleDate().toLocalDate());
 		}, startDatePicker.valueProperty(), endDatePicker.valueProperty()));
-		
-		filteredSaleItems.predicateProperty().bind(Bindings.createObjectBinding(
-                () -> productFilter.get().and(dateFilter.get()), 
-                productFilter, dateFilter));
 
-		saleItemsTableView.setItems(filteredSaleItems);
+		filteredSaleItems.predicateProperty().bind(Bindings
+				.createObjectBinding(() -> productFilter.get().and(dateFilter.get()), productFilter, dateFilter));
 
-		ContextMenu contextMenu = new ContextMenu();
-		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
-			CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
-			menuItem.selectedProperty().bindBidirectional(entry.getValue());
-			contextMenu.getItems().add(menuItem);
-		}
-		saleItemsTableView.setContextMenu(contextMenu);
+		return filteredSaleItems;
 	}
 }

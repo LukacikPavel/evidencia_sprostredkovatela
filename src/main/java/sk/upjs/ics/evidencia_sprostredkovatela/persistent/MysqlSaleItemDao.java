@@ -36,7 +36,8 @@ public class MysqlSaleItemDao implements SaleItemDao{
 
 	@Override
 	public List<SaleItem> getAll() {
-		String sql = "SELECT id, sale_id, product_id, quantity, price_piece, price_total FROM sale_item";
+		String sql = "SELECT si.id, p.name productName, si.quantity, si.price_piece, si.price_total, s.sale_date "
+				+ "FROM sale_item si JOIN product p ON (p.id = si.product_id) JOIN sale s ON (si.sale_id = s.id)";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SaleItem.class));
 	}
 
@@ -61,7 +62,9 @@ public class MysqlSaleItemDao implements SaleItemDao{
 
 	@Override
 	public List<SaleItem> getByCustomer(Long id) {
-		String sql = "SELECT si.id, p.name productName, si.quantity, si.price_piece, si.price_total, s.sale_date FROM sale_item si JOIN product p ON (p.id = si.product_id) JOIN sale s ON (si.sale_id = s.id) WHERE s.customer_id = " + id;
+		String sql = "SELECT si.id, p.name productName, si.quantity, si.price_piece, si.price_total, s.sale_date "
+				+ "FROM sale_item si JOIN product p ON (p.id = si.product_id) JOIN sale s ON (si.sale_id = s.id) "
+				+ "WHERE s.customer_id = " + id;
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SaleItem.class));
 	}
 

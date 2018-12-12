@@ -3,6 +3,7 @@ package sk.upjs.ics.evidencia_sprostredkovatela;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.CustomerDao;
@@ -30,10 +31,19 @@ public class AddCustomerController {
 
 	@FXML
 	private Button cancelButton;
-	
+
 	@FXML
 	private Button disableButton;
-	
+
+	@FXML
+	private Label nameLabel;
+
+	@FXML
+	private Label surnameLabel;
+
+	@FXML
+	private Label moreDetailsLabel;
+
 	private CustomerDao customerDao;
 	private CustomerFxModel customerModel;
 
@@ -46,18 +56,21 @@ public class AddCustomerController {
 	void cancelButtonClicked(ActionEvent event) {
 		cancelButton.getScene().getWindow().hide();
 	}
-	
+
 	@FXML
 	void saveButtonClicked(ActionEvent event) {
-		Customer customer = customerModel.getCustomer();
-		customerDao.add(customer);
-		saveButton.getScene().getWindow().hide();
+		if (nameTextField.getText() != null && surnameTextField.getText() != null
+				&& moreDetailsTextField.getText() != null && !nameTextField.getText().isEmpty()
+				&& !surnameTextField.getText().isEmpty() && !moreDetailsTextField.getText().isEmpty()) {
+			Customer customer = customerModel.getCustomer();
+			customerDao.add(customer);
+			saveButton.getScene().getWindow().hide();
+		}
 	}
-	
+
 	@FXML
-    void disableButtonClicked(ActionEvent event) {
-		
-    }
+	void disableButtonClicked(ActionEvent event) {
+	}
 
 	@FXML
 	void initialize() {
@@ -66,5 +79,33 @@ public class AddCustomerController {
 		emailTextField.textProperty().bindBidirectional(customerModel.emailProperty());
 		numberTextField.textProperty().bindBidirectional(customerModel.numberProperty());
 		moreDetailsTextField.textProperty().bindBidirectional(customerModel.moreDetailsProperty());
+
+		nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue == null || newValue.isEmpty()) {
+				//saveButton.setDisable(true);
+				nameLabel.setText("Nesmie zostať nezadané");
+			} else {
+				nameLabel.setText("");
+				//saveButton.setDisable(false);
+			}
+		});
+		surnameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue == null || newValue.isEmpty()) {
+				//saveButton.setDisable(true);
+				surnameLabel.setText("Nesmie zostať nezadané");
+			} else {
+				surnameLabel.setText("");
+				//saveButton.setDisable(false);
+			}
+		});
+		moreDetailsTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue == null || newValue.isEmpty()) {
+				//saveButton.setDisable(true);
+				moreDetailsLabel.setText("Nesmie zostať nezadané");
+			} else {
+				moreDetailsLabel.setText("");
+				//saveButton.setDisable(false);
+			}
+		});
 	}
 }

@@ -114,7 +114,7 @@ public class AddSaleController {
 
 	@FXML
 	void closeSaleButtonClicked(ActionEvent event) {
-		App.changeScene(new CustomersListController(), "CustomersList.fxml", "Zákazníci");
+		App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
 	}
 
 	@FXML
@@ -131,7 +131,7 @@ public class AddSaleController {
 			si.setSaleId(sale.getId());
 			saleItemDao.add(si);
 		}
-		App.changeScene(new CustomersListController(), "CustomersList.fxml", "Zákazníci");
+		App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
 	}
 
 	@FXML

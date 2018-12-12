@@ -44,7 +44,7 @@ public enum DaoFactory {
 	
 	public SaleItemDao getSaleItemDao() {
 		if (saleItemDao == null) {
-			saleItemDao = new MysqlSaleItemDao(jdbcTemplate);
+			saleItemDao = new MysqlSaleItemDao(getJdbcTemplate());
 		}
 		return saleItemDao;
 	}

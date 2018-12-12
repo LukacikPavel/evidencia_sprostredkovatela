@@ -1,46 +1,40 @@
 package sk.upjs.ics.evidencia_sprostredkovatela;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class MainWindowController {
-
-	@FXML
-	private ResourceBundle resources;
-
-	@FXML
-	private URL location;
 
 	@FXML
 	private Button customersListButton;
 
 	@FXML
-	void initialize() {
-		
-	}
-	
+	private Button productsListButton;
+
 	@FXML
-	void openCustomersListButtonClicked(ActionEvent event) {
-		CustomersListController controller = new CustomersListController();
-		App.changeScene(controller, "CustomersList.fxml", "Zákazníci");
-		
+	private Button salesListButton;
+
+	@FXML
+	void initialize() {
+
 	}
 
-    @FXML
-    void openProductsListButtonClicked(ActionEvent event) {
-    	ProductListController controller = new ProductListController();
-    	App.changeScene(controller, "ProductsList.fxml", "Tovary");
+	@FXML
+	void customersListButtonClicked(ActionEvent event) {
+		App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
 
-    }
+	}
 
+	@FXML
+	void productsListButtonClicked(ActionEvent event) {
+		App.changeScene(new ProductListController(), "ProductsList.fxml", "Tovary");
+
+	}
+
+	@FXML
+	void salesListButtonClicked(ActionEvent event) {
+		App.changeScene(new SalesHistoryController(), "SalesHistory.fxml", "Predaje");
+	}
 
 }

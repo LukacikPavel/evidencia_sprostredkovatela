@@ -32,6 +32,7 @@ public class CustomersListController {
 	private ObservableList<Customer> customersList;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<Customer> selectedCustomer = new SimpleObjectProperty<>();
+	private boolean selecting = false;
 
 	@FXML
 	private TextField nameTextField;
@@ -56,15 +57,30 @@ public class CustomersListController {
 
 	@FXML
 	private Button ordersHistoryButton;
-	
+
 	@FXML
-    private Button addSaleButton;
+	private Button addSaleButton;
+
+	@FXML
+	private Button selectCustomerButton;
 
 	@FXML
 	private TableView<Customer> customersTableView;
 
+	public CustomersListController(boolean selecting) {
+		this.selecting = selecting;
+	}
+
+	Customer getSelectedCustomer() {
+		return selectedCustomer.get();
+	}
+
 	@FXML
 	void initialize() {
+		if (selecting) {
+			selectCustomerButton.setVisible(true);
+		}
+
 		customersList = FXCollections.observableArrayList(customerDao.getAllEnabled());
 
 		TableColumn<Customer, Long> idCol = new TableColumn<>("ID");
@@ -136,10 +152,19 @@ public class CustomersListController {
 
 		customersTableView.setItems(filteredCustomers);
 	}
-	
+
+	@FXML
+	void selectCustomerButtonClicked(ActionEvent event) {
+		selectCustomerButton.getScene().getWindow().hide();
+	}
+
 	@FXML
 	void backButtonClicked(ActionEvent event) {
-		App.changeScene(new MainWindowController(), "MainWindow.fxml", "Hlavné okno");
+		if (selecting) {
+			backButton.getScene().getWindow().hide();
+		} else {
+			App.changeScene(new MainWindowController(), "MainWindow.fxml", "Hlavné okno");			
+		}
 	}
 
 	@FXML
@@ -166,10 +191,10 @@ public class CustomersListController {
 	void ordersHistoryButtonClicked(ActionEvent event) {
 
 	}
-	
+
 	@FXML
-    void addSaleButtonClicked(ActionEvent event) {
+	void addSaleButtonClicked(ActionEvent event) {
 		AddSaleController controller = new AddSaleController(selectedCustomer.get());
 		App.changeScene(controller, "AddSale.fxml", "Nový predaj");
-    }
+	}
 }
