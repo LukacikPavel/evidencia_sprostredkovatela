@@ -76,10 +76,10 @@ public class ProductListController {
 
     @FXML
     void editProductClicked(ActionEvent event) {
-		AddProductController controller = new AddProductController(selectedProduct.get());
+//		AddProductController controller = new AddProductController(selectedProduct.get());
 		//    	AppEmptyController controller = new AppEmptyController();
-		App.showModalWindow(controller, "AddProduct.fxml", "Pridanie Tovaru");
-			productsList.setAll(productDao.getAll());
+//		App.showModalWindow(controller, "AddProduct.fxml", "Pridanie Tovaru");
+//			productsList.setAll(productDao.getAll());
 
     }
 

@@ -61,8 +61,8 @@ public class ProductFxModel {
 		this.id = id;
 	}
 
-	public StringProperty getCode() {
-		return code;
+	public String getCode() {
+		return code.get();
 	}
 
 	public void setCode(String code) {

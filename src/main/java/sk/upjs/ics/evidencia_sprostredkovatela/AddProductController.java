@@ -53,7 +53,7 @@ public class AddProductController {
 	private ProductDao productDao;
 	private ProductFxModel productModel;
 
-	public AddProductController(ActionEvent event) {
+	public AddProductController() {
 		productDao = DaoFactory.INSTANCE.getProductDao();
 		productModel = new ProductFxModel();
 
