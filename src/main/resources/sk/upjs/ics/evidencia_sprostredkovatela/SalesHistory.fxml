@@ -6,15 +6,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="saleItemsTableView" layoutX="34.0" layoutY="147.0" prefHeight="200.0" prefWidth="526.0" />
+      <TableView fx:id="saleItemsTableView" layoutX="34.0" layoutY="147.0" prefHeight="278.0" prefWidth="614.0" />
       <TextField fx:id="nameTextField" disable="true" layoutX="34.0" layoutY="77.0" />
       <TextField fx:id="productTextField" layoutX="226.0" layoutY="77.0" />
       <Button layoutX="57.0" layoutY="29.0" mnemonicParsing="false" text="Vyber zákazníka" />
       <Button fx:id="selectProductButton" layoutX="258.0" layoutY="29.0" mnemonicParsing="false" onAction="#selectButtonClicked" text="Výber tovaru" />
-      <DatePicker fx:id="startDatePicker" layoutX="413.0" layoutY="64.0" />
-      <DatePicker fx:id="endDatePicker" layoutX="413.0" layoutY="103.0" />
-      <Button fx:id="closeButton" layoutX="575.0" layoutY="16.0" mnemonicParsing="false" onAction="#closeButtonClicked" text="Zatvor" />
+      <DatePicker fx:id="startDatePicker" layoutX="441.0" layoutY="64.0" />
+      <DatePicker fx:id="endDatePicker" layoutX="441.0" layoutY="103.0" />
+      <Button fx:id="backButton" layoutX="630.0" layoutY="15.0" mnemonicParsing="false" onAction="#backButtonClicked" text="Späť" />
    </children>
 </AnchorPane>

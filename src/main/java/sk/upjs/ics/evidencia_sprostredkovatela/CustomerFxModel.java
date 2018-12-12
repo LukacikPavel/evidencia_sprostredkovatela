@@ -12,9 +12,7 @@ public class CustomerFxModel {
 	private StringProperty number = new SimpleStringProperty();
 	private StringProperty moreDetails = new SimpleStringProperty();
 
-	public CustomerFxModel() {
-		// TODO Auto-generated constructor stub
-	}
+	public CustomerFxModel() {}
 	
 	public CustomerFxModel(Customer customer) {
 		setCustomer(customer);

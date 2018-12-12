@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="nameTextField" disable="true" layoutX="165.0" layoutY="42.0" />
+      <Label layoutX="55.0" layoutY="47.0" text="Meno a priezvisko" />
+      <TableView fx:id="saleItemsTableView" layoutX="31.0" layoutY="100.0" prefHeight="200.0" prefWidth="518.0" />
+      <Button fx:id="addProductButton" layoutX="583.0" layoutY="138.0" mnemonicParsing="false" onAction="#addProductButtonClicked" text="PridajTovar" />
+      <Button fx:id="deleteProductButton" disable="true" layoutX="578.0" layoutY="187.0" mnemonicParsing="false" onAction="#deleteProductButtonClicked" text="OdoberTovar" />
+      <ButtonBar layoutX="398.0" layoutY="251.0" prefHeight="40.0" prefWidth="200.0" />
+    <Button fx:id="changeQuantityButton" disable="true" layoutX="570.0" layoutY="238.0" mnemonicParsing="false" onAction="#changeQuantityButtonClicked" text="Uprav Mnozstvo" />
+      <Label layoutX="74.0" layoutY="357.0" text="Zľava (v %)" />
+      <Label layoutX="71.0" layoutY="321.0" text="Suma Spolu" />
+      <Label layoutX="63.0" layoutY="389.0" text="Vysledna Suma" />
+      <Button layoutX="358.0" layoutY="42.0" mnemonicParsing="false" text="Vyber zákazníka" />
+      <Button fx:id="createSaleButton" layoutX="581.0" layoutY="398.0" mnemonicParsing="false" onAction="#createSaleButtonClicked" text="Zapíš predaj" />
+      <Button fx:id="closeSaleButton" layoutX="486.0" layoutY="398.0" mnemonicParsing="false" onAction="#closeSaleButtonClicked" text="Zruš predaj" />
+      <TextField fx:id="totalPriceTextField" disable="true" layoutX="165.0" layoutY="317.0" />
+      <TextField fx:id="discountTextField" layoutX="165.0" layoutY="353.0" />
+      <TextField fx:id="finalPriceTextField" disable="true" layoutX="165.0" layoutY="385.0" />
+   </children>
+</AnchorPane>

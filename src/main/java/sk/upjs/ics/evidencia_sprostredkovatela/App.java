@@ -20,7 +20,7 @@ public class App extends Application {
 		Parent rootPane = fxmlLoader.load();
 		Scene scene = new Scene(rootPane);
 		mainStage = stage;
-		mainStage.setTitle("Úvodne okno");
+		mainStage.setTitle("Hlavné okno");
 		mainStage.setScene(scene);
 		mainStage.show();
 	}

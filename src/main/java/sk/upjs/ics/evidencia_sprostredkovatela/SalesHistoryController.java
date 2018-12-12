@@ -6,9 +6,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Predicate;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,12 +26,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.converter.LocalDateStringConverter;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.SaleItem;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.SaleItemDao;
 
-public class HistoryOfSalesController {
+public class SalesHistoryController {
 
 	private SaleItemDao saleItemDao = DaoFactory.INSTANCE.getSaleItemDao();
 	private ObservableList<SaleItem> saleItemsList;
@@ -46,7 +49,7 @@ public class HistoryOfSalesController {
 	private TextField productTextField;
 
 	@FXML
-	private Button closeButton;
+	private Button backButton;
 
 	@FXML
 	private DatePicker startDatePicker;
@@ -57,12 +60,12 @@ public class HistoryOfSalesController {
 	@FXML
 	private Button selectProductButton;
 
-	public HistoryOfSalesController(Customer customer) {
+	public SalesHistoryController(Customer customer) {
 		this.customer = customer;
 	}
 
 	@FXML
-	void closeButtonClicked(ActionEvent event) {
+	void backButtonClicked(ActionEvent event) {
 		App.changeScene(new CustomersListController(), "CustomersList.fxml", "Zákazníci");
 	}
 
@@ -83,30 +86,30 @@ public class HistoryOfSalesController {
 		saleItemsTableView.getColumns().add(idCol);
 		columnsVisibility.put("ID", idCol.visibleProperty());
 
-		TableColumn<SaleItem, String> productNameCol = new TableColumn<>("Názov produktu");
+		TableColumn<SaleItem, String> productNameCol = new TableColumn<>("Produkt");
 		productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
 		saleItemsTableView.getColumns().add(productNameCol);
-		columnsVisibility.put("Názov produktu", productNameCol.visibleProperty());
+		columnsVisibility.put("Produkt", productNameCol.visibleProperty());
 
-		TableColumn<SaleItem, Integer> quantityCol = new TableColumn<>("quantity");
+		TableColumn<SaleItem, Integer> quantityCol = new TableColumn<>("Počet");
 		quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 		saleItemsTableView.getColumns().add(quantityCol);
-		columnsVisibility.put("quantity", quantityCol.visibleProperty());
+		columnsVisibility.put("Počet", quantityCol.visibleProperty());
 
-		TableColumn<SaleItem, Double> pricePieceCol = new TableColumn<>("price_piece");
+		TableColumn<SaleItem, Double> pricePieceCol = new TableColumn<>("Cena za kus");
 		pricePieceCol.setCellValueFactory(new PropertyValueFactory<>("pricePiece"));
 		saleItemsTableView.getColumns().add(pricePieceCol);
-		columnsVisibility.put("price_piece", pricePieceCol.visibleProperty());
+		columnsVisibility.put("Cena za kus", pricePieceCol.visibleProperty());
 
-		TableColumn<SaleItem, Double> priceTotalCol = new TableColumn<>("price_total");
+		TableColumn<SaleItem, Double> priceTotalCol = new TableColumn<>("Cena celkom");
 		priceTotalCol.setCellValueFactory(new PropertyValueFactory<>("priceTotal"));
 		saleItemsTableView.getColumns().add(priceTotalCol);
-		columnsVisibility.put("price_total", priceTotalCol.visibleProperty());
+		columnsVisibility.put("Cena celkom", priceTotalCol.visibleProperty());
 
 		TableColumn<SaleItem, LocalDateTime> saleDateCol = new TableColumn<>("Dátum predaja");
 		saleDateCol.setCellFactory((TableColumn<SaleItem, LocalDateTime> param) -> {
 			return new TableCell<SaleItem, LocalDateTime>() {
-				private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy H:m");
+				private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy HH:mm");
 
 				@Override
 				protected void updateItem(LocalDateTime item, boolean empty) {
@@ -124,21 +127,16 @@ public class HistoryOfSalesController {
 		saleItemsTableView.getColumns().add(saleDateCol);
 		columnsVisibility.put("Dátum predaja", saleDateCol.visibleProperty());
 
-		FilteredList<SaleItem> filteredSaleItems = new FilteredList<>(saleItemsList, p -> true);
+		FilteredList<SaleItem> filteredSaleItems = new FilteredList<>(saleItemsList);
 		
-		productTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			filteredSaleItems.setPredicate(saleItem -> {
-				if (newValue == null || newValue.isEmpty()) {
-					return true;
-				}
-				if (saleItem.getProductName().toLowerCase().contains(newValue.toLowerCase())) {
-					return true;
-				}
-				return false;
-			});
-		});
-		
-		filteredSaleItems.predicateProperty().bind(Bindings.createObjectBinding(() -> {
+		ObjectProperty<Predicate<SaleItem>> productFilter = new SimpleObjectProperty<>();
+        ObjectProperty<Predicate<SaleItem>> dateFilter = new SimpleObjectProperty<>();
+        
+        productFilter.bind(Bindings.createObjectBinding(() -> 
+        saleItem -> saleItem.getProductName().toLowerCase().contains(productTextField.getText().toLowerCase()), 
+        productTextField.textProperty()));
+
+		dateFilter.bind(Bindings.createObjectBinding(() -> {
 			LocalDate minDate = startDatePicker.getValue();
 			LocalDate maxDate = endDatePicker.getValue();
 
@@ -148,6 +146,10 @@ public class HistoryOfSalesController {
 			return ti -> !finalMin.isAfter(ti.getSaleDate().toLocalDate())
 					&& !finalMax.isBefore(ti.getSaleDate().toLocalDate());
 		}, startDatePicker.valueProperty(), endDatePicker.valueProperty()));
+		
+		filteredSaleItems.predicateProperty().bind(Bindings.createObjectBinding(
+                () -> productFilter.get().and(dateFilter.get()), 
+                productFilter, dateFilter));
 
 		saleItemsTableView.setItems(filteredSaleItems);
 

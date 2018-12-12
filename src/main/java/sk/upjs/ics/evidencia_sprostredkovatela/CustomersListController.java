@@ -43,13 +43,22 @@ public class CustomersListController {
 	private TextField moreDetailsTextField;
 
 	@FXML
+	private Button backButton;
+
+	@FXML
 	private Button editCustomerButton;
 
 	@FXML
 	private Button addCustomerButton;
 
 	@FXML
-	private Button selectCustomerButton;
+	private Button salesHistoryButton;
+
+	@FXML
+	private Button ordersHistoryButton;
+	
+	@FXML
+    private Button addSaleButton;
 
 	@FXML
 	private TableView<Customer> customersTableView;
@@ -87,7 +96,7 @@ public class CustomersListController {
 		moreDetailsCol.setCellValueFactory(new PropertyValueFactory<>("moreDetails"));
 		customersTableView.getColumns().add(moreDetailsCol);
 		columnsVisibility.put("Dopl. údaje", moreDetailsCol.visibleProperty());
-		
+
 		ContextMenu contextMenu = new ContextMenu();
 		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
 			CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
@@ -102,26 +111,35 @@ public class CustomersListController {
 			public void changed(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue) {
 				if (newValue == null) {
 					editCustomerButton.setDisable(true);
+					salesHistoryButton.setDisable(true);
+					ordersHistoryButton.setDisable(true);
+					addSaleButton.setDisable(true);
 				} else {
 					editCustomerButton.setDisable(false);
+					salesHistoryButton.setDisable(false);
+					ordersHistoryButton.setDisable(false);
+					addSaleButton.setDisable(false);
 				}
 				selectedCustomer.set(newValue);
 			}
 
 		});
-		
+
 		FilteredList<Customer> filteredCustomers = new FilteredList<>(customersList);
-		filteredCustomers.predicateProperty().bind(Bindings.createObjectBinding(() -> 
-		customer -> customer.getName().toLowerCase().contains(nameTextField.getText().toLowerCase()) 
-				&& customer.getSurname().toLowerCase().contains(surnameTextField.getText().toLowerCase()) 
-				&& customer.getMoreDetails().toLowerCase().contains(moreDetailsTextField.getText().toLowerCase()),
-				
-		nameTextField.textProperty(),
-		surnameTextField.textProperty(),
-		moreDetailsTextField.textProperty()
-		));
-		
+		filteredCustomers.predicateProperty().bind(Bindings.createObjectBinding(
+				() -> customer -> customer.getName().toLowerCase().contains(nameTextField.getText().toLowerCase())
+						&& customer.getSurname().toLowerCase().contains(surnameTextField.getText().toLowerCase())
+						&& customer.getMoreDetails().toLowerCase()
+								.contains(moreDetailsTextField.getText().toLowerCase()),
+
+				nameTextField.textProperty(), surnameTextField.textProperty(), moreDetailsTextField.textProperty()));
+
 		customersTableView.setItems(filteredCustomers);
+	}
+	
+	@FXML
+	void backButtonClicked(ActionEvent event) {
+		App.changeScene(new MainWindowController(), "MainWindow.fxml", "Hlavné okno");
 	}
 
 	@FXML
@@ -137,10 +155,21 @@ public class CustomersListController {
 		App.showModalWindow(controller, "AddCustomer.fxml", "Úprava Zákazníka");
 		customersList.setAll(customerDao.getAllEnabled());
 	}
+
+	@FXML
+	void salesHistoryButtonClicked(ActionEvent event) {
+		SalesHistoryController controller = new SalesHistoryController(selectedCustomer.get());
+		App.changeScene(controller, "SalesHistory.fxml", "História predajov");
+	}
+
+	@FXML
+	void ordersHistoryButtonClicked(ActionEvent event) {
+
+	}
 	
 	@FXML
-    void selectCustomerButton(ActionEvent event) {
-		HistoryOfSalesController controller = new HistoryOfSalesController(selectedCustomer.get());
-		App.changeScene(controller, "HistoryOfSales.fxml", "História predajov");
+    void addSaleButtonClicked(ActionEvent event) {
+		AddSaleController controller = new AddSaleController(selectedCustomer.get());
+		App.changeScene(controller, "AddSale.fxml", "Nový predaj");
     }
 }

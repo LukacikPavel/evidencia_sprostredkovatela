@@ -56,11 +56,18 @@ public class ProductListController {
 
 	@FXML
 	private TextField tovarTextField;
+	
+	@FXML
+    private Button selectProductButton;
+	
+	Product getSelectedProduct() {
+		return selectedProduct.get();
+	}
 
 	@FXML
-	void vyber(MouseDragEvent event) {
-
-	}
+    void selectProductButtonClicked(ActionEvent event) {
+		selectProductButton.getScene().getWindow().hide();
+    }
 
 
 	@FXML
