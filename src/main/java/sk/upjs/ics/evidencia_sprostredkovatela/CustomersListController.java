@@ -196,6 +196,10 @@ public class CustomersListController {
 	void ordersHistoryButtonClicked(ActionEvent event) {
 		OrdersHistoryController controller = new OrdersHistoryController(selectedCustomer.get());
 		App.changeScene(controller, "OrdersHistory.fxml", "História objednávok");
+<<<<<<< HEAD
+=======
+	
+>>>>>>> branch 'master' of https://github.com/LukacikPavel/evidencia_sprostredkovatela.git
 	}
 
 	@FXML
