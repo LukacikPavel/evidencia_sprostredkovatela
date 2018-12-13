@@ -121,7 +121,7 @@ public class AddOrderController {
 	void createOrderButtonClicked(ActionEvent event) {
 		Order order = new Order();
 		order.setCustomerId(customer.getId());
-		order.setOrderDate(LocalDateTime.now());
+		order.setCreateDate(LocalDateTime.now());
 		order.setTotalPrice(totalPrice);
 		order.setDiscount(discount);
 		order.setFinalPrice(finalPrice);

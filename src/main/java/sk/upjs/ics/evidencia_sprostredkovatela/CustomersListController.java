@@ -62,6 +62,9 @@ public class CustomersListController {
 	private Button addSaleButton;
 
 	@FXML
+	private Button addOrderButton;
+
+	@FXML
 	private Button selectCustomerButton;
 
 	@FXML
@@ -189,12 +192,20 @@ public class CustomersListController {
 
 	@FXML
 	void ordersHistoryButtonClicked(ActionEvent event) {
-
+		OrdersHistoryController controller = new OrdersHistoryController(selectedCustomer.get());
+		App.changeScene(controller, "OrdersHistory.fxml", "História objednávok");
+	
 	}
 
 	@FXML
 	void addSaleButtonClicked(ActionEvent event) {
 		AddSaleController controller = new AddSaleController(selectedCustomer.get());
 		App.changeScene(controller, "AddSale.fxml", "Nový predaj");
+	}
+
+	@FXML
+	void addOrderButtonClicked(ActionEvent event) {
+		AddOrderController controller = new AddOrderController(selectedCustomer.get());
+		App.changeScene(controller, "AddOrder.fxml", "Nová objednávka");
 	}
 }

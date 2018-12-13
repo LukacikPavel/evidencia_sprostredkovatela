@@ -16,7 +16,7 @@ public class Order {
 	private LocalDateTime shippingDate;
 	
 	private String customerSurname;
-	private LocalDateTime orderDate;
+	//	private LocalDateTime orderDate;
 	private double totalPrice;
 	private double discount;
 	private double finalPrice;
@@ -28,12 +28,9 @@ public class Order {
 		this.customerSurname = customerSurname;
 	}
 
-	public LocalDateTime getOrderDate() {
-		return orderDate;
-	}
 
-	public void setOrderDate(LocalDateTime orderDate) {
-		this.orderDate = orderDate;
+	public void setCreaterDate(LocalDateTime createrDate) {
+		this.createDate = createDate;
 	}
 
 	public double getTotalPrice() {
