@@ -192,11 +192,8 @@ public class OrdersHistoryController {
 			final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
 			final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
 
-<<<<<<< HEAD
-			return ti -> !finalMin.isAfter(ti.getCreateDate()).toLocalDate())
-=======
+
 			return ti -> !finalMin.isAfter(ti.getCreateDate().toLocalDate())
->>>>>>> branch 'master' of https://github.com/LukacikPavel/evidencia_sprostredkovatela.git
 					&& !finalMax.isBefore(ti.getCreateDate().toLocalDate());
 		}, startDatePicker.valueProperty(), endDatePicker.valueProperty()));
 

@@ -24,11 +24,7 @@ public class MysqlOrderDao implements OrderDao {
 		simpleJdbcInsert.usingColumns("customer_id", "create_date");
 		Map<String, Object> values = new HashMap<>();
 		values.put("customer_id", order.getCustomerId());
-<<<<<<< HEAD
-		values.put("order_date", order.getCreateDate());
-=======
 		values.put("create_date", order.getCreateDate());
->>>>>>> branch 'master' of https://github.com/LukacikPavel/evidencia_sprostredkovatela.git
 		Long id = simpleJdbcInsert.executeAndReturnKey(values).longValue();
 		order.setId(id);
 		return order;
@@ -46,11 +42,7 @@ public class MysqlOrderDao implements OrderDao {
 			throw new NullPointerException("Order cannot be null");
 		}
 		String sql = "UPDATE `order` SET customer_id = ?, create_date = ? WHERE id = ?";
-<<<<<<< HEAD
-		jdbcTemplate.update(sql, order.getCustomerId(), order.getCreateDate(), order.getId());
-=======
 		jdbcTemplate.update(sql, order.getCustomerId(), order.getCreateDate(),  order.getId());
->>>>>>> branch 'master' of https://github.com/LukacikPavel/evidencia_sprostredkovatela.git
 	}
 
 	@Override

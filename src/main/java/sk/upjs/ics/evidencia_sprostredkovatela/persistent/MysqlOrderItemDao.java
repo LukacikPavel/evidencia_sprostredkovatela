@@ -37,11 +37,7 @@ public class MysqlOrderItemDao implements OrderItemDao{
 	@Override
 	public List<OrderItem> getAll() {
 		String sql = "SELECT si.id, p.name productName, si.quantity, si.price_piece, si.price_total, s.create_date "
-<<<<<<< HEAD
-				+ "FROM `order`_item si JOIN product p ON (p.id = si.product_id) JOIN `order` s ON (si.order_id = s.id)";
-=======
 				+ "FROM order_item si JOIN product p ON (p.id = si.product_id) JOIN `order` s ON (si.order_id = s.id)";
->>>>>>> branch 'master' of https://github.com/LukacikPavel/evidencia_sprostredkovatela.git
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(OrderItem.class));
 	}
 

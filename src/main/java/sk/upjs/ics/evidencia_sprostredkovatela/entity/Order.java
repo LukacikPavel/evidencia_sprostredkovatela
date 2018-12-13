@@ -16,11 +16,7 @@ public class Order {
 	private LocalDateTime shippingDate;
 	
 	private String customerSurname;
-<<<<<<< HEAD
-	//private LocalDateTime orderDate;
-=======
 	//	private LocalDateTime orderDate;
->>>>>>> branch 'master' of https://github.com/LukacikPavel/evidencia_sprostredkovatela.git
 	private double totalPrice;
 	private double discount;
 	private double finalPrice;
@@ -32,15 +28,8 @@ public class Order {
 		this.customerSurname = customerSurname;
 	}
 
-<<<<<<< HEAD
-	
-	public void setCreaterDate(LocalDateTime createrDate) { 
-		this.createDate = createDate; 
-=======
-
 	public void setCreaterDate(LocalDateTime createrDate) {
 		this.createDate = createDate;
->>>>>>> branch 'master' of https://github.com/LukacikPavel/evidencia_sprostredkovatela.git
 	}
 
 	public double getTotalPrice() {
