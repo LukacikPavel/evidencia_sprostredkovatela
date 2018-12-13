@@ -36,8 +36,8 @@ public class MysqlOrderItemDao implements OrderItemDao{
 
 	@Override
 	public List<OrderItem> getAll() {
-		String sql = "SELECT si.id, p.name productName, si.quantity, si.price_piece, si.price_total, s.order_date "
-				+ "FROM order_item si JOIN product p ON (p.id = si.product_id) JOIN order s ON (si.order_id = s.id)";
+		String sql = "SELECT si.id, p.name productName, si.quantity, si.price_piece, si.price_total, s.create_date "
+				+ "FROM `order`_item si JOIN product p ON (p.id = si.product_id) JOIN `order` s ON (si.order_id = s.id)";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(OrderItem.class));
 	}
 
@@ -62,8 +62,8 @@ public class MysqlOrderItemDao implements OrderItemDao{
 
 	@Override
 	public List<OrderItem> getByCustomer(Long id) {
-		String sql = "SELECT si.id, p.name productName, si.quantity, si.price_piece, si.price_total, s.order_date "
-				+ "FROM order_item si JOIN product p ON (p.id = si.product_id) JOIN order s ON (si.order_id = s.id) "
+		String sql = "SELECT si.id, p.name productName, si.quantity, si.price_piece, si.price_total, s.create_date "
+				+ "FROM order_item si JOIN product p ON (p.id = si.product_id) JOIN `order` s ON (si.order_id = s.id) "
 				+ "WHERE s.customer_id = " + id;
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(OrderItem.class));
 	}

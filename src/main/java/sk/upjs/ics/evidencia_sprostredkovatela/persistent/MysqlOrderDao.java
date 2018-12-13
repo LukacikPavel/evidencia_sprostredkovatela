@@ -19,15 +19,12 @@ public class MysqlOrderDao implements OrderDao {
 	@Override
 	public Order add(Order order) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-		simpleJdbcInsert.withTableName("order");
+		simpleJdbcInsert.withTableName("`order`");
 		simpleJdbcInsert.usingGeneratedKeyColumns("id");
-		simpleJdbcInsert.usingColumns("customer_id", "order_date", "total_price", "discount", "final_price");
+		simpleJdbcInsert.usingColumns("customer_id", "create_date");
 		Map<String, Object> values = new HashMap<>();
 		values.put("customer_id", order.getCustomerId());
-		values.put("order_date", order.getOrderDate());
-		values.put("total_price", order.getTotalPrice());
-		values.put("discount", order.getDiscount());
-		values.put("final_price", order.getFinalPrice());
+		values.put("order_date", order.getCreateDate());
 		Long id = simpleJdbcInsert.executeAndReturnKey(values).longValue();
 		order.setId(id);
 		return order;
@@ -35,7 +32,7 @@ public class MysqlOrderDao implements OrderDao {
 
 	@Override
 	public List<Order> getAll() {
-		String sql = "SELECT id, customer_id, order_date, total_price, discount, final_price FROM order";
+		String sql = "SELECT id, customer_id, create_date FROM `order`";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Order.class));
 	}
 
@@ -44,15 +41,13 @@ public class MysqlOrderDao implements OrderDao {
 		if (order == null) {
 			throw new NullPointerException("Order cannot be null");
 		}
-		String sql = "UPDATE order SET customer_id = ?, order_date = ?, total_price = ?, "
-				+ "discount = ?, final_price = ? WHERE id = ?";
-		jdbcTemplate.update(sql, order.getCustomerId(), order.getOrderDate(), order.getTotalPrice(), 
-				order.getDiscount(), order.getFinalPrice(), order.getId());
+		String sql = "UPDATE `order` SET customer_id = ?, create_date = ? WHERE id = ?";
+		jdbcTemplate.update(sql, order.getCustomerId(), order.getCreateDate(), order.getId());
 	}
 
 	@Override
 	public void delete(long id) {
-		int deleted = jdbcTemplate.update("DELETE FROM order WHERE id = ?", id);
+		int deleted = jdbcTemplate.update("DELETE FROM `order` WHERE id = ?", id);
 		if (deleted == 0) {
 			throw new OrderNotFoundException(id);
 		}

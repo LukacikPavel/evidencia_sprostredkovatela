@@ -57,6 +57,12 @@ public class MysqlProductDao implements ProductDao {
 		jdbcTemplate.update(sql, product.getCode(), product.getName(), product.getPrice(),product.getGroupId(), 
 				product.getQuantity(), product.isValidity(), product.getId());
 	}
+	
+	@Override
+	public void changeQuantity(int quantity, Long productId) {
+		String sql = "UPDATE product SET quantity = ? WHERE id = ?";
+		jdbcTemplate.update(sql, quantity, productId);
+	}
 
 	@Override
 	public void delete(long id) {

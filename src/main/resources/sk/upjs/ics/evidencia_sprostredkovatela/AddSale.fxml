@@ -16,7 +16,7 @@
       <Button fx:id="deleteProductButton" disable="true" layoutX="578.0" layoutY="187.0" mnemonicParsing="false" onAction="#deleteProductButtonClicked" text="OdoberTovar" />
       <ButtonBar layoutX="398.0" layoutY="251.0" prefHeight="40.0" prefWidth="200.0" />
     <Button fx:id="changeQuantityButton" disable="true" layoutX="570.0" layoutY="238.0" mnemonicParsing="false" onAction="#changeQuantityButtonClicked" text="Uprav Mnozstvo" />
-      <Label layoutX="74.0" layoutY="357.0" text="Zľava (v %)" />
+      <Label layoutX="88.0" layoutY="357.0" text="Zľava" />
       <Label layoutX="71.0" layoutY="321.0" text="Suma Spolu" />
       <Label layoutX="63.0" layoutY="389.0" text="Vysledna Suma" />
       <Button layoutX="358.0" layoutY="42.0" mnemonicParsing="false" text="Vyber zákazníka" />

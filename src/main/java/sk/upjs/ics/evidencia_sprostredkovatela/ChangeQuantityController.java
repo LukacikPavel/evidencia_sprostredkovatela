@@ -8,38 +8,38 @@ import sk.upjs.ics.evidencia_sprostredkovatela.entity.SaleItem;
 
 public class ChangeQuantityController {
 	private SaleItem saleItem;
-	private int quantity;
-	
-    @FXML
-    private TextField quantityTextField;
 
-    @FXML
-    private Button cancelButton;
-    
-    @FXML
-    private Button confirmButton;
+	@FXML
+	private TextField quantityTextField;
 
-    public ChangeQuantityController(SaleItem saleItem) {
+	@FXML
+	private Button cancelButton;
+
+	@FXML
+	private Button confirmButton;
+
+	public ChangeQuantityController(SaleItem saleItem) {
 		this.saleItem = saleItem;
 	}
-    
-    int getQuantity() {
-    	return quantity;
-    }
-    
-    @FXML
-    void cancelButtonClicked(ActionEvent event) {
-    	cancelButton.getScene().getWindow().hide();
-    }
-    
-    @FXML
-    void confirmButtonClicked(ActionEvent event) {
-    	quantity = Integer.parseInt(quantityTextField.getText());
-    	confirmButton.getScene().getWindow().hide();
-    }
 
-    @FXML
-    void initialize() {
+	@FXML
+	void cancelButtonClicked(ActionEvent event) {
+		cancelButton.getScene().getWindow().hide();
+	}
 
-    }
+	@FXML
+	void confirmButtonClicked(ActionEvent event) {
+		if (!quantityTextField.getText().isEmpty()) {
+			saleItem.setQuantity(Integer.parseInt(quantityTextField.getText()));
+		}
+		confirmButton.getScene().getWindow().hide();
+	}
+
+	@FXML
+	void initialize() {
+		quantityTextField.setText(String.valueOf(saleItem.getQuantity()));
+		quantityTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			quantityTextField.setText(newValue.replaceAll("[^0-9]", ""));
+		});
+	}
 }

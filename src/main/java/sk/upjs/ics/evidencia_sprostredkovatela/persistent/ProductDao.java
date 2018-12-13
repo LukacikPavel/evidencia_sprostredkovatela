@@ -12,10 +12,12 @@ public interface ProductDao {
 	List<Product> getAll();
 
     void save(Product product);
+    
+    public void changeQuantity(int quantity, Long productId);
 
-	 void delete(long id);
+	void delete(long id);
 
-	 void disable(long id);
+	void disable(long id);
 
 	 
 }

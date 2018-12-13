@@ -26,8 +26,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.converter.LocalDateStringConverter;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
+import sk.upjs.ics.evidencia_sprostredkovatela.entity.Product;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.SaleItem;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.SaleItemDao;
@@ -36,10 +36,9 @@ public class SalesHistoryController {
 
 	private SaleItemDao saleItemDao = DaoFactory.INSTANCE.getSaleItemDao();
 	private ObservableList<SaleItem> saleItemsList;
-	private ObservableList<SaleItem> lentak2;
-	private ObservableList<SaleItem> lentak1;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private Customer customer;
+	private Product product;
 	private String previousScene;
 
 	@FXML
@@ -87,16 +86,23 @@ public class SalesHistoryController {
 
 	@FXML
 	void selectProductButtonClicked(ActionEvent event) {
-		
+		ProductListController controller = new ProductListController();
+		App.showModalWindow(controller, "ProductsList.fxml", "Tovary");
+		product = controller.getSelectedProduct();
+		if (product != null) {
+			productTextField.setText(product.getName());
+		}
 	}
-	
+
 	@FXML
-    void selectCustomerButtonClicked(ActionEvent event) {
+	void selectCustomerButtonClicked(ActionEvent event) {
 		CustomersListController controller = new CustomersListController(true);
 		App.showModalWindow(controller, "CustomersList.fxml", "Zákazníci");
 		customer = controller.getSelectedCustomer();
-		fillTableView();
-    }
+		if (customer != null) {
+			nameTextField.setText(customer.getName() + " " + customer.getSurname());
+		}
+	}
 
 	@FXML
 	void initialize() {
@@ -105,6 +111,11 @@ public class SalesHistoryController {
 		idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 		saleItemsTableView.getColumns().add(idCol);
 		columnsVisibility.put("ID", idCol.visibleProperty());
+
+		TableColumn<SaleItem, String> customerNameCol = new TableColumn<>("Zákazník");
+		customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerFullName"));
+		saleItemsTableView.getColumns().add(customerNameCol);
+		columnsVisibility.put("Zákazník", customerNameCol.visibleProperty());
 
 		TableColumn<SaleItem, String> productNameCol = new TableColumn<>("Produkt");
 		productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
@@ -147,7 +158,9 @@ public class SalesHistoryController {
 		saleItemsTableView.getColumns().add(saleDateCol);
 		columnsVisibility.put("Dátum predaja", saleDateCol.visibleProperty());
 
-		fillTableView();
+		saleItemsList = FXCollections.observableArrayList(saleItemDao.getAll());
+		saleItemsTableView.setItems(filterSaleItems());
+		selectCustomerButton.setVisible(true);
 
 		ContextMenu contextMenu = new ContextMenu();
 		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
@@ -157,24 +170,13 @@ public class SalesHistoryController {
 		}
 		saleItemsTableView.setContextMenu(contextMenu);
 	}
-	
-	private void fillTableView() {
-		if (customer != null) {
-			nameTextField.setText(customer.getName() + " " + customer.getSurname());
-			saleItemsList = FXCollections.observableArrayList(saleItemDao.getByCustomer(customer.getId()));
-		} else {
-			saleItemsList = FXCollections.observableArrayList(saleItemDao.getAll());
-			selectCustomerButton.setVisible(true);
-		}
-
-		saleItemsTableView.setItems(filterSaleItems());
-	}
 
 	private FilteredList<SaleItem> filterSaleItems() {
 		FilteredList<SaleItem> filteredSaleItems = new FilteredList<>(saleItemsList);
 
 		ObjectProperty<Predicate<SaleItem>> productFilter = new SimpleObjectProperty<>();
 		ObjectProperty<Predicate<SaleItem>> dateFilter = new SimpleObjectProperty<>();
+		ObjectProperty<Predicate<SaleItem>> customerFilter = new SimpleObjectProperty<>();
 
 		productFilter
 				.bind(Bindings
@@ -194,8 +196,17 @@ public class SalesHistoryController {
 					&& !finalMax.isBefore(ti.getSaleDate().toLocalDate());
 		}, startDatePicker.valueProperty(), endDatePicker.valueProperty()));
 
-		filteredSaleItems.predicateProperty().bind(Bindings
-				.createObjectBinding(() -> productFilter.get().and(dateFilter.get()), productFilter, dateFilter));
+		customerFilter
+				.bind(Bindings
+						.createObjectBinding(
+								() -> saleItem -> saleItem.getCustomerFullName().toLowerCase()
+										.contains(nameTextField.getText().toLowerCase()),
+								nameTextField.textProperty()));
+
+		filteredSaleItems.predicateProperty()
+				.bind(Bindings.createObjectBinding(
+						() -> productFilter.get().and(dateFilter.get().and(customerFilter.get())), productFilter,
+						dateFilter, customerFilter));
 
 		return filteredSaleItems;
 	}

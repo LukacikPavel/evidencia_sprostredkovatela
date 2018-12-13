@@ -142,7 +142,7 @@ public class OrdersHistoryController {
 			};
 		});
 		orderDateCol.setCellValueFactory(param -> {
-			return new SimpleObjectProperty<>(param.getValue().getOrderDate());
+			return new SimpleObjectProperty<>(param.getValue().getCreateDate());
 		});
 		orderItemsTableView.getColumns().add(orderDateCol);
 		columnsVisibility.put("Dátum predaja", orderDateCol.visibleProperty());
@@ -171,6 +171,8 @@ public class OrdersHistoryController {
 	}
 
 	private FilteredList<OrderItem> filterOrderItems() {
+		
+		System.out.println(orderItemsList);
 		FilteredList<OrderItem> filteredOrderItems = new FilteredList<>(orderItemsList);
 
 		ObjectProperty<Predicate<OrderItem>> productFilter = new SimpleObjectProperty<>();
@@ -190,13 +192,14 @@ public class OrdersHistoryController {
 			final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
 			final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
 
-			return ti -> !finalMin.isAfter(ti.getOrderDate().toLocalDate())
-					&& !finalMax.isBefore(ti.getOrderDate().toLocalDate());
+			return ti -> !finalMin.isAfter(ti.getCreateDate()).toLocalDate())
+					&& !finalMax.isBefore(ti.getCreateDate().toLocalDate());
 		}, startDatePicker.valueProperty(), endDatePicker.valueProperty()));
 
 		filteredOrderItems.predicateProperty().bind(Bindings
 				.createObjectBinding(() -> productFilter.get().and(dateFilter.get()), productFilter, dateFilter));
 
 		return filteredOrderItems;
+		
 	}
 }

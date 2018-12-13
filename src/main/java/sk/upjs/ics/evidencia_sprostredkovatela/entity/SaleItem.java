@@ -7,8 +7,8 @@ public class SaleItem {
 	private Long saleId;
 	private LocalDateTime saleDate;
 	private Long customerId;
-	private String customerName;
-	private String customerSurname;
+	private String customerFullName;
+	//private String customerSurname;
 	private Long productId;
 	private String productName;
 	private int quantity;
@@ -47,21 +47,21 @@ public class SaleItem {
 		this.customerId = customerId;
 	}
 
-	public String getCustomerName() {
-		return customerName;
+	public String getCustomerFullName() {
+		return customerFullName;
 	}
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+	public void setCustomerFullName(String customerName) {
+		this.customerFullName = customerName;
 	}
 
-	public String getCustomerSurname() {
-		return customerSurname;
-	}
-
-	public void setCustomerSurname(String customerSurname) {
-		this.customerSurname = customerSurname;
-	}
+//	public String getCustomerSurname() {
+//		return customerSurname;
+//	}
+//
+//	public void setCustomerSurname(String customerSurname) {
+//		this.customerSurname = customerSurname;
+//	}
 
 	public Long getProductId() {
 		return productId;

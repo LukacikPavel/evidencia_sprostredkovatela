@@ -23,6 +23,7 @@ import sk.upjs.ics.evidencia_sprostredkovatela.entity.Product;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Sale;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.SaleItem;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
+import sk.upjs.ics.evidencia_sprostredkovatela.persistent.ProductDao;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.SaleDao;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.SaleItemDao;
 
@@ -30,6 +31,7 @@ public class AddSaleController {
 
 	private SaleItemDao saleItemDao = DaoFactory.INSTANCE.getSaleItemDao();
 	private SaleDao saleDao = DaoFactory.INSTANCE.getSaleDao();
+	private ProductDao productDao = DaoFactory.INSTANCE.getProductDao();
 	private ObservableList<SaleItem> saleItemsList = FXCollections.observableArrayList();
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<SaleItem> selectedSaleItem = new SimpleObjectProperty<>();
@@ -99,17 +101,13 @@ public class AddSaleController {
 
 	@FXML
 	void changeQuantityButtonClicked(ActionEvent event) {
-		ChangeQuantityController controller = new ChangeQuantityController(selectedSaleItem.get());
+		SaleItem saleItem = selectedSaleItem.get();
+		ChangeQuantityController controller = new ChangeQuantityController(saleItem);
 		App.showModalWindow(controller, "ChangeQuantity.fxml", "Množstvo");
-		int quantity = controller.getQuantity();
-		if (quantity > 0) {
-			int index = saleItemsList.indexOf(selectedSaleItem.get());
-			SaleItem saleItem = selectedSaleItem.get();
-			saleItem.setQuantity(quantity);
-			saleItem.setPriceTotal(quantity * saleItem.getPricePiece());
-			saleItemsList.set(index, saleItem);
-			calculatePrice();
-		}
+		int index = saleItemsList.indexOf(saleItem);
+		saleItem.setPriceTotal(saleItem.getQuantity() * saleItem.getPricePiece());
+		saleItemsList.set(index, saleItem);
+		calculatePrice();
 	}
 
 	@FXML
@@ -130,6 +128,7 @@ public class AddSaleController {
 		for (SaleItem si : saleItemsList) {
 			si.setSaleId(sale.getId());
 			saleItemDao.add(si);
+			// productDao.changeQuantity(si.getQuantity(), si.getProductId());
 		}
 		App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
 	}
@@ -185,12 +184,34 @@ public class AddSaleController {
 				finalPrice = totalPrice;
 				finalPriceTextField.setText(String.valueOf(finalPrice));
 			} else {
-				discount = Double.parseDouble(discountTextField.getText());
-				finalPrice = totalPrice - (totalPrice * (discount / 100));
+				discountTextField.setText(newValue.replaceAll("[^0-9.]", ""));
+				if (!newValue.isEmpty() && !newValue.startsWith(".")) {
+					discount = Double.parseDouble(discountTextField.getText());
+				}
+				if (discount > totalPrice) {
+					discount = totalPrice;
+					discountTextField.setText(totalPriceTextField.getText());
+				}
+				finalPrice = totalPrice - discount;
 				finalPriceTextField.setText(String.valueOf(finalPrice));
 			}
 
 		});
+
+//		finalPriceTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+//			if (newValue == null || newValue.isEmpty()) {
+//				discount = 0;
+//				discountTextField.setText("0");
+//			} else {
+//				finalPriceTextField.setText(newValue.replaceAll("[^0-9.]", ""));
+//				if (!newValue.isEmpty() && !newValue.startsWith(".")) {
+//					finalPrice = Double.parseDouble(finalPriceTextField.getText());
+//				}
+//				discount = totalPrice - finalPrice;
+//				discountTextField.setText(String.valueOf(discountTextField));
+//			}
+//		});
+
 	}
 
 	void calculatePrice() {

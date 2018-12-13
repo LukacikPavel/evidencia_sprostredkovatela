@@ -59,9 +59,7 @@ public class AddCustomerController {
 
 	@FXML
 	void saveButtonClicked(ActionEvent event) {
-		if (nameTextField.getText() != null && surnameTextField.getText() != null
-				&& moreDetailsTextField.getText() != null && !nameTextField.getText().isEmpty()
-				&& !surnameTextField.getText().isEmpty() && !moreDetailsTextField.getText().isEmpty()) {
+		if (isAllFilled()) {
 			Customer customer = customerModel.getCustomer();
 			customerDao.add(customer);
 			saveButton.getScene().getWindow().hide();
@@ -70,6 +68,12 @@ public class AddCustomerController {
 
 	@FXML
 	void disableButtonClicked(ActionEvent event) {
+	}
+	
+	private boolean isAllFilled() {
+		return nameTextField.getText() != null && surnameTextField.getText() != null
+				&& moreDetailsTextField.getText() != null && !nameTextField.getText().isEmpty()
+				&& !surnameTextField.getText().isEmpty() && !moreDetailsTextField.getText().isEmpty();
 	}
 
 	@FXML
