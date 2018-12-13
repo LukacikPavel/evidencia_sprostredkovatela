@@ -11,6 +11,8 @@ public enum DaoFactory {
 	private ProductDao productDao;
 	private SaleDao saleDao;
 	private SaleItemDao saleItemDao;
+	private OrderDao orderDao;
+	private OrderItemDao orderItemDao;
 	private JdbcTemplate jdbcTemplate;
 
 	public CustomerDao getCustomerDao() {
@@ -48,6 +50,21 @@ public enum DaoFactory {
 		}
 		return saleItemDao;
 	}
+
+public OrderDao getOrderDao() {
+	if (orderDao == null) {
+		orderDao = new MysqlOrderDao(getJdbcTemplate());
+	}
+	return orderDao;
+}
+
+public OrderItemDao getOrderItemDao() {
+	if (orderItemDao == null) {
+		orderItemDao = new MysqlOrderItemDao(getJdbcTemplate());
+	}
+	return orderItemDao;
+}
+
 
 	private JdbcTemplate getJdbcTemplate() {
 		if (jdbcTemplate == null) {

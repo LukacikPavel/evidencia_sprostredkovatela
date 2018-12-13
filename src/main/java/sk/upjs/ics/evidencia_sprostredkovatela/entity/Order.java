@@ -1,6 +1,9 @@
 package sk.upjs.ics.evidencia_sprostredkovatela.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+//import com.sun.corba.se.impl.resolver.ORBDefaultInitRefResolverImpl;
 
 public class Order {
 	private Long id;
@@ -11,6 +14,62 @@ public class Order {
 	private int quantity;
 	private LocalDateTime createDate;
 	private LocalDateTime shippingDate;
+	
+	private String customerSurname;
+	private LocalDateTime orderDate;
+	private double totalPrice;
+	private double discount;
+	private double finalPrice;
+	public String getCustomerSurname() {
+		return customerSurname;
+	}
+
+	public void setCustomerSurname(String customerSurname) {
+		this.customerSurname = customerSurname;
+	}
+
+	public LocalDateTime getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(LocalDateTime orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
+	public double getFinalPrice() {
+		return finalPrice;
+	}
+
+	public void setFinalPrice(double finalPrice) {
+		this.finalPrice = finalPrice;
+	}
+
+	public List<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<OrderItem> items) {
+		this.items = items;
+	}
+
+	private List<OrderItem> items;
+
 
 	public Long getId() {
 		return id;

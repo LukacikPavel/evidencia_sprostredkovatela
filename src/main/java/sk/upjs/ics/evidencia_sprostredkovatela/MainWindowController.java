@@ -36,5 +36,11 @@ public class MainWindowController {
 	void salesListButtonClicked(ActionEvent event) {
 		App.changeScene(new SalesHistoryController(), "SalesHistory.fxml", "Predaje");
 	}
+	
+	@FXML
+	void ordersListButtonClicked(ActionEvent event) {
+		App.changeScene(new OrdersHistoryController(), "OrdersHistory.fxml", "Objednávky");
+	}
+
 
 }
