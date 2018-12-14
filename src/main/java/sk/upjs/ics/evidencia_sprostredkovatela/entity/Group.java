@@ -29,6 +29,11 @@ public class Group {
 		return validity;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
+
 	public void setValidity(boolean validity) {
 		this.validity = validity;
 	}

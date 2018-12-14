@@ -33,13 +33,13 @@ public class MysqlGroupDao implements GroupDao{
 
 	@Override
 	public List<Group> getAllEnabled() {
-		String sql = "SELECT id, name, surname, email, number, more_details FROM customer WHERE enable = 1";
+		String sql = "SELECT id, name FROM `group` WHERE enable = 1";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Group.class));
 	}
 
 	@Override
 	public List<Group> getAll() {
-		String sql = "SELECT id, name, surname, email, number, more_details FROM customer";
+		String sql = "SELECT id, name FROM `group`";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Group.class));
 	}
 
