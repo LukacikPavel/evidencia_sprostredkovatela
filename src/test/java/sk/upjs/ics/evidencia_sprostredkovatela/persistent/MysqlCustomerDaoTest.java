@@ -15,11 +15,19 @@ class MysqlCustomerDaoTest {
 
 	@Test
 	void testGetAll() {
+		Customer customer = new Customer();
+		customer.setName("Felix");
+		customer.setSurname("Kjellberg");
+		customer.setMoreDetails("pewdiepie");
+		customer = customerDao.add(customer);
+
 		List<Customer> list = customerDao.getAll();
 		assertNotNull(list);
 		assertTrue(list.size() > 0);
+
+		customerDao.delete(customer.getId());
 	}
-	
+
 	@Test
 	void testGetAllEnabled() {
 		Customer customer = new Customer();
@@ -28,11 +36,13 @@ class MysqlCustomerDaoTest {
 		customer.setMoreDetails("da Firenze");
 		customer = customerDao.add(customer);
 		customerDao.disable(customer.getId());
-		
+
 		List<Customer> all = customerDao.getAll();
 		List<Customer> enabled = customerDao.getAllEnabled();
 		assertNotNull(enabled);
 		assertNotEquals(all.size(), enabled.size());
+
+		customerDao.delete(customer.getId());
 	}
 
 	@Test
@@ -52,7 +62,7 @@ class MysqlCustomerDaoTest {
 
 		customerDao.delete(latestCustomer.getId());
 	}
-	
+
 	@Test
 	void testSaveCustomer() {
 		Customer originalCustomer = new Customer();
@@ -60,24 +70,24 @@ class MysqlCustomerDaoTest {
 		originalCustomer.setSurname("Montenegro");
 		originalCustomer.setMoreDetails("insane");
 		originalCustomer = customerDao.add(originalCustomer);
-		
+
 		Customer modifiedCustomer = new Customer();
 		modifiedCustomer.setId(originalCustomer.getId());
 		modifiedCustomer.setName("Joseph");
 		modifiedCustomer.setSurname("Seed");
 		modifiedCustomer.setMoreDetails("father");
 		customerDao.save(modifiedCustomer);
-		
+
 		List<Customer> list = customerDao.getAll();
 		Customer latestCustomer = list.get(list.size() - 1);
 		assertNotEquals(originalCustomer.getName(), latestCustomer.getName());
 		assertNotEquals(originalCustomer.getSurname(), latestCustomer.getSurname());
 		assertNotEquals(originalCustomer.getMoreDetails(), latestCustomer.getMoreDetails());
-		
+
 		assertEquals(modifiedCustomer.getName(), latestCustomer.getName());
 		assertEquals(modifiedCustomer.getSurname(), latestCustomer.getSurname());
 		assertEquals(modifiedCustomer.getMoreDetails(), latestCustomer.getMoreDetails());
-		
+
 		customerDao.delete(modifiedCustomer.getId());
 	}
 
