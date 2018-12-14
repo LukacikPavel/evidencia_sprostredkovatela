@@ -64,6 +64,13 @@ public class SalesHistoryController {
 
 	@FXML
 	private Button selectCustomerButton;
+	
+    @FXML
+    private TextField quantityAllTextField;
+
+    @FXML
+    private TextField priceAllTextField;
+
 
 	public SalesHistoryController() {
 		previousScene = "MainWindow";
@@ -175,6 +182,9 @@ public class SalesHistoryController {
 			contextMenu.getItems().add(menuItem);
 		}
 		saleItemsTableView.setContextMenu(contextMenu);
+//		saleItemsList.addListener(() -> {  dokoncit !!!!!! TO DO ""
+//			
+//		});
 	}
 
 	private FilteredList<SaleItem> filterSaleItems() {
