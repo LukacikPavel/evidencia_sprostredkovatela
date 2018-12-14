@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -154,6 +155,17 @@ public class CustomersListController {
 				nameTextField.textProperty(), surnameTextField.textProperty(), moreDetailsTextField.textProperty()));
 
 		customersTableView.setItems(filteredCustomers);
+		customersTableView.setRowFactory(tv -> {
+			TableRow<Customer> row = new TableRow<>();
+			row.setOnMouseClicked(event -> {
+				if (event.getClickCount() == 2 && (!row.isEmpty())) {
+					if (selectCustomerButton.isVisible()) {
+						selectCustomerButtonClicked(new ActionEvent());
+					}
+				}
+			});
+			return row;
+		});
 	}
 
 	@FXML

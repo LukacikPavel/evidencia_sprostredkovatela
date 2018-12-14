@@ -128,7 +128,7 @@ public class AddSaleController {
 		for (SaleItem si : saleItemsList) {
 			si.setSaleId(sale.getId());
 			saleItemDao.add(si);
-			// productDao.changeQuantity(si.getQuantity(), si.getProductId());
+			productDao.decreaseQuantity(si.getQuantity(), si.getProductId());
 		}
 		App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
 	}

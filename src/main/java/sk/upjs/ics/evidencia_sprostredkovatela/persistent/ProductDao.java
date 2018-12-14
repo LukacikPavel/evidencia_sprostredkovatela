@@ -13,7 +13,7 @@ public interface ProductDao {
 
     void save(Product product);
     
-    public void changeQuantity(int quantity, Long productId);
+    public void decreaseQuantity(int quantity, Long productId);
 
 	void delete(long id);
 

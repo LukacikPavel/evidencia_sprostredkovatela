@@ -67,6 +67,8 @@ public class SalesHistoryController {
 
 	public SalesHistoryController() {
 		previousScene = "MainWindow";
+		customer = new Customer();
+		customer.setId(Long.MIN_VALUE);
 	}
 
 	public SalesHistoryController(Customer customer) {
@@ -162,6 +164,10 @@ public class SalesHistoryController {
 		saleItemsTableView.setItems(filterSaleItems());
 		selectCustomerButton.setVisible(true);
 
+		if (customer.getName() != null) {
+			nameTextField.setText(customer.getName() + " " + customer.getSurname());
+		}
+
 		ContextMenu contextMenu = new ContextMenu();
 		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
 			CheckMenuItem menuItem = new CheckMenuItem(entry.getKey());
@@ -176,7 +182,8 @@ public class SalesHistoryController {
 
 		ObjectProperty<Predicate<SaleItem>> productFilter = new SimpleObjectProperty<>();
 		ObjectProperty<Predicate<SaleItem>> dateFilter = new SimpleObjectProperty<>();
-		ObjectProperty<Predicate<SaleItem>> customerFilter = new SimpleObjectProperty<>();
+		ObjectProperty<Predicate<SaleItem>> customerNameFilter = new SimpleObjectProperty<>();
+		ObjectProperty<Predicate<SaleItem>> customerIdFilter = new SimpleObjectProperty<>();
 
 		productFilter
 				.bind(Bindings
@@ -196,17 +203,21 @@ public class SalesHistoryController {
 					&& !finalMax.isBefore(ti.getSaleDate().toLocalDate());
 		}, startDatePicker.valueProperty(), endDatePicker.valueProperty()));
 
-		customerFilter
+		customerNameFilter
 				.bind(Bindings
 						.createObjectBinding(
 								() -> saleItem -> saleItem.getCustomerFullName().toLowerCase()
 										.contains(nameTextField.getText().toLowerCase()),
 								nameTextField.textProperty()));
 
+		customerIdFilter
+				.bind(Bindings.createObjectBinding(() -> saleItem -> customer.getId().equals(saleItem.getCustomerId())
+						|| customer.getId().equals(Long.MIN_VALUE)));
+
 		filteredSaleItems.predicateProperty()
 				.bind(Bindings.createObjectBinding(
-						() -> productFilter.get().and(dateFilter.get().and(customerFilter.get())), productFilter,
-						dateFilter, customerFilter));
+						() -> productFilter.get().and(dateFilter.get().and(customerNameFilter.get().and(customerIdFilter.get()))), productFilter,
+						dateFilter, customerNameFilter));
 
 		return filteredSaleItems;
 	}

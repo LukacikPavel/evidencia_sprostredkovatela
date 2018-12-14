@@ -59,8 +59,8 @@ public class MysqlProductDao implements ProductDao {
 	}
 	
 	@Override
-	public void changeQuantity(int quantity, Long productId) {
-		String sql = "UPDATE product SET quantity = ? WHERE id = ?";
+	public void decreaseQuantity(int quantity, Long productId) {
+		String sql = "UPDATE product SET quantity = quantity - ? WHERE id = ?";
 		jdbcTemplate.update(sql, quantity, productId);
 	}
 

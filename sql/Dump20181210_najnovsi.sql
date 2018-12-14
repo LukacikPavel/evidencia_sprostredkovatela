@@ -159,7 +159,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'5067','San´Aktiv Šampón',23.10,1,1,1),(2,'5140','San´Aktiv Kúpeľ',24.75,1,1,1),(3,'5122','Tea Tree Šampón  ',24.65,2,1,1),(4,'5055','Žeruchový krém  ',20.25,3,1,1),(5,'5058','Lamelloderm krém',40.80,4,1,1),(6,'5013','Gél po holení',13.65,5,1,1);
+INSERT INTO `product` VALUES (1,'5067','San´Aktiv Šampón',23.10,1,10,1),(2,'5140','San´Aktiv Kúpeľ',24.75,1,10,1),(3,'5122','Tea Tree Šampón  ',24.65,2,10,1),(4,'5055','Žeruchový krém  ',20.25,3,10,1),(5,'5058','Lamelloderm krém',40.80,4,10,1),(6,'5013','Gél po holení',13.65,5,10,1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
