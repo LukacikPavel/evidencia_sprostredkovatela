@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
@@ -36,11 +37,9 @@ public class OrdersHistoryController {
 
 	private OrderItemDao orderItemDao = DaoFactory.INSTANCE.getOrderItemDao();
 	private ObservableList<OrderItem> orderItemsList;
-	private ObservableList<OrderItem> lentak2;
-	private ObservableList<OrderItem> lentak1;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private Customer customer;
-	private String previousScene;
+	private Parent parent;
 
 	@FXML
 	private TableView<OrderItem> orderItemsTableView;
@@ -66,23 +65,18 @@ public class OrdersHistoryController {
 	@FXML
 	private Button selectCustomerButton;
 
-	public OrdersHistoryController() {
-		previousScene = "MainWindow";
+	public OrdersHistoryController(Parent parent) {
+		this.parent = parent;
 	}
 
-	public OrdersHistoryController(Customer customer) {
-		previousScene = "CustomersList";
+	public OrdersHistoryController(Parent parent, Customer customer) {
+		this.parent = parent;
 		this.customer = customer;
 	}
 
 	@FXML
 	void backButtonClicked(ActionEvent event) {
-		if (previousScene.equals("CustomersList")) {
-			App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
-		}
-		if (previousScene.equals("MainWindow")) {
-			App.changeScene(new MainWindowController(), "MainWindow.fxml", "Hlavné okno");
-		}
+		backButton.getScene().setRoot(parent);
 	}
 
 	@FXML
@@ -92,7 +86,9 @@ public class OrdersHistoryController {
 	
 	@FXML
     void selectCustomerButtonClicked(ActionEvent event) {
-		CustomersListController controller = new CustomersListController(true);
+		Parent parent = selectCustomerButton.getParent();
+		parent.idProperty().set("select");
+		CustomersListController controller = new CustomersListController(parent);
 		App.showModalWindow(controller, "CustomersList.fxml", "Zákazníci");
 		customer = controller.getSelectedCustomer();
 		fillTableView();

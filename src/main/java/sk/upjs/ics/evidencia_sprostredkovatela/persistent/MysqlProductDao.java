@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import javafx.scene.Group;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Product;
 
 public class MysqlProductDao implements ProductDao {
@@ -35,8 +34,8 @@ public class MysqlProductDao implements ProductDao {
 		return product;
 	}
 	@Override
-	public List<Product> getAllEnabled() {
-		String sql = "SELECT id, code, name, price, group_id, quantity, validity FROM product WHERE enable = 1";
+	public List<Product> getAllValid() {
+		String sql = "SELECT id, code, name, price, group_id, quantity, validity FROM product WHERE validity = 1";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class));
 	}
 

@@ -12,13 +12,17 @@ import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactoryTest;
 class MysqlCustomerDaoTest {
 
 	private CustomerDao customerDao = DaoFactoryTest.INSTANCE.getCustomerDao();
+	private Customer customer;
 
+	public MysqlCustomerDaoTest() {
+		customer = new Customer();
+		customer.setName("Ezio");
+		customer.setSurname("Auditore");
+		customer.setMoreDetails("da Firenze");
+	}
+	
 	@Test
 	void testGetAll() {
-		Customer customer = new Customer();
-		customer.setName("Felix");
-		customer.setSurname("Kjellberg");
-		customer.setMoreDetails("pewdiepie");
 		customer = customerDao.add(customer);
 
 		List<Customer> list = customerDao.getAll();
@@ -30,10 +34,6 @@ class MysqlCustomerDaoTest {
 
 	@Test
 	void testGetAllEnabled() {
-		Customer customer = new Customer();
-		customer.setName("Ezio");
-		customer.setSurname("Auditore");
-		customer.setMoreDetails("da Firenze");
 		customer = customerDao.add(customer);
 		customerDao.disable(customer.getId());
 
@@ -47,10 +47,6 @@ class MysqlCustomerDaoTest {
 
 	@Test
 	void testAddCustomer() {
-		Customer customer = new Customer();
-		customer.setName("Bilbo");
-		customer.setSurname("Baggins");
-		customer.setMoreDetails("hobbit");
 		customer = customerDao.add(customer);
 
 		List<Customer> list = customerDao.getAll();
@@ -65,24 +61,20 @@ class MysqlCustomerDaoTest {
 
 	@Test
 	void testSaveCustomer() {
-		Customer originalCustomer = new Customer();
-		originalCustomer.setName("Vaas");
-		originalCustomer.setSurname("Montenegro");
-		originalCustomer.setMoreDetails("insane");
-		originalCustomer = customerDao.add(originalCustomer);
+		customer = customerDao.add(customer);
 
 		Customer modifiedCustomer = new Customer();
-		modifiedCustomer.setId(originalCustomer.getId());
-		modifiedCustomer.setName("Joseph");
-		modifiedCustomer.setSurname("Seed");
-		modifiedCustomer.setMoreDetails("father");
+		modifiedCustomer.setId(customer.getId());
+		modifiedCustomer.setName("Altaïr");
+		modifiedCustomer.setSurname("Ibn-La'Ahad");
+		modifiedCustomer.setMoreDetails("assassin");
 		customerDao.save(modifiedCustomer);
 
 		List<Customer> list = customerDao.getAll();
 		Customer latestCustomer = list.get(list.size() - 1);
-		assertNotEquals(originalCustomer.getName(), latestCustomer.getName());
-		assertNotEquals(originalCustomer.getSurname(), latestCustomer.getSurname());
-		assertNotEquals(originalCustomer.getMoreDetails(), latestCustomer.getMoreDetails());
+		assertNotEquals(customer.getName(), latestCustomer.getName());
+		assertNotEquals(customer.getSurname(), latestCustomer.getSurname());
+		assertNotEquals(customer.getMoreDetails(), latestCustomer.getMoreDetails());
 
 		assertEquals(modifiedCustomer.getName(), latestCustomer.getName());
 		assertEquals(modifiedCustomer.getSurname(), latestCustomer.getSurname());
@@ -93,10 +85,6 @@ class MysqlCustomerDaoTest {
 
 	@Test
 	void testDisableCustomer() {
-		Customer customer = new Customer();
-		customer.setName("Triss");
-		customer.setSurname("Merigold");
-		customer.setMoreDetails("sorceress");
 		customer = customerDao.add(customer);
 
 		customerDao.disable(customer.getId());
@@ -110,10 +98,6 @@ class MysqlCustomerDaoTest {
 
 	@Test
 	void testDeleteCustomer() {
-		Customer customer = new Customer();
-		customer.setName("Luke");
-		customer.setSurname("Skywalker");
-		customer.setMoreDetails("jedi");
 		customer = customerDao.add(customer);
 
 		customerDao.delete(customer.getId());

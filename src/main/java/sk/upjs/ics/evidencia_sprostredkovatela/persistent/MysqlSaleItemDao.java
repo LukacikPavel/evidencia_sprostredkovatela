@@ -36,8 +36,6 @@ public class MysqlSaleItemDao implements SaleItemDao{
 
 	@Override
 	public List<SaleItem> getAll() {
-//		String sql = "SELECT si.id, p.name productName, si.quantity, si.price_piece, si.price_total, s.sale_date "
-//				+ "FROM sale_item si JOIN product p ON (p.id = si.product_id) JOIN sale s ON (si.sale_id = s.id)";
 		String sql = "SELECT si.id, p.name productName, concat_ws(' ', c.name, c.surname) customerFullName, c.id customerId," + 
 				"si.quantity, si.price_piece, si.price_total, s.sale_date FROM sale_item si" + 
 				" JOIN product p ON (p.id = si.product_id) JOIN sale s ON (si.sale_id = s.id)" + 

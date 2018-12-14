@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,6 +37,7 @@ public class AddSaleController {
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<SaleItem> selectedSaleItem = new SimpleObjectProperty<>();
 	private Customer customer;
+	private Parent parent;
 	private double totalPrice, discount, finalPrice;
 
 	@FXML
@@ -68,10 +70,12 @@ public class AddSaleController {
 	@FXML
 	private TextField finalPriceTextField;
 
-	public AddSaleController() {
+	public AddSaleController(Parent parent) {
+		this.parent = parent;
 	}
 
-	public AddSaleController(Customer customer) {
+	public AddSaleController(Parent parent, Customer customer) {
+		this.parent = parent;
 		this.customer = customer;
 	}
 
@@ -112,7 +116,7 @@ public class AddSaleController {
 
 	@FXML
 	void closeSaleButtonClicked(ActionEvent event) {
-		App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
+		closeSaleButton.getScene().setRoot(parent);
 	}
 
 	@FXML
@@ -130,7 +134,7 @@ public class AddSaleController {
 			saleItemDao.add(si);
 			productDao.decreaseQuantity(si.getQuantity(), si.getProductId());
 		}
-		App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
+		createSaleButton.getScene().setRoot(parent);
 	}
 
 	@FXML

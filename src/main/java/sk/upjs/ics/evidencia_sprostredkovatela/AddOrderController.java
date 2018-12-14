@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -33,6 +34,7 @@ public class AddOrderController {
 	private ObservableList<OrderItem> orderItemsList = FXCollections.observableArrayList();
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<OrderItem> selectedOrderItem = new SimpleObjectProperty<>();
+	private Parent parent;
 	private Customer customer;
 	private double totalPrice, discount, finalPrice;
 
@@ -66,10 +68,12 @@ public class AddOrderController {
 	@FXML
 	private TextField finalPriceTextField;
 
-	public AddOrderController() {
+	public AddOrderController(Parent parent) {
+		this.parent = parent;
 	}
 
-	public AddOrderController(Customer customer) {
+	public AddOrderController(Parent parent, Customer customer) {
+		this.parent = parent;
 		this.customer = customer;
 	}
 
@@ -114,7 +118,7 @@ public class AddOrderController {
 
 	@FXML
 	void closeOrderButtonClicked(ActionEvent event) {
-		App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
+		closeOrderButton.getScene().setRoot(parent);
 	}
 
 	@FXML
@@ -131,7 +135,7 @@ public class AddOrderController {
 			si.setOrderId(order.getId());
 			orderItemDao.add(si);
 		}
-		App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
+		createOrderButton.getScene().setRoot(parent);
 	}
 
 	@FXML

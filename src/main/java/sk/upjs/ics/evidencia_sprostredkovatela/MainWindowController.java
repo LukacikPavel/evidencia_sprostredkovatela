@@ -2,6 +2,7 @@ package sk.upjs.ics.evidencia_sprostredkovatela;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 
 public class MainWindowController {
@@ -14,6 +15,9 @@ public class MainWindowController {
 
 	@FXML
 	private Button salesListButton;
+	
+	@FXML
+    private Button ordersListButton;
 
 	@FXML
 	void initialize() {
@@ -22,7 +26,9 @@ public class MainWindowController {
 
 	@FXML
 	void customersListButtonClicked(ActionEvent event) {
-		App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
+		Parent parent = customersListButton.getParent();
+		parent.idProperty().set("main");
+		App.changeScene(new CustomersListController(parent), "CustomersList.fxml", "Zákazníci");
 
 	}
 
@@ -34,12 +40,16 @@ public class MainWindowController {
 
 	@FXML
 	void salesListButtonClicked(ActionEvent event) {
-		App.changeScene(new SalesHistoryController(), "SalesHistory.fxml", "Predaje");
+		Parent parent = salesListButton.getParent();
+		parent.idProperty().set("main");
+		App.changeScene(new SalesHistoryController(parent), "SalesHistory.fxml", "Predaje");
 	}
 	
 	@FXML
 	void ordersListButtonClicked(ActionEvent event) {
-		App.changeScene(new OrdersHistoryController(), "OrdersHistory.fxml", "Objednávky");
+		Parent parent = ordersListButton.getParent();
+		parent.idProperty().set("main");
+		App.changeScene(new OrdersHistoryController(parent), "OrdersHistory.fxml", "Objednávky");
 	}
 
 

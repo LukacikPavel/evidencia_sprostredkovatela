@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
@@ -13,10 +14,12 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
@@ -39,7 +42,7 @@ public class SalesHistoryController {
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private Customer customer;
 	private Product product;
-	private String previousScene;
+	private Parent parent;
 
 	@FXML
 	private TableView<SaleItem> saleItemsTableView;
@@ -64,33 +67,27 @@ public class SalesHistoryController {
 
 	@FXML
 	private Button selectCustomerButton;
-	
-    @FXML
-    private TextField quantityAllTextField;
 
-    @FXML
-    private TextField priceAllTextField;
+	@FXML
+	private TextField quantityAllTextField;
 
+	@FXML
+	private TextField priceAllTextField;
 
-	public SalesHistoryController() {
-		previousScene = "MainWindow";
+	public SalesHistoryController(Parent parent) {
+		this.parent = parent;
 		customer = new Customer();
 		customer.setId(Long.MIN_VALUE);
 	}
 
-	public SalesHistoryController(Customer customer) {
-		previousScene = "CustomersList";
+	public SalesHistoryController(Parent parent, Customer customer) {
+		this.parent = parent;
 		this.customer = customer;
 	}
 
 	@FXML
 	void backButtonClicked(ActionEvent event) {
-		if (previousScene.equals("CustomersList")) {
-			App.changeScene(new CustomersListController(false), "CustomersList.fxml", "Zákazníci");
-		}
-		if (previousScene.equals("MainWindow")) {
-			App.changeScene(new MainWindowController(), "MainWindow.fxml", "Hlavné okno");
-		}
+		backButton.getScene().setRoot(parent);
 	}
 
 	@FXML
@@ -105,7 +102,9 @@ public class SalesHistoryController {
 
 	@FXML
 	void selectCustomerButtonClicked(ActionEvent event) {
-		CustomersListController controller = new CustomersListController(true);
+		Parent parent = selectCustomerButton.getParent();
+		parent.idProperty().set("select");
+		CustomersListController controller = new CustomersListController(parent);
 		App.showModalWindow(controller, "CustomersList.fxml", "Zákazníci");
 		customer = controller.getSelectedCustomer();
 		if (customer != null) {
@@ -168,7 +167,16 @@ public class SalesHistoryController {
 		columnsVisibility.put("Dátum predaja", saleDateCol.visibleProperty());
 
 		saleItemsList = FXCollections.observableArrayList(saleItemDao.getAll());
-		saleItemsTableView.setItems(filterSaleItems());
+		FilteredList<SaleItem> filteredList = filterSaleItems();
+		saleItemsTableView.setItems(filteredList);
+		
+		if (parent.idProperty().getValue().equals("main")) {
+			updateQuantityAndPriceAll(filteredList);
+		}
+		
+		filteredList.addListener((ListChangeListener<SaleItem>) c -> {
+			updateQuantityAndPriceAll(filteredList);
+		});
 		selectCustomerButton.setVisible(true);
 
 		if (customer.getName() != null) {
@@ -182,9 +190,20 @@ public class SalesHistoryController {
 			contextMenu.getItems().add(menuItem);
 		}
 		saleItemsTableView.setContextMenu(contextMenu);
-//		saleItemsList.addListener(() -> {  dokoncit !!!!!! TO DO ""
-//			
-//		});
+	}
+
+	private void updateQuantityAndPriceAll(List<SaleItem> list) {
+		int quantityAll = 0;
+		double priceAll = 0;
+		for (SaleItem si : list) {
+			quantityAll += si.getQuantity();
+			priceAll += si.getPriceTotal();
+		}
+		priceAll = priceAll*100;
+		priceAll = Math.round(priceAll);
+		priceAll = priceAll /100;
+		quantityAllTextField.setText(String.valueOf(quantityAll));
+		priceAllTextField.setText(String.valueOf(priceAll));
 	}
 
 	private FilteredList<SaleItem> filterSaleItems() {
@@ -226,8 +245,9 @@ public class SalesHistoryController {
 
 		filteredSaleItems.predicateProperty()
 				.bind(Bindings.createObjectBinding(
-						() -> productFilter.get().and(dateFilter.get().and(customerNameFilter.get().and(customerIdFilter.get()))), productFilter,
-						dateFilter, customerNameFilter));
+						() -> productFilter.get()
+								.and(dateFilter.get().and(customerNameFilter.get().and(customerIdFilter.get()))),
+						productFilter, dateFilter, customerNameFilter));
 
 		return filteredSaleItems;
 	}

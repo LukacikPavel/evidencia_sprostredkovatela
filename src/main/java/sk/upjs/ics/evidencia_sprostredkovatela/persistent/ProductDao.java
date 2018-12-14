@@ -7,7 +7,7 @@ public interface ProductDao {
 
 	Product add(Product product);
 
-	 List<Product> getAllEnabled();
+	 List<Product> getAllValid();
 
 	List<Product> getAll();
 

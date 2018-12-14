@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
@@ -33,7 +34,7 @@ public class CustomersListController {
 	private ObservableList<Customer> customersList;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<Customer> selectedCustomer = new SimpleObjectProperty<>();
-	private boolean selecting = false;
+	private Parent parent;
 
 	@FXML
 	private TextField nameTextField;
@@ -71,8 +72,8 @@ public class CustomersListController {
 	@FXML
 	private TableView<Customer> customersTableView;
 
-	public CustomersListController(boolean selecting) {
-		this.selecting = selecting;
+	public CustomersListController(Parent parent) {
+		this.parent = parent;
 	}
 
 	Customer getSelectedCustomer() {
@@ -81,7 +82,7 @@ public class CustomersListController {
 
 	@FXML
 	void initialize() {
-		if (selecting) {
+		if (parent.idProperty().getValue().equals("select")) {
 			selectCustomerButton.setVisible(true);
 		}
 
@@ -175,12 +176,11 @@ public class CustomersListController {
 
 	@FXML
 	void backButtonClicked(ActionEvent event) {
-		if (selecting) {
+		selectedCustomer.set(null);
+		if (parent.idProperty().getValue().equals("select")) {
 			backButton.getScene().getWindow().hide();
-			selectedCustomer.set(null);
-			;
 		} else {
-			App.changeScene(new MainWindowController(), "MainWindow.fxml", "Hlavné okno");
+			backButton.getScene().setRoot(parent);			
 		}
 	}
 
@@ -200,25 +200,25 @@ public class CustomersListController {
 
 	@FXML
 	void salesHistoryButtonClicked(ActionEvent event) {
-		SalesHistoryController controller = new SalesHistoryController(selectedCustomer.get());
+		SalesHistoryController controller = new SalesHistoryController(salesHistoryButton.getParent(), selectedCustomer.get());
 		App.changeScene(controller, "SalesHistory.fxml", "História predajov");
 	}
 
 	@FXML
 	void ordersHistoryButtonClicked(ActionEvent event) {
-		OrdersHistoryController controller = new OrdersHistoryController(selectedCustomer.get());
+		OrdersHistoryController controller = new OrdersHistoryController(ordersHistoryButton.getParent(), selectedCustomer.get());
 		App.changeScene(controller, "OrdersHistory.fxml", "História objednávok");
 	}
 
 	@FXML
 	void addSaleButtonClicked(ActionEvent event) {
-		AddSaleController controller = new AddSaleController(selectedCustomer.get());
+		AddSaleController controller = new AddSaleController(addSaleButton.getParent(), selectedCustomer.get());
 		App.changeScene(controller, "AddSale.fxml", "Nový predaj");
 	}
 
 	@FXML
 	void addOrderButtonClicked(ActionEvent event) {
-		AddOrderController controller = new AddOrderController(selectedCustomer.get());
+		AddOrderController controller = new AddOrderController(addOrderButton.getParent(), selectedCustomer.get());
 		App.changeScene(controller, "AddOrder.fxml", "Nová objednávka");
 	}
 }
