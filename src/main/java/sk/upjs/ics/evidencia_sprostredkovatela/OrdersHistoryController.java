@@ -7,12 +7,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
+import java.util.List;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -29,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.converter.LocalDateStringConverter;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
+import sk.upjs.ics.evidencia_sprostredkovatela.entity.Product;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.OrderItem;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.OrderItemDao;
@@ -39,6 +42,7 @@ public class OrdersHistoryController {
 	private ObservableList<OrderItem> orderItemsList;
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private Customer customer;
+	private Product product;
 	private Parent parent;
 
 	@FXML
@@ -65,8 +69,16 @@ public class OrdersHistoryController {
 	@FXML
 	private Button selectCustomerButton;
 
+	@FXML
+	private TextField quantityAllTextField;
+
+	@FXML
+	private TextField priceAllTextField;
+
 	public OrdersHistoryController(Parent parent) {
 		this.parent = parent;
+		customer = new Customer();
+		customer.setId(Long.MIN_VALUE);
 	}
 
 	public OrdersHistoryController(Parent parent, Customer customer) {
@@ -81,6 +93,13 @@ public class OrdersHistoryController {
 
 	@FXML
 	void selectProductButtonClicked(ActionEvent event) {
+		ProductListController controller = new ProductListController();
+		App.showModalWindow(controller, "ProductsList.fxml", "Tovary");
+		product = controller.getSelectedProduct();
+		if (product != null) {
+			productTextField.setText(product.getName());
+		}
+
 		
 	}
 	
@@ -91,8 +110,10 @@ public class OrdersHistoryController {
 		CustomersListController controller = new CustomersListController(parent);
 		App.showModalWindow(controller, "CustomersList.fxml", "Zákazníci");
 		customer = controller.getSelectedCustomer();
-		fillTableView();
-    }
+		if (customer != null) {
+			nameTextField.setText(customer.getName() + " " + customer.getSurname());
+		}
+  }
 
 	@FXML
 	void initialize() {
@@ -101,6 +122,13 @@ public class OrdersHistoryController {
 		idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 		orderItemsTableView.getColumns().add(idCol);
 		columnsVisibility.put("ID", idCol.visibleProperty());
+
+	TableColumn<OrderItem, String> customerNameCol = new TableColumn<>("Zákazník");
+		customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerFullName"));
+		orderItemsTableView.getColumns().add(customerNameCol);
+		columnsVisibility.put("Zákazník", customerNameCol.visibleProperty());
+
+
 
 		TableColumn<OrderItem, String> productNameCol = new TableColumn<>("Produkt");
 		productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
@@ -143,7 +171,31 @@ public class OrdersHistoryController {
 		orderItemsTableView.getColumns().add(orderDateCol);
 		columnsVisibility.put("Dátum predaja", orderDateCol.visibleProperty());
 
-		fillTableView();
+		//fillTableView();
+
+                orderItemsList = FXCollections.observableArrayList(orderItemDao.getAll());
+		FilteredList<OrderItem> filteredList = filterOrderItems();
+		orderItemsTableView.setItems(filteredList);
+		
+		if (parent.idProperty().getValue().equals("main")) {
+			updateQuantityAndPriceAll(filteredList);
+
+		}
+		
+		filteredList.addListener((ListChangeListener<OrderItem>) c -> {
+			updateQuantityAndPriceAll(filteredList);
+		});
+		selectCustomerButton.setVisible(true);
+
+		if (customer.getName() != null) {
+			nameTextField.setText(customer.getName() + " " + customer.getSurname());
+
+
+
+
+		}
+
+
 
 		ContextMenu contextMenu = new ContextMenu();
 		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
@@ -153,18 +205,23 @@ public class OrdersHistoryController {
 		}
 		orderItemsTableView.setContextMenu(contextMenu);
 	}
-	
-	private void fillTableView() {
-		if (customer != null) {
-			nameTextField.setText(customer.getName() + " " + customer.getSurname());
-			orderItemsList = FXCollections.observableArrayList(orderItemDao.getByCustomer(customer.getId()));
-		} else {
-			orderItemsList = FXCollections.observableArrayList(orderItemDao.getAll());
-			selectCustomerButton.setVisible(true);
-		}
 
-		orderItemsTableView.setItems(filterOrderItems());
+	private void updateQuantityAndPriceAll(List<OrderItem> list) {
+		int quantityAll = 0;
+		double priceAll = 0;
+		for (OrderItem si : list) {
+			quantityAll += si.getQuantity();
+			priceAll += si.getPriceTotal();
+
+		}
+		priceAll = priceAll*100;
+		priceAll = Math.round(priceAll);
+		priceAll = priceAll /100;
+		quantityAllTextField.setText(String.valueOf(quantityAll));
+		priceAllTextField.setText(String.valueOf(priceAll));
 	}
+
+	
 
 	private FilteredList<OrderItem> filterOrderItems() {
 		
@@ -173,6 +230,9 @@ public class OrdersHistoryController {
 
 		ObjectProperty<Predicate<OrderItem>> productFilter = new SimpleObjectProperty<>();
 		ObjectProperty<Predicate<OrderItem>> dateFilter = new SimpleObjectProperty<>();
+		ObjectProperty<Predicate<OrderItem>> customerNameFilter = new SimpleObjectProperty<>();
+		ObjectProperty<Predicate<OrderItem>> customerIdFilter = new SimpleObjectProperty<>();
+
 
 		productFilter
 				.bind(Bindings
@@ -193,8 +253,24 @@ public class OrdersHistoryController {
 					&& !finalMax.isBefore(ti.getCreateDate().toLocalDate());
 		}, startDatePicker.valueProperty(), endDatePicker.valueProperty()));
 
-		filteredOrderItems.predicateProperty().bind(Bindings
-				.createObjectBinding(() -> productFilter.get().and(dateFilter.get()), productFilter, dateFilter));
+
+		customerNameFilter
+				.bind(Bindings
+						.createObjectBinding(
+								() -> orderItem -> orderItem.getCustomerFullName().toLowerCase()
+										.contains(nameTextField.getText().toLowerCase()),
+								nameTextField.textProperty()));
+
+		customerIdFilter
+				.bind(Bindings.createObjectBinding(() -> orderItem -> customer.getId().equals(orderItem.getCustomerId())
+						|| customer.getId().equals(Long.MIN_VALUE)));
+
+		filteredOrderItems.predicateProperty()
+				.bind(Bindings.createObjectBinding(
+						() -> productFilter.get()
+								.and(dateFilter.get().and(customerNameFilter.get().and(customerIdFilter.get()))),
+						productFilter, dateFilter, customerNameFilter));
+
 
 		return filteredOrderItems;
 		
