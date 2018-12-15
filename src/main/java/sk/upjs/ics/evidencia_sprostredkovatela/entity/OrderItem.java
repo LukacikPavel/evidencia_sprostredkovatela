@@ -9,7 +9,8 @@ public class OrderItem {
 	private LocalDateTime createDate;
 	private Long customerId;
 	private String customerName;
-	private String customerSurname;
+	private String customerFullName;
+//		private String customerSurname;
 	private Long productId;
 	private String productName;
 	private int quantity;
@@ -51,18 +52,23 @@ public class OrderItem {
 	public String getCustomerName() {
 		return customerName;
 	}
+	
+	public String getCustomerFullName() {
+		return customerFullName;
+	}
+
 
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
 
-	public String getCustomerSurname() {
-		return customerSurname;
-	}
+//	public String getCustomerSurname() {
+//		return customerSurname;
+//	}
 
-	public void setCustomerSurname(String customerSurname) {
-		this.customerSurname = customerSurname;
-	}
+//	public void setCustomerSurname(String customerSurname) {
+//		this.customerSurname = customerSurname;
+//	}
 
 	public Long getProductId() {
 		return productId;
@@ -102,5 +108,12 @@ public class OrderItem {
 
 	public void setPriceTotal(double totalPrice) {
 		this.priceTotal = totalPrice;
+	}
+
+	public void setCustomerFullname(String customerFullName2) {
+		this.customerFullName=customerFullName2;
+		// TODO Auto-generated method stub
+		
+		
 	}
 }

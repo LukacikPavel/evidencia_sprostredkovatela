@@ -24,6 +24,7 @@ import sk.upjs.ics.evidencia_sprostredkovatela.entity.Product;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Order;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.OrderItem;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
+import sk.upjs.ics.evidencia_sprostredkovatela.persistent.ProductDao;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.OrderDao;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.OrderItemDao;
 
@@ -32,6 +33,8 @@ public class AddOrderController {
 	private OrderItemDao orderItemDao = DaoFactory.INSTANCE.getOrderItemDao();
 	private OrderDao orderDao = DaoFactory.INSTANCE.getOrderDao();
 	private ObservableList<OrderItem> orderItemsList = FXCollections.observableArrayList();
+	private ProductDao productDao = DaoFactory.INSTANCE.getProductDao();
+
 	private Map<String, BooleanProperty> columnsVisibility = new LinkedHashMap<>();
 	private ObjectProperty<OrderItem> selectedOrderItem = new SimpleObjectProperty<>();
 	private Parent parent;
@@ -103,17 +106,16 @@ public class AddOrderController {
 
 	@FXML
 	void changeQuantityButtonClicked(ActionEvent event) {
-		ChangeQuantityController controller = new ChangeQuantityController(selectedOrderItem.get());
+                OrderItem orderItem = selectedOrderItem.get();
+		ChangeQuantityOController controller = new ChangeQuantityOController(selectedOrderItem.get());
 		App.showModalWindow(controller, "ChangeQuantity.fxml", "Množstvo");
-		int quantity = controller.getQuantity();
-		if (quantity > 0) {
-			int index = orderItemsList.indexOf(selectedOrderItem.get());
-			OrderItem orderItem = selectedOrderItem.get();
-			orderItem.setQuantity(quantity);
-			orderItem.setPriceTotal(quantity * orderItem.getPricePiece());
-			orderItemsList.set(index, orderItem);
-			calculatePrice();
-		}
+		
+		App.showModalWindow(controller, "ChangeQuantity.fxml", "Množstvo");
+		int index = orderItemsList.indexOf(orderItem);
+		orderItem.setPriceTotal(orderItem.getQuantity() * orderItem.getPricePiece());
+		orderItemsList.set(index, orderItem);
+		calculatePrice();
+		
 	}
 
 	@FXML
@@ -134,6 +136,8 @@ public class AddOrderController {
 		for (OrderItem si : orderItemsList) {
 			si.setOrderId(order.getId());
 			orderItemDao.add(si);
+			productDao.decreaseQuantity(si.getQuantity(), si.getProductId());
+
 		}
 		createOrderButton.getScene().setRoot(parent);
 	}
@@ -189,8 +193,16 @@ public class AddOrderController {
 				finalPrice = totalPrice;
 				finalPriceTextField.setText(String.valueOf(finalPrice));
 			} else {
-				discount = Double.parseDouble(discountTextField.getText());
-				finalPrice = totalPrice - (totalPrice * (discount / 100));
+				discountTextField.setText(newValue.replaceAll("[^0-9.]", ""));
+				if (!newValue.isEmpty() && !newValue.startsWith(".")) {
+					discount = Double.parseDouble(discountTextField.getText());
+				}
+				if (discount > totalPrice) {
+					discount = totalPrice;
+					discountTextField.setText(totalPriceTextField.getText());
+				}
+				finalPrice = totalPrice - discount;
+
 				finalPriceTextField.setText(String.valueOf(finalPrice));
 			}
 

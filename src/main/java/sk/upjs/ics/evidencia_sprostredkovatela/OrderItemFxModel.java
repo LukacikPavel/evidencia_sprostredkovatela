@@ -9,10 +9,10 @@ import sk.upjs.ics.evidencia_sprostredkovatela.entity.OrderItem;
 public class OrderItemFxModel {
 	private Long id;
 	private Long orderId;
-	private LocalDateTime orderDate;
+	private LocalDateTime createDate;
 	private Long customerId;
 	private StringProperty customerName = new SimpleStringProperty();
-	private StringProperty customerSurname = new SimpleStringProperty();
+	private StringProperty customerFullName = new SimpleStringProperty();
 	private Long productId;
 	private StringProperty productName = new SimpleStringProperty();
 	private int quantity;
@@ -22,10 +22,10 @@ public class OrderItemFxModel {
 	public void setOrderItem(OrderItem orderItem) {
 		setId(orderItem.getId());
 		setOrderId(orderItem.getOrderId());
-		setOrderDate(orderItem.getOrderDate());
+		setCreateDate(orderItem.getCreateDate());
 		setCustomerId(orderItem.getOrderId());
 		setCustomerName(orderItem.getCustomerName());
-		setCustomerSurname(orderItem.getCustomerSurname());
+		setCustomerFullName(orderItem.getCustomerFullName());
 		setProductId(orderItem.getProductId());
 		setProductName(orderItem.getProductName());
 		setQuantity(orderItem.getQuantity());
@@ -37,10 +37,10 @@ public class OrderItemFxModel {
 		OrderItem orderItem = new OrderItem();
 		orderItem.setId(getId());
 		orderItem.setOrderId(getOrderId());
-		orderItem.setOrderDate(getOrderDate());
+		orderItem.setCreateDate(getCreateDate());
 		orderItem.setCustomerId(getCustomerId());
 		orderItem.setCustomerName(getCustomerName());
-		orderItem.setCustomerSurname(getCustomerSurname());
+		orderItem.setCustomerFullname(getCustomerFullName());
 		orderItem.setProductId(getProductId());
 		orderItem.setProductName(getProductName());
 		orderItem.setQuantity(getQuantity());
@@ -65,12 +65,12 @@ public class OrderItemFxModel {
 		this.orderId = orderId;
 	}
 
-	public LocalDateTime getOrderDate() {
-		return orderDate;
+	public LocalDateTime getCreateDate() {
+		return createDate;
 	}
 
-	public void setOrderDate(LocalDateTime orderDate) {
-		this.orderDate = orderDate;
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
 	}
 
 	public Long getCustomerId() {
@@ -93,17 +93,16 @@ public class OrderItemFxModel {
 		return customerName;
 	}
 
-	public String getCustomerSurname() {
-		return customerSurname.get();
+	public String getCustomerFullName() {
+		return customerFullName.get();
 	}
 
-	public void setCustomerSurname(String customerSurname) {
-		this.customerSurname.set(customerSurname);
-		;
-	}
+	public void setCustomerFullName(String customerSurname) {
+		this.customerFullName.set(customerSurname); // TO DO
+			}
 
 	public StringProperty customerSurnameProperty() {
-		return customerSurname;
+		return customerFullName;
 	}
 
 	public Long getProductId() {
