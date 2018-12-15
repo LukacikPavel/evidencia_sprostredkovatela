@@ -20,7 +20,7 @@ class MysqlCustomerDaoTest {
 		customer.setSurname("Auditore");
 		customer.setMoreDetails("da Firenze");
 	}
-	
+
 	@Test
 	void testGetAll() {
 		customer = customerDao.add(customer);
@@ -87,12 +87,14 @@ class MysqlCustomerDaoTest {
 	void testDisableCustomer() {
 		customer = customerDao.add(customer);
 
+		List<Customer> listBefore = customerDao.getAllEnabled();
 		customerDao.disable(customer.getId());
+		List<Customer> listAfter = customerDao.getAllEnabled();
 
-		List<Customer> list = customerDao.getAllEnabled();
-		Customer latestCustomerEnabled = list.get(list.size() - 1);
+		Customer latestCustomerEnabled = listAfter.get(listAfter.size() - 1);
 		assertNotEquals(customer.getId(), latestCustomerEnabled.getId());
-
+		assertNotEquals(listBefore.size(), listAfter.size());
+		
 		customerDao.delete(customer.getId());
 	}
 
@@ -100,10 +102,13 @@ class MysqlCustomerDaoTest {
 	void testDeleteCustomer() {
 		customer = customerDao.add(customer);
 
+		List<Customer> listBefore = customerDao.getAll();
 		customerDao.delete(customer.getId());
-		List<Customer> list = customerDao.getAll();
-		Customer latestCustomer = list.get(list.size() - 1);
+		List<Customer> listAfter = customerDao.getAll();
+
+		Customer latestCustomer = listAfter.get(listAfter.size() - 1);
 		assertNotEquals(customer.getId(), latestCustomer.getId());
+		assertNotEquals(listBefore.size(), listAfter.size());
 	}
 
 }

@@ -2,15 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="264.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="157.0" prefWidth="264.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="21.0" layoutY="79.0" text="Množstvo" />
-      <Button fx:id="confirmButton" layoutX="180.0" layoutY="128.0" mnemonicParsing="false" onAction="#confirmButtonClicked" text="Potvrď" />
-      <Button fx:id="cancelButton" layoutX="117.0" layoutY="128.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Zruš" />
-      <TextField fx:id="quantityTextField" layoutX="92.0" layoutY="75.0" />
+      <Label layoutX="26.0" layoutY="55.0" text="Množstvo" />
+      <Button fx:id="confirmButton" layoutX="190.0" layoutY="102.0" mnemonicParsing="false" onAction="#confirmButtonClicked" text="Potvrdiť" />
+      <Button fx:id="cancelButton" layoutX="132.0" layoutY="102.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Zrušiť" />
+      <Spinner fx:id="quantitySpinner" layoutX="105.0" layoutY="51.0" prefHeight="26.0" prefWidth="126.0" />
    </children>
 </AnchorPane>

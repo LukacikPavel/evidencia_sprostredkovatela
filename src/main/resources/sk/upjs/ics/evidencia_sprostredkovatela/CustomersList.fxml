@@ -1,27 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <ImageView fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@preview.jpg" />
+         </image>
+      </ImageView>
       <TextField fx:id="nameTextField" layoutX="35.0" layoutY="73.0" prefHeight="26.0" prefWidth="111.0" />
       <TextField fx:id="surnameTextField" layoutX="184.0" layoutY="73.0" prefHeight="26.0" prefWidth="149.0" />
       <Label layoutX="75.0" layoutY="36.0" text="Meno" />
       <Label layoutX="232.0" layoutY="36.0" text="Priezvisko" />
-      <Label layoutX="415.0" layoutY="36.0" text="Blizsie urcenie" />
+      <Label layoutX="406.0" layoutY="36.0" text="Doplňujúce údaje" />
       <TextField fx:id="moreDetailsTextField" layoutX="378.0" layoutY="73.0" prefHeight="26.0" prefWidth="149.0" />
-      <Button fx:id="editCustomerButton" disable="true" layoutX="592.0" layoutY="199.0" mnemonicParsing="false" onAction="#editCustomerButtonClicked" text="Uprav" />
-      <Button fx:id="addCustomerButton" layoutX="593.0" layoutY="141.0" mnemonicParsing="false" onAction="#addCustomerButtonClicked" text="Pridaj" />
-      <Button fx:id="salesHistoryButton" disable="true" layoutX="562.0" layoutY="299.0" mnemonicParsing="false" onAction="#salesHistoryButtonClicked" text="História predajov" />
-      <TableView fx:id="customersTableView" layoutX="30.0" layoutY="121.0" prefHeight="314.0" prefWidth="510.0" />
-      <Button fx:id="addSaleButton" disable="true" layoutX="576.0" layoutY="252.0" mnemonicParsing="false" onAction="#addSaleButtonClicked" text="Nový predaj" />
-      <Button fx:id="addOrderButton" layoutX="562.0" layoutY="360.0" mnemonicParsing="false" onAction="#addOrderButtonClicked" text="Nová objednávka" />
+      <Button fx:id="editCustomerButton" disable="true" layoutX="574.0" layoutY="173.0" mnemonicParsing="false" onAction="#editCustomerButtonClicked" text="Uprav">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@editCustomer.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="addCustomerButton" layoutX="575.0" layoutY="121.0" mnemonicParsing="false" onAction="#addCustomerButtonClicked" text="Pridaj">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@addCustomer.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="salesHistoryButton" disable="true" layoutX="544.0" layoutY="288.0" mnemonicParsing="false" onAction="#salesHistoryButtonClicked" text="História predajov">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@notepad.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <TableView fx:id="customersTableView" layoutX="17.0" layoutY="121.0" prefHeight="314.0" prefWidth="510.0" />
+      <Button fx:id="addSaleButton" disable="true" layoutX="558.0" layoutY="238.0" mnemonicParsing="false" onAction="#addSaleButtonClicked" text="Nový predaj">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@addSale.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="addOrderButton" layoutX="543.0" layoutY="347.0" mnemonicParsing="false" onAction="#addOrderButtonClicked" text="Nová objednávka">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@addOrder.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Button fx:id="selectCustomerButton" layoutX="592.0" layoutY="73.0" mnemonicParsing="false" onAction="#selectCustomerButtonClicked" text="Vyber" visible="false" />
-      <Button fx:id="ordersHistoryButton" layoutX="555.0" layoutY="401.0" mnemonicParsing="false" onAction="#ordersHistoryButtonClicked" text="História objednávok" />
-      <Button fx:id="backButton" layoutX="630.0" layoutY="15.0" mnemonicParsing="false" onAction="#backButtonClicked" text="Späť" />
+      <Button fx:id="ordersHistoryButton" layoutX="537.0" layoutY="396.0" mnemonicParsing="false" onAction="#ordersHistoryButtonClicked" text="História objednávok">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@notepad.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="backButton" layoutX="630.0" layoutY="15.0" mnemonicParsing="false" onAction="#backButtonClicked">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@back.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </AnchorPane>

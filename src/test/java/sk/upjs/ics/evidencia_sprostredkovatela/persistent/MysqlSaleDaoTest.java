@@ -51,12 +51,12 @@ class MysqlSaleDaoTest {
 		sale = saleDao.add(sale);
 
 		List<Sale> list = saleDao.getAll();
-		Sale lastSale = list.get(list.size() - 1);
-		assertEquals(sale.getId(), lastSale.getId());
-		assertEquals(sale.getCustomerId(), lastSale.getCustomerId());
-		assertEquals(sale.getTotalPrice(), lastSale.getTotalPrice());
-		assertEquals(sale.getDiscount(), lastSale.getDiscount());
-		assertEquals(sale.getFinalPrice(), lastSale.getFinalPrice());
+		Sale latestSale = list.get(list.size() - 1);
+		assertEquals(sale.getId(), latestSale.getId());
+		assertEquals(sale.getCustomerId(), latestSale.getCustomerId());
+		assertEquals(sale.getTotalPrice(), latestSale.getTotalPrice());
+		assertEquals(sale.getDiscount(), latestSale.getDiscount());
+		assertEquals(sale.getFinalPrice(), latestSale.getFinalPrice());
 
 		saleDao.delete(sale.getId());
 		customerDao.delete(customer.getId());
@@ -96,12 +96,15 @@ class MysqlSaleDaoTest {
 		customer = customerDao.add(customer);
 		sale.setCustomerId(customer.getId());
 		sale = saleDao.add(sale);
-
+		
+		List<Sale> listBefore = saleDao.getAll();
 		saleDao.delete(sale.getId());
-		List<Sale> list = saleDao.getAll();
-		Sale latestSale = list.get(list.size() - 1);
-		assertNotEquals(latestSale.getId(), sale.getId());
-
+		List<Sale> listAfter = saleDao.getAll();
+		
+		Sale latestSale = listAfter.get(listAfter.size() - 1);
+		assertNotEquals(sale.getId(), latestSale.getId());
+		assertNotEquals(listBefore.size(), listAfter.size());
+		
 		customerDao.delete(customer.getId());
 	}
 

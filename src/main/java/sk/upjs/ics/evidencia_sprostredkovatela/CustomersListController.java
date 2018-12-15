@@ -200,13 +200,17 @@ public class CustomersListController {
 
 	@FXML
 	void salesHistoryButtonClicked(ActionEvent event) {
-		SalesHistoryController controller = new SalesHistoryController(salesHistoryButton.getParent(), selectedCustomer.get());
+		Parent parent = salesHistoryButton.getParent();
+		parent.idProperty().set("select");
+		SalesHistoryController controller = new SalesHistoryController(parent, selectedCustomer.get());
 		App.changeScene(controller, "SalesHistory.fxml", "História predajov");
 	}
 
 	@FXML
 	void ordersHistoryButtonClicked(ActionEvent event) {
-		OrdersHistoryController controller = new OrdersHistoryController(ordersHistoryButton.getParent(), selectedCustomer.get());
+		Parent parent = ordersHistoryButton.getParent();
+		parent.idProperty().set("select");
+		OrdersHistoryController controller = new OrdersHistoryController(parent, selectedCustomer.get());
 		App.changeScene(controller, "OrdersHistory.fxml", "História objednávok");
 	}
 

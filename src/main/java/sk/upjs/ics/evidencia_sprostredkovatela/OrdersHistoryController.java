@@ -27,7 +27,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.converter.LocalDateStringConverter;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.OrderItem;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;

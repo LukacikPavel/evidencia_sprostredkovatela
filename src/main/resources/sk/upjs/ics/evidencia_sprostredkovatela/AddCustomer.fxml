@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="nameTextField" layoutX="226.0" layoutY="87.0" />
       <TextField fx:id="surnameTextField" layoutX="226.0" layoutY="136.0" />
@@ -17,8 +17,8 @@
       <Label layoutX="70.0" layoutY="191.0" text="E-mail" />
       <Label layoutX="70.0" layoutY="241.0" text="Tel. číslo" />
       <Label layoutX="69.0" layoutY="290.0" text="Doplňujúce údaje" />
-      <Button fx:id="saveButton" layoutX="524.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Uložiť" />
-      <Button fx:id="cancelButton" layoutX="457.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Zrušiť" />
+      <Button fx:id="saveButton" layoutX="327.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Uložiť" />
+      <Button fx:id="cancelButton" layoutX="226.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Zrušiť" />
       <Button fx:id="disableButton" layoutX="375.0" layoutY="340.0" mnemonicParsing="false" onAction="#disableButtonClicked" text="Odobrať" visible="false" />
       <Label fx:id="nameLabel" layoutX="423.0" layoutY="91.0" textFill="RED" />
       <Label fx:id="surnameLabel" layoutX="423.0" layoutY="140.0" textFill="RED" />
