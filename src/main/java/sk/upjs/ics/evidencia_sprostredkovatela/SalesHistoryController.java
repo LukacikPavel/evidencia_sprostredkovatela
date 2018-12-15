@@ -172,6 +172,8 @@ public class SalesHistoryController {
 		
 		if (parent.idProperty().getValue().equals("main")) {
 			updateQuantityAndPriceAll(filteredList);
+		} else {
+			nameTextField.setEditable(false);;
 		}
 		
 		filteredList.addListener((ListChangeListener<SaleItem>) c -> {

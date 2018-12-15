@@ -3,6 +3,7 @@ package sk.upjs.ics.evidencia_sprostredkovatela;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.CustomerDao;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
 
@@ -13,6 +14,9 @@ public class DisableConfirmationController {
 
     @FXML
     private Button noButton;
+    
+    @FXML
+    private Label textLabel;
 
     private long id;
     private CustomerDao customerDao;

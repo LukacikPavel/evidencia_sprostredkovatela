@@ -39,7 +39,6 @@ class MysqlCustomerDaoTest {
 
 		List<Customer> all = customerDao.getAll();
 		List<Customer> enabled = customerDao.getAllEnabled();
-		assertNotNull(enabled);
 		assertNotEquals(all.size(), enabled.size());
 
 		customerDao.delete(customer.getId());
@@ -87,13 +86,11 @@ class MysqlCustomerDaoTest {
 	void testDisableCustomer() {
 		customer = customerDao.add(customer);
 
-		List<Customer> listBefore = customerDao.getAllEnabled();
 		customerDao.disable(customer.getId());
-		List<Customer> listAfter = customerDao.getAllEnabled();
+		List<Customer> list = customerDao.getAllEnabled();
 
-		Customer latestCustomerEnabled = listAfter.get(listAfter.size() - 1);
+		Customer latestCustomerEnabled = list.get(list.size() - 1);
 		assertNotEquals(customer.getId(), latestCustomerEnabled.getId());
-		assertNotEquals(listBefore.size(), listAfter.size());
 		
 		customerDao.delete(customer.getId());
 	}

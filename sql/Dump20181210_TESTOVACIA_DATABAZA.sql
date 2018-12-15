@@ -56,7 +56,7 @@ DROP TABLE IF EXISTS `group`;
 CREATE TABLE `group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `validity` tinyint(4) DEFAULT NULL,
+  `validity` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -146,7 +146,7 @@ CREATE TABLE `product` (
   `price` decimal(6,2) NOT NULL,
   `group_id` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `validity` tinyint(4) DEFAULT NULL,
+  `validity` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `fk_tovary_skupiny_idx` (`group_id`),
   CONSTRAINT `fk_tovary_skupiny` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`)

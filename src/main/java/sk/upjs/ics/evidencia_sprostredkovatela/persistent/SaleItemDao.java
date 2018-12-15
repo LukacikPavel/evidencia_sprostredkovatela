@@ -10,8 +10,6 @@ public interface SaleItemDao {
 	
 	List<SaleItem> getAll();
 	
-	List<SaleItem> getByCustomer(Long id);
-	
 	void save(SaleItem saleItem);
 
 	void delete(long id);

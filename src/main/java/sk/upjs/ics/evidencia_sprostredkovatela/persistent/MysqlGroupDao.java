@@ -20,7 +20,7 @@ public class MysqlGroupDao implements GroupDao{
 	@Override
 	public Group add(Group group) {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-		simpleJdbcInsert.withTableName("group");
+		simpleJdbcInsert.withTableName("`group`");
 		simpleJdbcInsert.usingGeneratedKeyColumns("id");
 		simpleJdbcInsert.usingColumns("name");
 		Map<String, Object> values = new HashMap<>();
@@ -31,7 +31,7 @@ public class MysqlGroupDao implements GroupDao{
 	}
 
 	@Override
-	public List<Group> getAllEnabled() {
+	public List<Group> getAllValid() {
 		String sql = "SELECT id, name FROM `group` WHERE validity = 1";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Group.class));
 	}
@@ -60,7 +60,7 @@ public class MysqlGroupDao implements GroupDao{
 	}
 
 	@Override
-	public void disable(long id) {
+	public void setNotValid(long id) {
 		int disabled = jdbcTemplate.update("UPDATE `group` SET validity = 0 WHERE id = ?", id);
 		if (disabled == 0) {
 			throw new CustomerNotFoundException(id);

@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
-import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Group;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Product;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;

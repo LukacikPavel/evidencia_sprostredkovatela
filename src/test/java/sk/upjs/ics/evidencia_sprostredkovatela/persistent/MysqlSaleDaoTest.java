@@ -32,8 +32,7 @@ class MysqlSaleDaoTest {
 
 	@Test
 	void testGetAll() {
-		customer = customerDao.add(customer);
-		sale.setCustomerId(customer.getId());
+		setup();
 		saleDao.add(sale);
 
 		List<Sale> list = saleDao.getAll();
@@ -41,13 +40,12 @@ class MysqlSaleDaoTest {
 		assertTrue(list.size() > 0);
 
 		saleDao.delete(sale.getId());
-		customerDao.delete(customer.getId());
+		cleanup();
 	}
 
 	@Test
 	void testAddSale() {
-		customer = customerDao.add(customer);
-		sale.setCustomerId(customer.getId());
+		setup();
 		sale = saleDao.add(sale);
 
 		List<Sale> list = saleDao.getAll();
@@ -59,13 +57,12 @@ class MysqlSaleDaoTest {
 		assertEquals(sale.getFinalPrice(), latestSale.getFinalPrice());
 
 		saleDao.delete(sale.getId());
-		customerDao.delete(customer.getId());
+		cleanup();
 	}
 	
 	@Test
 	void testSaveSale() {
-		customer = customerDao.add(customer);
-		sale.setCustomerId(customer.getId());
+		setup();
 		sale = saleDao.add(sale);
 		
 		Sale modifieldSale = new Sale();
@@ -88,13 +85,12 @@ class MysqlSaleDaoTest {
 		assertEquals(modifieldSale.getFinalPrice(), latestSale.getFinalPrice());
 	
 		saleDao.delete(modifieldSale.getId());
-		customerDao.delete(customer.getId());
+		cleanup();
 	}
 
 	@Test
 	void testDeleteSale() {
-		customer = customerDao.add(customer);
-		sale.setCustomerId(customer.getId());
+		setup();
 		sale = saleDao.add(sale);
 		
 		List<Sale> listBefore = saleDao.getAll();
@@ -105,6 +101,15 @@ class MysqlSaleDaoTest {
 		assertNotEquals(sale.getId(), latestSale.getId());
 		assertNotEquals(listBefore.size(), listAfter.size());
 		
+		cleanup();
+	}
+	
+	void setup() {
+		customer = customerDao.add(customer);
+		sale.setCustomerId(customer.getId());
+	}
+	
+	void cleanup() {
 		customerDao.delete(customer.getId());
 	}
 

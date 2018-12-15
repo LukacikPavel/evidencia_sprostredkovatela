@@ -7,7 +7,7 @@ public interface GroupDao {
 
 	Group add(Group group);
 
-	List<Group> getAllEnabled();
+	List<Group> getAllValid();
 
 	List<Group> getAll();
 
@@ -15,6 +15,6 @@ public interface GroupDao {
 
 	void delete(long id);
 
-	void disable(long id);
+	void setNotValid(long id);
 
 }

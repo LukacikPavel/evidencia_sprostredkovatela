@@ -75,7 +75,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="backButton" layoutX="630.0" layoutY="15.0" mnemonicParsing="false" onAction="#backButtonClicked">
+      <Button fx:id="backButton" cancelButton="true" layoutX="630.0" layoutY="15.0" mnemonicParsing="false" onAction="#backButtonClicked">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>

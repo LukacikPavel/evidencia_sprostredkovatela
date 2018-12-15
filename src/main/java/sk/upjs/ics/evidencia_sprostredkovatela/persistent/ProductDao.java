@@ -17,7 +17,7 @@ public interface ProductDao {
 
 	void delete(long id);
 
-	void disable(long id);
+	void setNotValid(long id);
 
 	 
 }

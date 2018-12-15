@@ -67,15 +67,15 @@ public class MysqlProductDao implements ProductDao {
 	public void delete(long id) {
 		int deleted = jdbcTemplate.update("DELETE FROM product WHERE id = ?", id);
 		if (deleted == 0) {
-			throw new CustomerNotFoundException(id);
+			throw new ProductNotFoundException(id);
 		}
 	}
 
 	@Override
-	public void disable(long id) {
-		int disabled = jdbcTemplate.update("UPDATE product SET enable = 0 WHERE id = ?", id);
+	public void setNotValid(long id) {
+		int disabled = jdbcTemplate.update("UPDATE product SET validity = 0 WHERE id = ?", id);
 		if (disabled == 0) {
-			throw new CustomerNotFoundException(id);
+			throw new ProductNotFoundException(id);
 		}
 	}
 

@@ -28,6 +28,18 @@ class MysqlGroupDaoTest {
 
 		groupDao.delete(group.getId());
 	}
+	
+	@Test
+	void testGetAllValid() {
+		group = groupDao.add(group);
+		groupDao.setNotValid(group.getId());
+		
+		List<Group> all = groupDao.getAll();
+		List<Group> enabled = groupDao.getAllValid();
+		assertNotEquals(all.size(), enabled.size());
+		
+		groupDao.delete(group.getId());
+	}
 
 	@Test
 	void testAddGroup() {
@@ -57,19 +69,19 @@ class MysqlGroupDaoTest {
 		assertEquals(group.getId(), latestGroup.getId());
 		assertEquals(modifiedGroup.getId(), latestGroup.getId());
 		assertEquals(modifiedGroup.getName(), latestGroup.getName());
+		
+		groupDao.delete(modifiedGroup.getId());
 	}
 
 	@Test
-	void testDisableGroup() {
+	void testsetNotValidGroup() {
 		group = groupDao.add(group);
 
-		List<Group> listBefore = groupDao.getAllEnabled();
-		groupDao.disable(group.getId());
-		List<Group> listAfter = groupDao.getAllEnabled();
-		Group latestGroup = listAfter.get(listAfter.size() - 1);
+		groupDao.setNotValid(group.getId());
+		List<Group> list = groupDao.getAllValid();
+		Group latestGroup = list.get(list.size() - 1);
 
 		assertNotEquals(group.getId(), latestGroup.getId());
-		assertNotEquals(listBefore.size(), listAfter.size());
 		
 		groupDao.delete(group.getId());
 	}

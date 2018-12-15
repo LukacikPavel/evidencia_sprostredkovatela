@@ -63,6 +63,8 @@ public class EditCustomerController {
 			Customer customer = customerModel.getCustomer();
 			customerDao.save(customer);
 			saveButton.getScene().getWindow().hide();
+		} else {
+			App.showModalWindow(new ErrorCantSaveController(), "ErrorCantSave.fxml", "Error");
 		}
 	}
 
@@ -91,29 +93,23 @@ public class EditCustomerController {
 
 		nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue == null || newValue.isEmpty()) {
-				// saveButton.setDisable(true);
-				nameLabel.setText("Nesmie zostať nezadané");
+				nameLabel.setText("Nutné vyplniť");
 			} else {
 				nameLabel.setText("");
-				// saveButton.setDisable(false);
 			}
 		});
 		surnameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue == null || newValue.isEmpty()) {
-				// saveButton.setDisable(true);
-				surnameLabel.setText("Nesmie zostať nezadané");
+				surnameLabel.setText("Nutné vyplniť");
 			} else {
 				surnameLabel.setText("");
-				// saveButton.setDisable(false);
 			}
 		});
 		moreDetailsTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue == null || newValue.isEmpty()) {
-				// saveButton.setDisable(true);
-				moreDetailsLabel.setText("Nesmie zostať nezadané");
+				moreDetailsLabel.setText("Nutné vyplniť");
 			} else {
 				moreDetailsLabel.setText("");
-				// saveButton.setDisable(false);
 			}
 		});
 

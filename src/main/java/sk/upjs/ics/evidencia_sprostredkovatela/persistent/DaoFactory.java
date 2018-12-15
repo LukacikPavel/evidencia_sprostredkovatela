@@ -35,7 +35,6 @@ public enum DaoFactory {
 		}
 		return productDao;
 	}
-	
 
 	public SaleDao getSaleDao() {
 		if (saleDao == null) {
@@ -43,7 +42,7 @@ public enum DaoFactory {
 		}
 		return saleDao;
 	}
-	
+
 	public SaleItemDao getSaleItemDao() {
 		if (saleItemDao == null) {
 			saleItemDao = new MysqlSaleItemDao(getJdbcTemplate());
@@ -51,20 +50,19 @@ public enum DaoFactory {
 		return saleItemDao;
 	}
 
-public OrderDao getOrderDao() {
-	if (orderDao == null) {
-		orderDao = new MysqlOrderDao(getJdbcTemplate());
+	public OrderDao getOrderDao() {
+		if (orderDao == null) {
+			orderDao = new MysqlOrderDao(getJdbcTemplate());
+		}
+		return orderDao;
 	}
-	return orderDao;
-}
 
-public OrderItemDao getOrderItemDao() {
-	if (orderItemDao == null) {
-		orderItemDao = new MysqlOrderItemDao(getJdbcTemplate());
+	public OrderItemDao getOrderItemDao() {
+		if (orderItemDao == null) {
+			orderItemDao = new MysqlOrderItemDao(getJdbcTemplate());
+		}
+		return orderItemDao;
 	}
-	return orderItemDao;
-}
-
 
 	private JdbcTemplate getJdbcTemplate() {
 		if (jdbcTemplate == null) {

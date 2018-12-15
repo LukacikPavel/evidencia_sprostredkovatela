@@ -16,10 +16,8 @@ import javafx.util.converter.NumberStringConverter;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.GroupDao;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.ProductDao;
-import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Group;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Product;
-import sk.upjs.ics.evidencia_sprostredkovatela.persistent.CustomerDao;
 
 public class EditProductController {
 
