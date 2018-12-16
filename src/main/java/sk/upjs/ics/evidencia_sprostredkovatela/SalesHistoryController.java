@@ -92,7 +92,9 @@ public class SalesHistoryController {
 
 	@FXML
 	void selectProductButtonClicked(ActionEvent event) {
-		ProductListController controller = new ProductListController();
+		Parent parent = selectCustomerButton.getParent();
+		parent.idProperty().set("selesct");
+		ProductListController controller = new ProductListController(parent);
 		App.showModalWindow(controller, "ProductsList.fxml", "Tovary");
 		product = controller.getSelectedProduct();
 		if (product != null) {

@@ -64,7 +64,7 @@ public class AddCustomerController {
 			customerDao.add(customer);
 			saveButton.getScene().getWindow().hide();
 		} else {
-			App.showModalWindow(new ErrorCantSaveController(), "ErrorCantSave.fxml", "Error");
+			App.showModalWindow(new ErrorCantSaveController(), "Error.fxml", "Error");
 		}
 	}
 
@@ -80,6 +80,7 @@ public class AddCustomerController {
 
 	@FXML
 	void initialize() {
+		
 		nameTextField.textProperty().bindBidirectional(customerModel.nameProperty());
 		surnameTextField.textProperty().bindBidirectional(customerModel.surnameProperty());
 		emailTextField.textProperty().bindBidirectional(customerModel.emailProperty());

@@ -4,22 +4,34 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="716.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="367.0" prefWidth="448.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="nameTextField" layoutX="226.0" layoutY="87.0" />
-      <TextField fx:id="codeTextField" layoutX="226.0" layoutY="136.0" />
-      <TextField fx:id="priceTextField" layoutX="226.0" layoutY="187.0" />
-      <TextField fx:id="quantityTextField" layoutX="226.0" layoutY="286.0" />
-      <Label layoutX="70.0" layoutY="91.0" text="Názov tovaru" />
-      <Label layoutX="70.0" layoutY="140.0" text="Kód Tovaru" />
-      <Label layoutX="70.0" layoutY="191.0" text="cena" />
-      <Label layoutX="70.0" layoutY="241.0" text="Skupina tovaru" />
-      <Label layoutX="69.0" layoutY="290.0" text="Počet na sklade" />
-      <Button fx:id="saveButton" layoutX="524.0" layoutY="340.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Uložiť" />
-      <Button fx:id="cancelButton" layoutX="457.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Zrušiť" />
-      <Button fx:id="disableButton" layoutX="375.0" layoutY="340.0" mnemonicParsing="false" onAction="#disableButtonClicked" text="Odobrať" visible="false" />
-      <ComboBox fx:id="groupComboBox" layoutX="225.0" layoutY="237.0" prefWidth="150.0" />
+      <ImageView fitHeight="448.0" fitWidth="448.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@background/preview.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="nameTextField" layoutX="190.0" layoutY="110.0" />
+      <TextField fx:id="codeTextField" layoutX="190.0" layoutY="171.0" />
+      <TextField fx:id="priceTextField" layoutX="190.0" layoutY="224.0" />
+      <TextField fx:id="quantityTextField" layoutX="190.0" layoutY="273.0" />
+      <Label layoutX="51.0" layoutY="114.0" text="Názov tovaru" />
+      <Label layoutX="56.0" layoutY="175.0" text="Kód Tovaru" />
+      <Label layoutX="62.0" layoutY="228.0" text="Cena kus" />
+      <Label layoutX="51.0" layoutY="59.0" text="Skupina tovaru" />
+      <Label layoutX="45.0" layoutY="277.0" text="Počet na sklade" />
+      <Button fx:id="saveButton" layoutX="365.0" layoutY="314.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Uložiť" />
+      <Button fx:id="cancelButton" layoutX="280.0" layoutY="314.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Zrušiť" />
+      <Button fx:id="disableButton" layoutX="60.0" layoutY="314.0" mnemonicParsing="false" onAction="#disableButtonClicked" text="Odobrať" visible="false" />
+      <ComboBox fx:id="groupComboBox" layoutX="189.0" layoutY="55.0" prefWidth="150.0" />
+      <Label fx:id="groupLabel" layoutX="353.0" layoutY="59.0" textFill="RED" />
+      <Label fx:id="nameLabel" layoutX="353.0" layoutY="114.0" textFill="RED" />
+      <Label fx:id="codeLabel" layoutX="353.0" layoutY="175.0" textFill="RED" />
+      <Label fx:id="priceLabel" layoutX="353.0" layoutY="228.0" textFill="RED" />
+      <Label fx:id="quantityLabel" layoutX="353.0" layoutY="277.0" textFill="RED" />
    </children>
 </AnchorPane>

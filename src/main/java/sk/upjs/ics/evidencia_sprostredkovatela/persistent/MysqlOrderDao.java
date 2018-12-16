@@ -21,10 +21,11 @@ public class MysqlOrderDao implements OrderDao {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("`order`");
 		simpleJdbcInsert.usingGeneratedKeyColumns("id");
-		simpleJdbcInsert.usingColumns("customer_id", "create_date");
+		simpleJdbcInsert.usingColumns("customer_id", "create_date", "shipping_date");
 		Map<String, Object> values = new HashMap<>();
 		values.put("customer_id", order.getCustomerId());
 		values.put("create_date", order.getCreateDate());
+		values.put("shipping_date", order.getShippingDate());
 		Long id = simpleJdbcInsert.executeAndReturnKey(values).longValue();
 		order.setId(id);
 		return order;
@@ -32,7 +33,7 @@ public class MysqlOrderDao implements OrderDao {
 
 	@Override
 	public List<Order> getAll() {
-		String sql = "SELECT id, customer_id, create_date FROM `order`";
+		String sql = "SELECT id, customer_id, create_date, shipping_date FROM `order`";
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Order.class));
 	}
 
@@ -41,8 +42,8 @@ public class MysqlOrderDao implements OrderDao {
 		if (order == null) {
 			throw new NullPointerException("Order cannot be null");
 		}
-		String sql = "UPDATE `order` SET customer_id = ?, create_date = ? WHERE id = ?";
-		jdbcTemplate.update(sql, order.getCustomerId(), order.getCreateDate(),  order.getId());
+		String sql = "UPDATE `order` SET customer_id = ?, create_date = ?, shipping_date = ? WHERE id = ?";
+		jdbcTemplate.update(sql, order.getCustomerId(), order.getCreateDate(), order.getShippingDate(), order.getId());
 	}
 
 	@Override

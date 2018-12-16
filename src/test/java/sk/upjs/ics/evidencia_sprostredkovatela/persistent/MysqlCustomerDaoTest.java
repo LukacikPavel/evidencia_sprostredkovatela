@@ -103,8 +103,6 @@ class MysqlCustomerDaoTest {
 		customerDao.delete(customer.getId());
 		List<Customer> listAfter = customerDao.getAll();
 
-		Customer latestCustomer = listAfter.get(listAfter.size() - 1);
-		assertNotEquals(customer.getId(), latestCustomer.getId());
 		assertNotEquals(listBefore.size(), listAfter.size());
 	}
 

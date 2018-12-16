@@ -3,23 +3,21 @@ package sk.upjs.ics.evidencia_sprostredkovatela.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-//import com.sun.corba.se.impl.resolver.ORBDefaultInitRefResolverImpl;
-
 public class Order {
 	private Long id;
 	private Long customerId;
 	private String customerName;
 	private Long productId;
 	private String productName;
-	private int quantity;
+	private int quantity; //zbytocnost?
 	private LocalDateTime createDate;
 	private LocalDateTime shippingDate;
 	
 	private String customerSurname;
-	//	private LocalDateTime orderDate;
 	private double totalPrice;
 	private double discount;
 	private double finalPrice;
+	
 	public String getCustomerSurname() {
 		return customerSurname;
 	}
@@ -28,9 +26,9 @@ public class Order {
 		this.customerSurname = customerSurname;
 	}
 
-	public void setCreaterDate(LocalDateTime createrDate) {
-		this.createDate = createDate;
-	}
+//	public void setCreaterDate(LocalDateTime createrDate) {
+//		this.createDate = createDate;
+//	}
 
 	public double getTotalPrice() {
 		return totalPrice;

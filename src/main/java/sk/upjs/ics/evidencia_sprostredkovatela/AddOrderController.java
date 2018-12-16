@@ -39,7 +39,7 @@ public class AddOrderController {
 	private ObjectProperty<OrderItem> selectedOrderItem = new SimpleObjectProperty<>();
 	private Parent parent;
 	private Customer customer;
-	private double totalPrice, discount, finalPrice;
+	private double totalPrice;
 
 	@FXML
 	private TextField nameTextField;
@@ -64,12 +64,9 @@ public class AddOrderController {
 
 	@FXML
 	private TextField totalPriceTextField;
-
+	
 	@FXML
-	private TextField discountTextField;
-
-	@FXML
-	private TextField finalPriceTextField;
+	private Button selectCustomerButton;
 
 	public AddOrderController(Parent parent) {
 		this.parent = parent;
@@ -82,7 +79,9 @@ public class AddOrderController {
 
 	@FXML
 	void addProductButtonClicked(ActionEvent event) {
-		ProductListController controller = new ProductListController();
+		Parent parent = addProductButton.getParent();
+		parent.idProperty().set("add");
+		ProductListController controller = new ProductListController(parent);
 		App.showModalWindow(controller, "ProductsList.fxml", "Tovary");
 		Product selectedProduct = controller.getSelectedProduct();
 		if (selectedProduct != null) {
@@ -106,16 +105,16 @@ public class AddOrderController {
 
 	@FXML
 	void changeQuantityButtonClicked(ActionEvent event) {
-                OrderItem orderItem = selectedOrderItem.get();
+		OrderItem orderItem = selectedOrderItem.get();
 		ChangeQuantityOController controller = new ChangeQuantityOController(selectedOrderItem.get());
 		App.showModalWindow(controller, "ChangeQuantity.fxml", "Množstvo");
-		
+
 		App.showModalWindow(controller, "ChangeQuantity.fxml", "Množstvo");
 		int index = orderItemsList.indexOf(orderItem);
 		orderItem.setPriceTotal(orderItem.getQuantity() * orderItem.getPricePiece());
 		orderItemsList.set(index, orderItem);
 		calculatePrice();
-		
+
 	}
 
 	@FXML
@@ -125,28 +124,41 @@ public class AddOrderController {
 
 	@FXML
 	void createOrderButtonClicked(ActionEvent event) {
-		Order order = new Order();
-		order.setCustomerId(customer.getId());
-		order.setCreateDate(LocalDateTime.now());
-		order.setTotalPrice(totalPrice);
-		order.setDiscount(discount);
-		order.setFinalPrice(finalPrice);
-		order = orderDao.add(order);
+		if (customer != null && !orderItemsList.isEmpty()) {
+			Order order = new Order();
+			order.setCustomerId(customer.getId());
+			order.setCreateDate(LocalDateTime.now());
+			order.setTotalPrice(totalPrice);
+			order = orderDao.add(order);
 
-		for (OrderItem si : orderItemsList) {
-			si.setOrderId(order.getId());
-			orderItemDao.add(si);
-			productDao.decreaseQuantity(si.getQuantity(), si.getProductId());
+			for (OrderItem si : orderItemsList) {
+				si.setOrderId(order.getId());
+				orderItemDao.add(si);
+				productDao.decreaseQuantity(si.getQuantity(), si.getProductId());
 
+			}
+			createOrderButton.getScene().setRoot(parent);
+		} else if (customer == null){
+			App.showModalWindow(new ErrorInvalidCustomerController(), "Error.fxml", "Error");
+		} else {
+			App.showModalWindow(new ErrorNonProductSelectedController(), "Error.fxml", "Error");
 		}
-		createOrderButton.getScene().setRoot(parent);
+	}
+	
+	@FXML
+	void selectCustomerButtonClicked(ActionEvent event) {
+		Parent parent = selectCustomerButton.getParent();
+		parent.idProperty().set("select");
+		CustomersListController controller = new CustomersListController(parent);
+		App.showModalWindow(controller, "CustomersList.fxml", "Zákazníci");
+		customer = controller.getSelectedCustomer();
+		if (customer != null) {
+			nameTextField.setText(customer.getName() + " " + customer.getSurname());
+		}
 	}
 
 	@FXML
 	void initialize() {
-
-		discountTextField.setText("0");
-		discount = 0;
 
 		TableColumn<OrderItem, String> productNameCol = new TableColumn<>("Produkt");
 		productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
@@ -175,7 +187,8 @@ public class AddOrderController {
 		orderItemsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<OrderItem>() {
 
 			@Override
-			public void changed(ObservableValue<? extends OrderItem> observable, OrderItem oldValue, OrderItem newValue) {
+			public void changed(ObservableValue<? extends OrderItem> observable, OrderItem oldValue,
+					OrderItem newValue) {
 				if (newValue == null) {
 					changeQuantityButton.setDisable(true);
 					deleteProductButton.setDisable(true);
@@ -188,25 +201,6 @@ public class AddOrderController {
 
 		});
 
-		discountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue == null || newValue.isEmpty()) {
-				finalPrice = totalPrice;
-				finalPriceTextField.setText(String.valueOf(finalPrice));
-			} else {
-				discountTextField.setText(newValue.replaceAll("[^0-9.]", ""));
-				if (!newValue.isEmpty() && !newValue.startsWith(".")) {
-					discount = Double.parseDouble(discountTextField.getText());
-				}
-				if (discount > totalPrice) {
-					discount = totalPrice;
-					discountTextField.setText(totalPriceTextField.getText());
-				}
-				finalPrice = totalPrice - discount;
-
-				finalPriceTextField.setText(String.valueOf(finalPrice));
-			}
-
-		});
 	}
 
 	void calculatePrice() {
@@ -216,7 +210,5 @@ public class AddOrderController {
 		}
 		totalPrice = price;
 		totalPriceTextField.setText(String.valueOf(totalPrice));
-		finalPrice = totalPrice - (totalPrice * (discount / 100));
-		finalPriceTextField.setText(String.valueOf(finalPrice));
 	}
 }

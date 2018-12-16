@@ -1,10 +1,8 @@
 package sk.upjs.ics.evidencia_sprostredkovatela;
-import com.google.protobuf.GeneratedMessageV3;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Group;
-//import sk.upjs.ics.evidencia_sprostredkovatela.entity.Group;;
 
 public class GroupOfGoodsFxModel {
 

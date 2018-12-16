@@ -36,7 +36,7 @@ public class MysqlOrderItemDao implements OrderItemDao{
 
 	@Override
 	public List<OrderItem> getAll() {
-		String sql = "SELECT si.id, p.name productName,concat_ws(' ', c.name, c.surname) customerFullName, c.id customerId," +
+		String sql = "SELECT si.id, si.order_id, si.product_id, p.name productName,concat_ws(' ', c.name, c.surname) customerFullName, c.id customerId," +
                      "si.quantity, si.price_piece, si.price_total, s.create_date FROM order_item si  " +
                    " JOIN product p ON (p.id = si.product_id) JOIN `order` s ON (si.order_id = s.id)"+
 				" JOIN customer c ON (s.customer_id = c.id)";
@@ -56,7 +56,7 @@ public class MysqlOrderItemDao implements OrderItemDao{
 
 	@Override
 	public void delete(long id) {
-		int deleted = jdbcTemplate.update("DELETE FROM orderItem WHERE id = ?", id);
+		int deleted = jdbcTemplate.update("DELETE FROM order_item WHERE id = ?", id);
 		if (deleted == 0) {
 			throw new OrderItemNotFoundException(id);
 		}

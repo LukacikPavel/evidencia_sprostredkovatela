@@ -136,8 +136,6 @@ class MysqlProductDaoTest {
 		productDao.delete(product.getId());
 		List<Product> listAfter = productDao.getAll();
 
-		Product latestProduct = listAfter.get(listAfter.size() - 1);
-		assertNotEquals(product.getId(), latestProduct.getId());
 		assertNotEquals(listBefore.size(), listAfter.size());
 
 		cleanup();

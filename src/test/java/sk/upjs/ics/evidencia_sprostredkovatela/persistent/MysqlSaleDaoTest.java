@@ -33,7 +33,7 @@ class MysqlSaleDaoTest {
 	@Test
 	void testGetAll() {
 		setup();
-		saleDao.add(sale);
+		sale = saleDao.add(sale);
 
 		List<Sale> list = saleDao.getAll();
 		assertNotNull(list);
@@ -97,8 +97,6 @@ class MysqlSaleDaoTest {
 		saleDao.delete(sale.getId());
 		List<Sale> listAfter = saleDao.getAll();
 		
-		Sale latestSale = listAfter.get(listAfter.size() - 1);
-		assertNotEquals(sale.getId(), latestSale.getId());
 		assertNotEquals(listBefore.size(), listAfter.size());
 		
 		cleanup();

@@ -70,6 +70,9 @@ public class AddSaleController {
 	@FXML
 	private TextField finalPriceTextField;
 
+	@FXML
+	private Button selectCustomerButton;
+
 	public AddSaleController(Parent parent) {
 		this.parent = parent;
 	}
@@ -81,7 +84,9 @@ public class AddSaleController {
 
 	@FXML
 	void addProductButtonClicked(ActionEvent event) {
-		ProductListController controller = new ProductListController();
+		Parent parent = addProductButton.getParent();
+		parent.idProperty().set("add");
+		ProductListController controller = new ProductListController(parent);
 		App.showModalWindow(controller, "ProductsList.fxml", "Tovary");
 		Product selectedProduct = controller.getSelectedProduct();
 		if (selectedProduct != null) {
@@ -121,20 +126,38 @@ public class AddSaleController {
 
 	@FXML
 	void createSaleButtonClicked(ActionEvent event) {
-		Sale sale = new Sale();
-		sale.setCustomerId(customer.getId());
-		sale.setSaleDate(LocalDateTime.now());
-		sale.setTotalPrice(totalPrice);
-		sale.setDiscount(discount);
-		sale.setFinalPrice(finalPrice);
-		sale = saleDao.add(sale);
+		if (customer != null && !saleItemsList.isEmpty() ) {
+			Sale sale = new Sale();
+			sale.setCustomerId(customer.getId());
+			sale.setSaleDate(LocalDateTime.now());
+			sale.setTotalPrice(totalPrice);
+			sale.setDiscount(discount);
+			sale.setFinalPrice(finalPrice);
+			sale = saleDao.add(sale);
 
-		for (SaleItem si : saleItemsList) {
-			si.setSaleId(sale.getId());
-			saleItemDao.add(si);
-			productDao.decreaseQuantity(si.getQuantity(), si.getProductId());
+			for (SaleItem si : saleItemsList) {
+				si.setSaleId(sale.getId());
+				saleItemDao.add(si);
+				productDao.decreaseQuantity(si.getQuantity(), si.getProductId());
+			}
+			createSaleButton.getScene().setRoot(parent);
+		} else if (customer == null){
+			App.showModalWindow(new ErrorInvalidCustomerController(), "Error.fxml", "Error");
+		} else {
+			App.showModalWindow(new ErrorNonProductSelectedController(), "Error.fxml", "Error");
 		}
-		createSaleButton.getScene().setRoot(parent);
+	}
+
+	@FXML
+	void selectCustomerButtonClicked(ActionEvent event) {
+		Parent parent = selectCustomerButton.getParent();
+		parent.idProperty().set("select");
+		CustomersListController controller = new CustomersListController(parent);
+		App.showModalWindow(controller, "CustomersList.fxml", "Zákazníci");
+		customer = controller.getSelectedCustomer();
+		if (customer != null) {
+			nameTextField.setText(customer.getName() + " " + customer.getSurname());
+		}
 	}
 
 	@FXML

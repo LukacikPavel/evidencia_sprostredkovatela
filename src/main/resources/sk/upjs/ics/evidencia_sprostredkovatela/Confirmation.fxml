@@ -13,7 +13,7 @@
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@success.png" />
+                  <Image url="@icons/success.png" />
                </image>
             </ImageView>
          </graphic></Button>
@@ -21,11 +21,11 @@
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@error.png" />
+                  <Image url="@icons/error.png" />
                </image>
             </ImageView>
          </graphic></Button>
-      <Label fx:id="textLabel" layoutX="45.0" layoutY="37.0" text="Odobrať zákazníka?">
+      <Label fx:id="textLabel" layoutX="59.0" layoutY="37.0" prefHeight="27.0" prefWidth="130.0" text="Určite odobrať?" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font></Label>

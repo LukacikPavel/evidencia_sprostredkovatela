@@ -5,10 +5,17 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <ImageView pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@background/preview.jpg" />
+         </image>
+      </ImageView>
       <TableView fx:id="salesTableView" layoutX="34.0" layoutY="147.0" prefHeight="200.0" prefWidth="526.0" />
       <TextField fx:id="nameTextField" disable="true" layoutX="34.0" layoutY="77.0" />
       <TextField fx:id="surnameTextField" layoutX="226.0" layoutY="77.0" />

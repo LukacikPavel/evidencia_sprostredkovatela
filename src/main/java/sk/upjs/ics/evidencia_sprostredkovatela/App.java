@@ -48,7 +48,6 @@ public class App extends Application {
 	}
 
 	public static void changeScene(Object controller, String fxml, String title) {
-
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
 			fxmlLoader.setController(controller);
@@ -58,7 +57,6 @@ public class App extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }

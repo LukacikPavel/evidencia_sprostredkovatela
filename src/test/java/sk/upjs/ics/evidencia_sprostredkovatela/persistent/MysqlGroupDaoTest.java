@@ -94,8 +94,6 @@ class MysqlGroupDaoTest {
 		groupDao.delete(group.getId());
 		List<Group> listAfter = groupDao.getAll();
 
-		Group latestGroup = listAfter.get(listAfter.size() - 1);
-		assertNotEquals(group.getId(), latestGroup.getId());
 		assertNotEquals(listBefore.size(), listAfter.size());
 	}
 

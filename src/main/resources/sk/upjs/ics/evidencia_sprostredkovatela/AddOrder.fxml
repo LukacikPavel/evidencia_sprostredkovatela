@@ -5,25 +5,57 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="nameTextField" disable="true" layoutX="165.0" layoutY="42.0" />
+      <ImageView fitHeight="1920.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@background/preview.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="nameTextField" disable="true" layoutX="165.0" layoutY="42.0" AnchorPane.leftAnchor="165.0" AnchorPane.topAnchor="42.0" />
       <Label layoutX="55.0" layoutY="47.0" text="Meno a priezvisko" />
-      <TableView fx:id="orderItemsTableView" layoutX="31.0" layoutY="100.0" prefHeight="200.0" prefWidth="518.0" />
-      <Button fx:id="addProductButton" layoutX="583.0" layoutY="138.0" mnemonicParsing="false" onAction="#addProductButtonClicked" text="PridajTovar" />
-      <Button fx:id="deleteProductButton" disable="true" layoutX="578.0" layoutY="187.0" mnemonicParsing="false" onAction="#deleteProductButtonClicked" text="OdoberTovar" />
+      <TableView fx:id="orderItemsTableView" layoutX="31.0" layoutY="100.0" prefHeight="200.0" prefWidth="518.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="150.60000000000002" AnchorPane.topAnchor="100.0" />
+      <Button fx:id="addProductButton" layoutX="569.0" layoutY="138.0" mnemonicParsing="false" onAction="#addProductButtonClicked" text="PridajTovar" AnchorPane.rightAnchor="26.200000000000003" AnchorPane.topAnchor="138.0">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/add.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="deleteProductButton" disable="true" layoutX="563.0" layoutY="191.0" mnemonicParsing="false" onAction="#deleteProductButtonClicked" text="OdoberTovar" AnchorPane.rightAnchor="21.799999999999955" AnchorPane.topAnchor="191.0">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/minus.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <ButtonBar layoutX="398.0" layoutY="251.0" prefHeight="40.0" prefWidth="200.0" />
-    <Button fx:id="changeQuantityButton" disable="true" layoutX="570.0" layoutY="238.0" mnemonicParsing="false" onAction="#changeQuantityButtonClicked" text="Uprav Mnozstvo" />
-      <Label layoutX="74.0" layoutY="357.0" text="Zľava (v %)" />
-      <Label layoutX="71.0" layoutY="321.0" text="Suma Spolu" />
-      <Label layoutX="63.0" layoutY="389.0" text="Vysledna Suma" />
-      <Button layoutX="358.0" layoutY="42.0" mnemonicParsing="false" text="Vyber zákazníka" />
-      <Button fx:id="createOrderButton" layoutX="581.0" layoutY="398.0" mnemonicParsing="false" onAction="#createOrderButtonClicked" text="Zapíš predaj" />
-      <Button fx:id="closeOrderButton" layoutX="486.0" layoutY="398.0" mnemonicParsing="false" onAction="#closeOrderButtonClicked" text="Zruš predaj" />
-      <TextField fx:id="totalPriceTextField" disable="true" layoutX="165.0" layoutY="317.0" />
-      <TextField fx:id="discountTextField" layoutX="165.0" layoutY="353.0" />
-      <TextField fx:id="finalPriceTextField" disable="true" layoutX="165.0" layoutY="385.0" />
+      <Label layoutX="120.0" layoutY="367.0" text="Suma spolu" AnchorPane.bottomAnchor="65.4" AnchorPane.leftAnchor="120.0" />
+      <Button fx:id="selectCustomerButton" layoutX="350.0" layoutY="35.0" mnemonicParsing="false" onAction="#selectCustomerButtonClicked" text="Vyber zákazníka" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="35.0">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/searchUser.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="createOrderButton" layoutX="581.0" layoutY="398.0" mnemonicParsing="false" onAction="#createOrderButtonClicked" text="Zapíš predaj" AnchorPane.bottomAnchor="26.4" AnchorPane.rightAnchor="37.400000000000006" />
+      <Button fx:id="closeOrderButton" layoutX="488.0" layoutY="398.0" mnemonicParsing="false" onAction="#closeOrderButtonClicked" text="Zruš predaj" AnchorPane.bottomAnchor="26.399999999999977" AnchorPane.rightAnchor="136.0" />
+      <TextField fx:id="totalPriceTextField" editable="false" layoutX="216.0" layoutY="363.0" AnchorPane.bottomAnchor="61.4" AnchorPane.leftAnchor="216.0" />
+    <Button fx:id="changeQuantityButton" disable="true" layoutX="555.0" layoutY="244.0" mnemonicParsing="false" onAction="#changeQuantityButtonClicked" text="Uprav Mnozstvo" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="244.0">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/edit.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

@@ -11,75 +11,75 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1920.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@preview.jpg" />
+            <Image url="@background/preview.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="nameTextField" layoutX="35.0" layoutY="73.0" prefHeight="26.0" prefWidth="111.0" />
-      <TextField fx:id="surnameTextField" layoutX="184.0" layoutY="73.0" prefHeight="26.0" prefWidth="149.0" />
+      <TextField fx:id="nameTextField" layoutX="35.0" layoutY="73.0" prefHeight="26.0" prefWidth="111.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="73.0" />
+      <TextField fx:id="surnameTextField" layoutX="184.0" layoutY="73.0" prefHeight="26.0" prefWidth="149.0" AnchorPane.leftAnchor="184.0" />
       <Label layoutX="75.0" layoutY="36.0" text="Meno" />
       <Label layoutX="232.0" layoutY="36.0" text="Priezvisko" />
       <Label layoutX="406.0" layoutY="36.0" text="Doplňujúce údaje" />
-      <TextField fx:id="moreDetailsTextField" layoutX="378.0" layoutY="73.0" prefHeight="26.0" prefWidth="149.0" />
-      <Button fx:id="editCustomerButton" disable="true" layoutX="574.0" layoutY="173.0" mnemonicParsing="false" onAction="#editCustomerButtonClicked" text="Uprav">
+      <TextField fx:id="moreDetailsTextField" layoutX="378.0" layoutY="73.0" prefHeight="26.0" prefWidth="149.0" AnchorPane.leftAnchor="378.0" />
+      <Button fx:id="editCustomerButton" disable="true" layoutX="573.0" layoutY="179.0" mnemonicParsing="false" onAction="#editCustomerButtonClicked" text="Uprav" AnchorPane.rightAnchor="43.0">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@editCustomer.png" />
+                  <Image url="@icons/editCustomer.png" />
                </image>
                <viewport>
                   <Rectangle2D />
                </viewport>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="addCustomerButton" layoutX="575.0" layoutY="121.0" mnemonicParsing="false" onAction="#addCustomerButtonClicked" text="Pridaj">
+      <Button fx:id="addCustomerButton" layoutX="574.0" layoutY="121.0" mnemonicParsing="false" onAction="#addCustomerButtonClicked" text="Pridaj" AnchorPane.rightAnchor="43.60000000000002">
          <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@addCustomer.png" />
+                  <Image url="@icons/addCustomer.png" />
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="salesHistoryButton" disable="true" layoutX="544.0" layoutY="288.0" mnemonicParsing="false" onAction="#salesHistoryButtonClicked" text="História predajov">
+      <Button fx:id="salesHistoryButton" disable="true" layoutX="544.0" layoutY="290.0" mnemonicParsing="false" onAction="#salesHistoryButtonClicked" text="História predajov" AnchorPane.rightAnchor="12.799999999999955">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@notepad.png" />
+                  <Image url="@icons/folder.png" />
                </image>
             </ImageView>
          </graphic></Button>
-      <TableView fx:id="customersTableView" layoutX="17.0" layoutY="121.0" prefHeight="314.0" prefWidth="510.0" />
-      <Button fx:id="addSaleButton" disable="true" layoutX="558.0" layoutY="238.0" mnemonicParsing="false" onAction="#addSaleButtonClicked" text="Nový predaj">
+      <TableView fx:id="customersTableView" layoutX="17.0" layoutY="121.0" prefHeight="314.0" prefWidth="510.0" AnchorPane.bottomAnchor="14.600000000000023" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="172.60000000000002" AnchorPane.topAnchor="121.0" />
+      <Button fx:id="addSaleButton" disable="true" layoutX="557.0" layoutY="238.0" mnemonicParsing="false" onAction="#addSaleButtonClicked" text="Nový predaj" AnchorPane.rightAnchor="26.200000000000045">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@addSale.png" />
+                  <Image url="@icons/addSale.png" />
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="addOrderButton" layoutX="543.0" layoutY="347.0" mnemonicParsing="false" onAction="#addOrderButtonClicked" text="Nová objednávka">
+      <Button fx:id="addOrderButton" disable="true" layoutX="543.0" layoutY="346.0" mnemonicParsing="false" onAction="#addOrderButtonClicked" text="Nová objednávka" AnchorPane.rightAnchor="12.200000000000045">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@addOrder.png" />
+                  <Image url="@icons/notepad.png" />
                </image>
             </ImageView>
          </graphic></Button>
       <Button fx:id="selectCustomerButton" layoutX="592.0" layoutY="73.0" mnemonicParsing="false" onAction="#selectCustomerButtonClicked" text="Vyber" visible="false" />
-      <Button fx:id="ordersHistoryButton" layoutX="537.0" layoutY="396.0" mnemonicParsing="false" onAction="#ordersHistoryButtonClicked" text="História objednávok">
+      <Button fx:id="ordersHistoryButton" disable="true" layoutX="537.0" layoutY="396.0" mnemonicParsing="false" onAction="#ordersHistoryButtonClicked" text="História objednávok" AnchorPane.rightAnchor="4.599999999999994">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@notepad.png" />
+                  <Image url="@icons/folder%20(1).png" />
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="backButton" cancelButton="true" layoutX="630.0" layoutY="15.0" mnemonicParsing="false" onAction="#backButtonClicked">
+      <Button fx:id="backButton" cancelButton="true" layoutX="630.0" layoutY="15.0" mnemonicParsing="false" onAction="#backButtonClicked" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="15.0">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@back.png" />
+                  <Image url="@icons/back.png" />
                </image>
             </ImageView>
          </graphic></Button>

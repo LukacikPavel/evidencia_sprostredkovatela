@@ -15,9 +15,15 @@ public class MainWindowController {
 
 	@FXML
 	private Button salesListButton;
-	
+
 	@FXML
-    private Button ordersListButton;
+	private Button ordersListButton;
+
+	@FXML
+	private Button addSaleButton;
+
+	@FXML
+	private Button addOrderButton;
 
 	@FXML
 	void initialize() {
@@ -34,7 +40,9 @@ public class MainWindowController {
 
 	@FXML
 	void productsListButtonClicked(ActionEvent event) {
-		App.changeScene(new ProductListController(), "ProductsList.fxml", "Tovary");
+		Parent parent = productsListButton.getParent();
+		parent.idProperty().set("main");
+		App.changeScene(new ProductListController(parent), "ProductsList.fxml", "Tovary");
 
 	}
 
@@ -44,7 +52,7 @@ public class MainWindowController {
 		parent.idProperty().set("main");
 		App.changeScene(new SalesHistoryController(parent), "SalesHistory.fxml", "Predaje");
 	}
-	
+
 	@FXML
 	void ordersListButtonClicked(ActionEvent event) {
 		Parent parent = ordersListButton.getParent();
@@ -52,5 +60,17 @@ public class MainWindowController {
 		App.changeScene(new OrdersHistoryController(parent), "OrdersHistory.fxml", "Objednávky");
 	}
 
+	@FXML
+	void addOrderButtonClicked(ActionEvent event) {
+		Parent parent = addOrderButton.getParent();
+		parent.idProperty().set("main");
+		App.changeScene(new AddOrderController(parent), "AddOrder.fxml", "Nová objednávka");
+	}
 
+	@FXML
+	void addSaleButtonClicked(ActionEvent event) {
+		Parent parent = addSaleButton.getParent();
+		parent.idProperty().set("main");
+		App.changeScene(new AddSaleController(parent), "AddSale.fxml", "Nový predaj");
+	}
 }

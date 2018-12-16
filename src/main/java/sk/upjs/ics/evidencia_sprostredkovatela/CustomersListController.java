@@ -24,6 +24,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.CustomerDao;
@@ -124,6 +125,7 @@ public class CustomersListController {
 			menuItem.selectedProperty().bindBidirectional(entry.getValue());
 			contextMenu.getItems().add(menuItem);
 		}
+
 		customersTableView.setContextMenu(contextMenu);
 
 		customersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Customer>() {
@@ -180,7 +182,7 @@ public class CustomersListController {
 		if (parent.idProperty().getValue().equals("select")) {
 			backButton.getScene().getWindow().hide();
 		} else {
-			backButton.getScene().setRoot(parent);			
+			backButton.getScene().setRoot(parent);
 		}
 	}
 

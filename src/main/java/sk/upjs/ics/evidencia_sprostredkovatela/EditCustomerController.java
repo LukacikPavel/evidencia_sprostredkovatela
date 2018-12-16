@@ -64,13 +64,13 @@ public class EditCustomerController {
 			customerDao.save(customer);
 			saveButton.getScene().getWindow().hide();
 		} else {
-			App.showModalWindow(new ErrorCantSaveController(), "ErrorCantSave.fxml", "Error");
+			App.showModalWindow(new ErrorCantSaveController(), "Error.fxml", "Error");
 		}
 	}
 
 	@FXML
 	void disableButtonClicked(ActionEvent event) {
-		DisableConfirmationController controller = new DisableConfirmationController(customerModel.getId());
+		DisableConfirmationCustomerController controller = new DisableConfirmationCustomerController(customerModel.getId());
 		App.showModalWindow(controller, "Confirmation.fxml", "Určite?");
 		if (controller.wasDisabled()) {
 			disableButton.getScene().getWindow().hide();
