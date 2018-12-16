@@ -25,7 +25,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Group;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Product;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;

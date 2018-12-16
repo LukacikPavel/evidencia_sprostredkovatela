@@ -24,7 +24,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import sk.upjs.ics.evidencia_sprostredkovatela.entity.Customer;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.DaoFactory;
 import sk.upjs.ics.evidencia_sprostredkovatela.persistent.CustomerDao;
@@ -137,11 +136,13 @@ public class CustomersListController {
 					salesHistoryButton.setDisable(true);
 					ordersHistoryButton.setDisable(true);
 					addSaleButton.setDisable(true);
+					addOrderButton.setDisable(true);
 				} else {
 					editCustomerButton.setDisable(false);
 					salesHistoryButton.setDisable(false);
 					ordersHistoryButton.setDisable(false);
 					addSaleButton.setDisable(false);
+					addOrderButton.setDisable(false);
 				}
 				selectedCustomer.set(newValue);
 			}
