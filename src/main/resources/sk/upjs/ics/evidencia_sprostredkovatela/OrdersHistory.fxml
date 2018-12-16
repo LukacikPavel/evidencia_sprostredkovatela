@@ -8,7 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.control.CheckBox?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="1920.0" pickOnBounds="true" preserveRatio="true">
@@ -37,6 +37,8 @@
          </graphic></Button>
       <DatePicker fx:id="startDatePicker" layoutX="473.0" layoutY="64.0" AnchorPane.leftAnchor="473.0" AnchorPane.topAnchor="64.0" />
       <DatePicker fx:id="endDatePicker" layoutX="473.0" layoutY="103.0" AnchorPane.leftAnchor="473.0" AnchorPane.topAnchor="103.0" />
+      <DatePicker fx:id="startShippingDatePicker" layoutX="613.0" layoutY="64.0" AnchorPane.leftAnchor="663.0" AnchorPane.topAnchor="64.0" />
+      <DatePicker fx:id="endShippingDatePicker" layoutX="613.0" layoutY="103.0" AnchorPane.leftAnchor="663.0" AnchorPane.topAnchor="103.0" />
       <Button fx:id="backButton" layoutX="630.0" layoutY="15.0" mnemonicParsing="false" onAction="#backButtonClicked" AnchorPane.rightAnchor="28.4" AnchorPane.topAnchor="15.0">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -51,5 +53,6 @@
       <TextField fx:id="priceAllTextField" editable="false" layoutX="441.0" layoutY="382.0" AnchorPane.bottomAnchor="42.4" AnchorPane.leftAnchor="441.0" />
       <Label layoutX="400.0" layoutY="68.0" text="Dátum od" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="68.0" />
       <Label layoutX="400.0" layoutY="107.0" text="Dátum do" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="107.0" />
+          <CheckBox fx:id="orderedCheckBox" layoutX="613.0" layoutY="46.0" mnemonicParsing="false" text="Objednané" />  
    </children>
 </AnchorPane>

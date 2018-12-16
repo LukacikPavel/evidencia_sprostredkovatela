@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
@@ -61,7 +62,13 @@ public class OrdersHistoryController {
 
 	@FXML
 	private DatePicker endDatePicker;
+	
+	@FXML
+	private DatePicker startShippingDatePicker;
 
+	@FXML
+	private DatePicker endShippingDatePicker;
+	
 	@FXML
 	private Button selectProductButton;
 
@@ -73,6 +80,10 @@ public class OrdersHistoryController {
 
 	@FXML
 	private TextField priceAllTextField;
+	
+    @FXML
+    private CheckBox orderedCheckBox;
+
 
 	public OrdersHistoryController(Parent parent) {
 		this.parent = parent;
@@ -150,8 +161,31 @@ public class OrdersHistoryController {
 		priceTotalCol.setCellValueFactory(new PropertyValueFactory<>("priceTotal"));
 		orderItemsTableView.getColumns().add(priceTotalCol);
 		columnsVisibility.put("Cena celkom", priceTotalCol.visibleProperty());
+//
+		TableColumn<OrderItem, LocalDateTime> orderedDateCol = new TableColumn<>("Dátum predaja");
+		orderedDateCol.setCellFactory((TableColumn<OrderItem, LocalDateTime> param) -> {
+			return new TableCell<OrderItem, LocalDateTime>() {
+				private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy HH:mm");
 
-		TableColumn<OrderItem, LocalDateTime> orderDateCol = new TableColumn<>("Dátum predaja");
+				@Override
+				protected void updateItem(LocalDateTime item, boolean empty) {
+					super.updateItem(item, empty);
+					if (empty || item == null)
+						setText("");
+					else
+						setText(formatter.format(item));
+				}
+			};
+		});
+		orderedDateCol.setCellValueFactory(param -> {
+			return new SimpleObjectProperty<>(param.getValue().getShippingDate());
+		});  
+
+		orderItemsTableView.getColumns().add(orderedDateCol);
+		columnsVisibility.put("Dátum predaja", orderedDateCol.visibleProperty());	
+		
+//		
+		TableColumn<OrderItem, LocalDateTime> orderDateCol = new TableColumn<>("Dátum objednávky");
 		orderDateCol.setCellFactory((TableColumn<OrderItem, LocalDateTime> param) -> {
 			return new TableCell<OrderItem, LocalDateTime>() {
 				private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy HH:mm");
@@ -170,7 +204,7 @@ public class OrdersHistoryController {
 			return new SimpleObjectProperty<>(param.getValue().getCreateDate());
 		});
 		orderItemsTableView.getColumns().add(orderDateCol);
-		columnsVisibility.put("Dátum predaja", orderDateCol.visibleProperty());
+		columnsVisibility.put("Dátum objednávky", orderDateCol.visibleProperty());
 
 		//fillTableView();
 
@@ -231,6 +265,7 @@ public class OrdersHistoryController {
 
 		ObjectProperty<Predicate<OrderItem>> productFilter = new SimpleObjectProperty<>();
 		ObjectProperty<Predicate<OrderItem>> dateFilter = new SimpleObjectProperty<>();
+		ObjectProperty<Predicate<OrderItem>> dateOrderedFilter = new SimpleObjectProperty<>();
 		ObjectProperty<Predicate<OrderItem>> customerNameFilter = new SimpleObjectProperty<>();
 		ObjectProperty<Predicate<OrderItem>> customerIdFilter = new SimpleObjectProperty<>();
 
@@ -255,6 +290,19 @@ public class OrdersHistoryController {
 		}, startDatePicker.valueProperty(), endDatePicker.valueProperty()));
 
 
+		dateOrderedFilter.bind(Bindings.createObjectBinding(() -> {
+			LocalDate minDate = startShippingDatePicker.getValue();
+			LocalDate maxDate = endShippingDatePicker.getValue();
+
+			final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
+			final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
+
+
+			return ti -> !finalMin.isAfter(ti.getShippingDate().toLocalDate())
+					&& !finalMax.isBefore(ti.getShippingDate().toLocalDate());
+		}, startShippingDatePicker.valueProperty(), endShippingDatePicker.valueProperty()));
+
+		
 		customerNameFilter
 				.bind(Bindings
 						.createObjectBinding(
@@ -269,8 +317,8 @@ public class OrdersHistoryController {
 		filteredOrderItems.predicateProperty()
 				.bind(Bindings.createObjectBinding(
 						() -> productFilter.get()
-								.and(dateFilter.get().and(customerNameFilter.get().and(customerIdFilter.get()))),
-						productFilter, dateFilter, customerNameFilter));
+								.and(dateFilter.get().and(dateOrderedFilter.get().and(customerNameFilter.get().and(customerIdFilter.get())))),
+						productFilter, dateFilter, dateOrderedFilter, customerNameFilter));
 
 
 		return filteredOrderItems;

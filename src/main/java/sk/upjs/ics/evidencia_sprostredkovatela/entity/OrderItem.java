@@ -7,6 +7,7 @@ public class OrderItem {
 	private Long id;
 	private Long orderId;
 	private LocalDateTime createDate;
+	private LocalDateTime shippingDate; 
 	private Long customerId;
 	private String customerName;
 	private String customerFullName;
@@ -41,6 +42,19 @@ public class OrderItem {
 		this.createDate = dateOfOrder;
 	}
 
+	public LocalDateTime getShippingDate() {
+		return shippingDate;
+	}
+
+	public void setShippingDate(LocalDateTime shippingDate) {
+		this.shippingDate = shippingDate;
+	}
+
+
+	
+	
+	
+	
 	public Long getCustomerId() {
 		return customerId;
 	}
