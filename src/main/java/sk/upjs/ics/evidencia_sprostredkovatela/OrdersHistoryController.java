@@ -62,13 +62,13 @@ public class OrdersHistoryController {
 
 	@FXML
 	private DatePicker endDatePicker;
-	
+
 	@FXML
 	private DatePicker startShippingDatePicker;
 
 	@FXML
 	private DatePicker endShippingDatePicker;
-	
+
 	@FXML
 	private Button selectProductButton;
 
@@ -80,10 +80,9 @@ public class OrdersHistoryController {
 
 	@FXML
 	private TextField priceAllTextField;
-	
-    @FXML
-    private CheckBox orderedCheckBox;
 
+	@FXML
+	private CheckBox orderedCheckBox;
 
 	public OrdersHistoryController(Parent parent) {
 		this.parent = parent;
@@ -112,11 +111,10 @@ public class OrdersHistoryController {
 			productTextField.setText(product.getName());
 		}
 
-		
 	}
-	
+
 	@FXML
-    void selectCustomerButtonClicked(ActionEvent event) {
+	void selectCustomerButtonClicked(ActionEvent event) {
 		Parent parent = selectCustomerButton.getParent();
 		parent.idProperty().set("select");
 		CustomersListController controller = new CustomersListController(parent);
@@ -125,7 +123,7 @@ public class OrdersHistoryController {
 		if (customer != null) {
 			nameTextField.setText(customer.getName() + " " + customer.getSurname());
 		}
-  }
+	}
 
 	@FXML
 	void initialize() {
@@ -135,22 +133,20 @@ public class OrdersHistoryController {
 		orderItemsTableView.getColumns().add(idCol);
 		columnsVisibility.put("ID", idCol.visibleProperty());
 
-	TableColumn<OrderItem, String> customerNameCol = new TableColumn<>("Zákazník");
+		TableColumn<OrderItem, String> customerNameCol = new TableColumn<>("Zákazník");
 		customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerFullName"));
 		orderItemsTableView.getColumns().add(customerNameCol);
 		columnsVisibility.put("Zákazník", customerNameCol.visibleProperty());
-
-
 
 		TableColumn<OrderItem, String> productNameCol = new TableColumn<>("Produkt");
 		productNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
 		orderItemsTableView.getColumns().add(productNameCol);
 		columnsVisibility.put("Produkt", productNameCol.visibleProperty());
 
-		TableColumn<OrderItem, Integer> quantityCol = new TableColumn<>("Počet");
-		quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-		orderItemsTableView.getColumns().add(quantityCol);
-		columnsVisibility.put("Počet", quantityCol.visibleProperty());
+//		TableColumn<OrderItem, Integer> quantityCol = new TableColumn<>("Počet");
+//		quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+//		orderItemsTableView.getColumns().add(quantityCol);
+//		columnsVisibility.put("Počet", quantityCol.visibleProperty());
 
 		TableColumn<OrderItem, Double> pricePieceCol = new TableColumn<>("Cena za kus");
 		pricePieceCol.setCellValueFactory(new PropertyValueFactory<>("pricePiece"));
@@ -162,7 +158,7 @@ public class OrdersHistoryController {
 		orderItemsTableView.getColumns().add(priceTotalCol);
 		columnsVisibility.put("Cena celkom", priceTotalCol.visibleProperty());
 //
-		TableColumn<OrderItem, LocalDateTime> orderedDateCol = new TableColumn<>("Dátum predaja");
+		TableColumn<OrderItem, LocalDateTime> orderedDateCol = new TableColumn<>("Dátum objednávky");
 		orderedDateCol.setCellFactory((TableColumn<OrderItem, LocalDateTime> param) -> {
 			return new TableCell<OrderItem, LocalDateTime>() {
 				private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy HH:mm");
@@ -179,13 +175,13 @@ public class OrdersHistoryController {
 		});
 		orderedDateCol.setCellValueFactory(param -> {
 			return new SimpleObjectProperty<>(param.getValue().getShippingDate());
-		});  
+		});
 
 		orderItemsTableView.getColumns().add(orderedDateCol);
-		columnsVisibility.put("Dátum predaja", orderedDateCol.visibleProperty());	
-		
+		columnsVisibility.put("Dátum predaja", orderedDateCol.visibleProperty());
+
 //		
-		TableColumn<OrderItem, LocalDateTime> orderDateCol = new TableColumn<>("Dátum objednávky");
+		TableColumn<OrderItem, LocalDateTime> orderDateCol = new TableColumn<>("Dátum odoslania");
 		orderDateCol.setCellFactory((TableColumn<OrderItem, LocalDateTime> param) -> {
 			return new TableCell<OrderItem, LocalDateTime>() {
 				private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy HH:mm");
@@ -206,17 +202,17 @@ public class OrdersHistoryController {
 		orderItemsTableView.getColumns().add(orderDateCol);
 		columnsVisibility.put("Dátum objednávky", orderDateCol.visibleProperty());
 
-		//fillTableView();
+		// fillTableView();
 
-                orderItemsList = FXCollections.observableArrayList(orderItemDao.getAll());
+		orderItemsList = FXCollections.observableArrayList(orderItemDao.getAll());
 		FilteredList<OrderItem> filteredList = filterOrderItems();
 		orderItemsTableView.setItems(filteredList);
-		
+
 		if (parent.idProperty().getValue().equals("main")) {
 			updateQuantityAndPriceAll(filteredList);
 
 		}
-		
+
 		filteredList.addListener((ListChangeListener<OrderItem>) c -> {
 			updateQuantityAndPriceAll(filteredList);
 		});
@@ -225,12 +221,7 @@ public class OrdersHistoryController {
 		if (customer.getName() != null) {
 			nameTextField.setText(customer.getName() + " " + customer.getSurname());
 
-
-
-
 		}
-
-
 
 		ContextMenu contextMenu = new ContextMenu();
 		for (Entry<String, BooleanProperty> entry : columnsVisibility.entrySet()) {
@@ -249,18 +240,14 @@ public class OrdersHistoryController {
 			priceAll += si.getPriceTotal();
 
 		}
-		priceAll = priceAll*100;
+		priceAll = priceAll * 100;
 		priceAll = Math.round(priceAll);
-		priceAll = priceAll /100;
+		priceAll = priceAll / 100;
 		quantityAllTextField.setText(String.valueOf(quantityAll));
 		priceAllTextField.setText(String.valueOf(priceAll));
 	}
 
-	
-
 	private FilteredList<OrderItem> filterOrderItems() {
-		
-		System.out.println(orderItemsList);
 		FilteredList<OrderItem> filteredOrderItems = new FilteredList<>(orderItemsList);
 
 		ObjectProperty<Predicate<OrderItem>> productFilter = new SimpleObjectProperty<>();
@@ -268,7 +255,6 @@ public class OrdersHistoryController {
 		ObjectProperty<Predicate<OrderItem>> dateOrderedFilter = new SimpleObjectProperty<>();
 		ObjectProperty<Predicate<OrderItem>> customerNameFilter = new SimpleObjectProperty<>();
 		ObjectProperty<Predicate<OrderItem>> customerIdFilter = new SimpleObjectProperty<>();
-
 
 		productFilter
 				.bind(Bindings
@@ -284,11 +270,9 @@ public class OrdersHistoryController {
 			final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
 			final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
 
-
 			return ti -> !finalMin.isAfter(ti.getCreateDate().toLocalDate())
 					&& !finalMax.isBefore(ti.getCreateDate().toLocalDate());
 		}, startDatePicker.valueProperty(), endDatePicker.valueProperty()));
-
 
 		dateOrderedFilter.bind(Bindings.createObjectBinding(() -> {
 			LocalDate minDate = startShippingDatePicker.getValue();
@@ -297,12 +281,10 @@ public class OrdersHistoryController {
 			final LocalDate finalMin = minDate == null ? LocalDate.MIN : minDate;
 			final LocalDate finalMax = maxDate == null ? LocalDate.MAX : maxDate;
 
-
 			return ti -> !finalMin.isAfter(ti.getShippingDate().toLocalDate())
 					&& !finalMax.isBefore(ti.getShippingDate().toLocalDate());
 		}, startShippingDatePicker.valueProperty(), endShippingDatePicker.valueProperty()));
 
-		
 		customerNameFilter
 				.bind(Bindings
 						.createObjectBinding(
@@ -317,11 +299,10 @@ public class OrdersHistoryController {
 		filteredOrderItems.predicateProperty()
 				.bind(Bindings.createObjectBinding(
 						() -> productFilter.get()
-								.and(dateFilter.get().and(dateOrderedFilter.get().and(customerNameFilter.get().and(customerIdFilter.get())))),
-						productFilter, dateFilter, dateOrderedFilter, customerNameFilter));
-
+								.and(dateFilter.get().and(customerNameFilter.get().and(customerIdFilter.get()))),
+						productFilter, dateFilter, customerNameFilter, dateOrderedFilter));
 
 		return filteredOrderItems;
-		
+
 	}
 }

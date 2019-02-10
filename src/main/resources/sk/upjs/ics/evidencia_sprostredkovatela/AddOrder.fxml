@@ -46,7 +46,7 @@
             </ImageView>
          </graphic></Button>
       <Button fx:id="createOrderButton" layoutX="581.0" layoutY="398.0" mnemonicParsing="false" onAction="#createOrderButtonClicked" text="Zapíš predaj" AnchorPane.bottomAnchor="26.4" AnchorPane.rightAnchor="37.400000000000006" />
-      <Button fx:id="closeOrderButton" layoutX="488.0" layoutY="398.0" mnemonicParsing="false" onAction="#closeOrderButtonClicked" text="Zruš predaj" AnchorPane.bottomAnchor="26.399999999999977" AnchorPane.rightAnchor="136.0" />
+      <Button fx:id="closeOrderButton" cancelButton="true" layoutX="488.0" layoutY="398.0" mnemonicParsing="false" onAction="#closeOrderButtonClicked" text="Zruš predaj" AnchorPane.bottomAnchor="26.399999999999977" AnchorPane.rightAnchor="136.0" />
       <TextField fx:id="totalPriceTextField" editable="false" layoutX="216.0" layoutY="363.0" AnchorPane.bottomAnchor="61.4" AnchorPane.leftAnchor="216.0" />
     <Button fx:id="changeQuantityButton" disable="true" layoutX="555.0" layoutY="244.0" mnemonicParsing="false" onAction="#changeQuantityButtonClicked" text="Uprav Mnozstvo" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="244.0">
          <graphic>

@@ -38,7 +38,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="ordersListButton" layoutX="498.0" layoutY="312.0" mnemonicParsing="false" onAction="#ordersListButtonClicked" text="História objednávok" AnchorPane.bottomAnchor="98.0" AnchorPane.rightAnchor="43.60000000000002">
+      <Button fx:id="ordersListButton" layoutX="497.0" layoutY="312.0" mnemonicParsing="false" onAction="#ordersListButtonClicked" text="História objednávok" AnchorPane.bottomAnchor="98.0" AnchorPane.rightAnchor="44.60000000000002">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
